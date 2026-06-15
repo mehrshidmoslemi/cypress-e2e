@@ -1,0 +1,27 @@
+{
+  "name": "cypress-e2e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:vs": "cypress run --spec cypress/e2e/VS-flow-test.cy.js",
+    "flow-agent:list": "node tools/flow-agent.js list",
+    "flow-agent:scenarios": "node tools/flow-agent.js scenarios",
+    "flow-agent:run": "node tools/flow-agent.js run",
+    "flow-agent:run-scenario": "node tools/flow-agent.js run-scenario",
+    "flow-chat": "node tools/flow-chat-agent.js",
+    "flow-agent:smoke": "node tools/flow-agent.js run --group smoke",
+    "flow-agent:all": "node tools/flow-agent.js run --group all",
+    "test": "cypress run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cypress": "^15.15.0",
+    "cypress-hover": "^1.0.1",
+    "cypress-real-events": "^1.15.0"
+  }
+}

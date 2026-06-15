@@ -1,0 +1,243 @@
+{
+  "name": "Cypress E2E Test Runner & Slack Reporter",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1-5"
+            }
+          ]
+        }
+      },
+      "id": "node-1",
+      "name": "Schedule Trigger (Weekdays 8AM)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {},
+      "id": "node-2",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 460]
+    },
+    {
+      "parameters": {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -Command \"Get-ChildItem -Path C:\\Users\\me.moslemi\\Desktop\\cypress-e2e\\cypress\\e2e-final-tests -Filter *.cy.js | Select-Object -ExpandProperty Name | ConvertTo-Json -Compress\""
+      },
+      "id": "node-3",
+      "name": "Read Test Files Dynamically",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [480, 380]
+    },
+    {
+      "parameters": {
+        "jsCode": "const stdout = $input.first().json.stdout || '';\n\nlet testFiles = [];\ntry {\n  const parsed = JSON.parse(stdout.trim());\n  if (Array.isArray(parsed)) {\n    testFiles = parsed;\n  } else if (typeof parsed === 'string' && parsed.endsWith('.cy.js')) {\n    testFiles = [parsed];\n  }\n} catch(e) {\n  testFiles = stdout.trim().split('\\n').map(l => l.trim()).filter(l => l.endsWith('.cy.js'));\n}\n\nconst now = new Date();\nconst pad = n => String(n).padStart(2,'0');\nconst runId = 'run-' + now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + '-' + pad(now.getHours()) + pad(now.getMinutes()) + pad(now.getSeconds());\n\nreturn [{\n  json: {\n    runId,\n    startTime: now.toISOString(),\n    startTimeFormatted: now.toLocaleString('fa-IR', { timeZone: 'Asia/Tehran' }),\n    totalTests: testFiles.length,\n    testFiles,\n    baseUrl: 'https://app.aihomedesign.com'\n  }\n}];"
+      },
+      "id": "node-4",
+      "name": "Set Run Config & Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 380]
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "=:rocket: *Cypress Tests Starting...*\n*Run ID:* `{{ $json.runId }}`\n*Files:* {{ $json.testFiles.join(', ') }}\n*Time:* {{ $json.startTimeFormatted }}\n\n_Please wait for results..._"
+      },
+      "id": "node-5",
+      "name": "Slack - Notify Start",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [960, 380],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Users\\me.moslemi\\Desktop\\cypress-e2e\\run-cypress.ps1",
+        "executeOnce": true
+      },
+      "id": "node-6",
+      "name": "Run Cypress Tests",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [1200, 380]
+    },
+    {
+      "parameters": {
+        "jsCode": "const stdout = $input.first().json.stdout || '';\nconst exitCode = $input.first().json.exitCode;\n\nconst endTime = new Date();\nconst prevData = $('Set Run Config & Metadata').first().json;\nconst startTime = new Date(prevData.startTime);\nconst durationMs = endTime - startTime;\nconst durationMin = Math.floor(durationMs / 60000);\nconst durationSec = Math.floor((durationMs % 60000) / 1000);\n\nlet passed = 0, failed = 0, pending = 0, skipped = 0;\nlet failedTests = [];\nlet passedTests = [];\nlet suiteResults = [];\nlet parsedOk = false;\n\nconst resultsFile = 'C:\\\\Users\\\\me.moslemi\\\\Desktop\\\\cypress-e2e\\\\cypress-results.json';\nlet parsed = null;\ntry {\n  const fs = require('fs');\n  if (fs.existsSync(resultsFile)) {\n    const raw = fs.readFileSync(resultsFile, 'utf8');\n    parsed = JSON.parse(raw);\n    if (parsed.stats) {\n      parsedOk = true;\n      passed  = parsed.stats.passes   || (parsed.passes ? parsed.passes.length : 0);\n      failed  = parsed.stats.failures || (parsed.failures ? parsed.failures.length : 0);\n      pending = parsed.stats.pending  || (parsed.pending ? parsed.pending.length : 0);\n      skipped = parsed.stats.skipped  || (parsed.skipped ? parsed.skipped.length : 0);\n      for (const t of (parsed.passes || [])) {\n        passedTests.push({ suite: (t.fullTitle||'').split(' ')[0], title: t.fullTitle || t.title });\n      }\n      for (const t of (parsed.failures || [])) {\n        const errMsg = t.err ? (t.err.message || '') : 'Unknown error';\n        const firstLine = errMsg.split('\\n')[0].replace(/^CypressError:\\s*/, '').substring(0, 200);\n        failedTests.push({ suite: (t.fullTitle||'').split(' ')[0], title: t.fullTitle || t.title || 'Unknown', error: firstLine });\n      }\n      const suiteMap = {};\n      for (const t of (parsed.tests || [])) {\n        const sName = (t.fullTitle || '').split(' ')[0] || 'Unknown';\n        if (!suiteMap[sName]) suiteMap[sName] = { name: sName, passed: 0, failed: 0, tests: [] };\n        const hasFailed = t.err && t.err.message && t.err.message.length > 0;\n        const status = hasFailed ? 'FAIL' : 'PASS';\n        if (hasFailed) suiteMap[sName].failed++; else suiteMap[sName].passed++;\n        const errFirst = hasFailed ? t.err.message.split('\\n')[0].replace(/^CypressError:\\s*/, '').substring(0, 150) : '';\n        suiteMap[sName].tests.push({ name: t.fullTitle || t.title, status, error: errFirst });\n      }\n      suiteResults = Object.values(suiteMap).map(s => ({ ...s, total: s.passed + s.failed, status: s.failed > 0 ? 'FAIL' : 'PASS' }));\n    }\n  }\n} catch(e) {}\n\nif (!parsedOk) {\n  const passM = stdout.match(/(\\d+) passing/);\n  const failM = stdout.match(/(\\d+) failing/);\n  if (passM) passed = parseInt(passM[1]);\n  if (failM) failed = parseInt(failM[1]);\n}\n\n// Fallback: اگر از stats و آرایه‌های top-level تست نگرفتیم، از ساختار results استفاده کن\nif (passed === 0 && failed === 0 && parsed && parsed.results && Array.isArray(parsed.results)) {\n  for (const r of parsed.results) {\n    const suites = r.suites || [];
+    for (const suite of suites) {
+      const tests = suite.tests || [];
+      for (const t of tests) {
+        const hasFailed = !!(t.err && t.err.message);
+        const title = t.fullTitle || t.title;
+        const errFirst = hasFailed ? (t.err.message || '').split('\n')[0].substring(0, 200) : '';
+        if (hasFailed) {
+          failed++;
+          failedTests.push({ title, error: errFirst });
+        } else {
+          passed++;
+          passedTests.push({ title });
+        }
+      }
+    }\n    for (const t of tests) {\n      const hasFailed = !!(t.err && t.err.message);\n      const title = t.fullTitle || t.title;\n      const errFirst = hasFailed ? t.err.message.split('\\n')[0].substring(0, 200) : '';\n      if (hasFailed) {\n        failed++;\n        failedTests.push({ title, error: errFirst });\n      } else {\n        passed++;\n        passedTests.push({ title });\n      }\n    }\n  }\n}\n\nconst total = passed + failed + pending + skipped;\nconst successRate = total > 0 ? Math.round((passed / total) * 100) : 0;\nconst overallStatus = total === 0 ? 'NO_TESTS' : (failed === 0 ? 'PASS' : 'FAIL');\n\nreturn [{\n  json: {\n    runId: prevData.runId,\n    overallStatus,\n    successRate,\n    stats: { passed, failed, pending, skipped, total },\n    failedTests,\n    passedTests,\n    suiteResults,\n    duration: durationMin + 'm ' + durationSec + 's',\n    endTimeFormatted: endTime.toLocaleString('fa-IR', { timeZone: 'Asia/Tehran' }),\n    startTimeFormatted: prevData.startTimeFormatted,\n    baseUrl: prevData.baseUrl,\n    hasErrors: failed > 0,\n    exitCode,\n    parsedOk\n  }\n}];"
+      },
+      "id": "node-7",
+      "name": "Parse Test Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1440, 380]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-fail",
+              "leftValue": "={{ $json.hasErrors }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-8",
+      "name": "Has Failures?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1680, 380]
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\n\nlet lines = [];\nlines.push(':red_circle: *Cypress Test Report — FAILED*');\nlines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');\nlines.push('*Run ID:* `' + d.runId + '`');\nlines.push('*Result:* FAIL  |  *Duration:* ' + d.duration);\n\n\nlines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');\nlines.push('*Test Details:*');\n\nlet hasAny = false;\n\nif (d.suiteResults && d.suiteResults.length > 0) {\n  for (const s of d.suiteResults) {\n    const si = s.status === 'PASS' ? ':white_check_mark:' : ':x:';\n    lines.push(si + ' *' + s.name + '* (' + s.passed + ' passed, ' + s.failed + ' failed)');\n    for (const t of (s.tests || [])) {\n      hasAny = true;\n      const ti = t.status === 'PASS' ? '  :white_check_mark:' : '  :x:';\n      lines.push(ti + ' ' + t.name);\n      if (t.status === 'FAIL' && t.error) {\n        lines.push('    > `' + t.error.substring(0, 200) + '`');\n      }\n    }\n  }\n}\n\nif ((!d.suiteResults || d.suiteResults.length === 0) && d.failedTests && d.failedTests.length > 0) {\n  for (const t of d.failedTests) {\n    hasAny = true;\n    lines.push('  :x: ' + (t.title || t.fullTitle || 'Unknown test'));\n    if (t.error) {\n      lines.push('    > `' + t.error.substring(0, 200) + '`');\n    }\n  }\n}\n\nif ((!d.suiteResults || d.suiteResults.length === 0) && d.passedTests && d.passedTests.length > 0) {\n  for (const t of d.passedTests) {\n    hasAny = true;\n    lines.push('  :white_check_mark: ' + (t.title || t.fullTitle || 'Unknown test'));\n  }\n}\n\nif (!hasAny) {\n  lines.push(':x: No test details available (parsedOk=' + d.parsedOk + ')');\n}\n\nlines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');\nlines.push('_' + d.startTimeFormatted + ' → ' + d.endTimeFormatted + '_');\n\nreturn [{ json: { slackText: lines.join('\\n'), ...d } }];"
+      },
+      "id": "node-9",
+      "name": "Build Failure Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1920, 260]
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\n\nlet lines = [];\nlines.push(':large_green_circle: *Cypress Test Report — ALL PASSED*');\nlines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');\nlines.push('*Run ID:* `' + d.runId + '`');\nlines.push('*Result:* PASS  |  *Duration:* ' + d.duration);\n\n\nlines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');\nlines.push('*Test Details:*');\n\nlet hasAny = false;\n\nif (d.suiteResults && d.suiteResults.length > 0) {\n  for (const s of d.suiteResults) {\n    lines.push(':white_check_mark: *' + s.name + '* (' + s.passed + ' passed)');\n    for (const t of (s.tests || [])) {\n      hasAny = true;\n      lines.push('  :white_check_mark: ' + t.name);\n    }\n  }\n}\n\nif ((!d.suiteResults || d.suiteResults.length === 0) && d.passedTests && d.passedTests.length > 0) {\n  for (const t of d.passedTests) {\n    hasAny = true;\n    lines.push('  :white_check_mark: ' + (t.title || t.fullTitle || 'Unknown test'));\n  }\n}\n\nif (!hasAny) {\n  lines.push(':white_check_mark: All tests passed (no per-test details)');\n}\n\nlines.push('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');\nlines.push('_' + d.startTimeFormatted + ' → ' + d.endTimeFormatted + '_');\n\nreturn [{ json: { slackText: lines.join('\\n'), ...d } }];"
+      },
+      "id": "node-10",
+      "name": "Build Success Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1920, 500]
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "={{ $json.slackText }}"
+      },
+      "id": "node-11",
+      "name": "Slack - Send Failure Report",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [2160, 260],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "={{ $json.slackText }}"
+      },
+      "id": "node-12",
+      "name": "Slack - Send Success Report",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [2160, 500],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const slackResponse = $input.first().json;\nconst testData = $('Parse Test Results').first().json;\nconst stats = testData.stats || { passed: 0, failed: 0, total: 0 };\nconsole.log('[CypressRunner] ' + testData.runId + ' | ' + testData.overallStatus + ' | passed:' + stats.passed + ' failed:' + stats.failed + ' | ' + testData.duration + ' | slack:' + (slackResponse.ok ? 'ok' : 'fail'));\nreturn [{ json: { ...testData, slackDelivered: slackResponse.ok === true } }];"
+      },
+      "id": "node-13",
+      "name": "Log Final Status",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2400, 380]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger (Weekdays 8AM)": {
+      "main": [[{ "node": "Read Test Files Dynamically", "type": "main", "index": 0 }]]
+    },
+    "Manual Trigger": {
+      "main": [[{ "node": "Read Test Files Dynamically", "type": "main", "index": 0 }]]
+    },
+    "Read Test Files Dynamically": {
+      "main": [[{ "node": "Set Run Config & Metadata", "type": "main", "index": 0 }]]
+    },
+    "Set Run Config & Metadata": {
+      "main": [[{ "node": "Slack - Notify Start", "type": "main", "index": 0 }]]
+    },
+    "Slack - Notify Start": {
+      "main": [[{ "node": "Run Cypress Tests", "type": "main", "index": 0 }]]
+    },
+    "Run Cypress Tests": {
+      "main": [[{ "node": "Parse Test Results", "type": "main", "index": 0 }]]
+    },
+    "Parse Test Results": {
+      "main": [[{ "node": "Has Failures?", "type": "main", "index": 0 }]]
+    },
+    "Has Failures?": {
+      "main": [
+        [{ "node": "Build Failure Report", "type": "main", "index": 0 }],
+        [{ "node": "Build Success Report", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build Failure Report": {
+      "main": [[{ "node": "Slack - Send Failure Report", "type": "main", "index": 0 }]]
+    },
+    "Build Success Report": {
+      "main": [[{ "node": "Slack - Send Success Report", "type": "main", "index": 0 }]]
+    },
+    "Slack - Send Failure Report": {
+      "main": [[{ "node": "Log Final Status", "type": "main", "index": 0 }]]
+    },
+    "Slack - Send Success Report": {
+      "main": [[{ "node": "Log Final Status", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "timezone": "Asia/Tehran"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": ["cypress", "e2e", "testing", "slack"]
+}

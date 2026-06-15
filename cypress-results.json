@@ -1,0 +1,309 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-06-03T14:08:17.528Z",
+    "end": "2026-06-03T14:10:34.412Z",
+    "duration": 136884
+  },
+  "tests": [
+    {
+      "title": "completes BC flow: login → upload → gen-1 → download (normal + upscale) → feedback → bookmark → gen-2",
+      "fullTitle": "BC-flow-test completes BC flow: login → upload → gen-1 → download (normal + upscale) → feedback → bookmark → gen-2",
+      "file": null,
+      "duration": 136860,
+      "currentRetry": 0,
+      "err": {
+        "message": "Timed out retrying after 90050ms: `cy.click()` failed because this element is `disabled`:\n\n`<button type=\"button\" disabled=\"\" id=\"v5-tool-backsplash-change-generate-button\" class=\"font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer gap-2 text-sm h-14 w-full justify-center hover:bg-primary/75 active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary bg-primary-main rounded-full z-50 text-static-white p-0\">...</button>`\n\nFix this problem, or use `{force: true}` to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with",
+        "name": "CypressError",
+        "stack": "CypressError: Timed out retrying after 90050ms: `cy.click()` failed because this element is `disabled`:\n\n`<button type=\"button\" disabled=\"\" id=\"v5-tool-backsplash-change-generate-button\" class=\"font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer gap-2 text-sm h-14 w-full justify-center hover:bg-primary/75 active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary bg-primary-main rounded-full z-50 text-static-white p-0\">...</button>`\n\nFix this problem, or use `{force: true}` to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with\n    at Object.isNotDisabled (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:153405:58)\n    at runAllChecks (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:115625:26)\n    at retryActionability (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:115714:16)\n    at tryCatcher (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:4285:29)\n    at whenStable (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:152243:70)\n    at <unknown> (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:152158:14)\n    at tryCatcher (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1671:18)\n    at Promise._fulfill (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1615:18)\n    at <unknown> (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:5420:46)",
+        "parsedStack": [
+          {
+            "message": "CypressError: Timed out retrying after 90050ms: `cy.click()` failed because this element is `disabled`:",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "`<button type=\"button\" disabled=\"\" id=\"v5-tool-backsplash-change-generate-button\" class=\"font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer gap-2 text-sm h-14 w-full justify-center hover:bg-primary/75 active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary bg-primary-main rounded-full z-50 text-static-white p-0\">...</button>`",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "Fix this problem, or use `{force: true}` to disable error checking.",
+            "whitespace": ""
+          },
+          {
+            "function": "Object.isNotDisabled",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 153405,
+            "column": 58,
+            "whitespace": "    "
+          },
+          {
+            "function": "runAllChecks",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 115625,
+            "column": 26,
+            "whitespace": "    "
+          },
+          {
+            "function": "retryActionability",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 115714,
+            "column": 16,
+            "whitespace": "    "
+          },
+          {
+            "function": "tryCatcher",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1777,
+            "column": 23,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise.attempt.Promise.try",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 4285,
+            "column": 29,
+            "whitespace": "    "
+          },
+          {
+            "function": "whenStable",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 152243,
+            "column": 70,
+            "whitespace": "    "
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 152158,
+            "column": 14,
+            "whitespace": "    "
+          },
+          {
+            "function": "tryCatcher",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1777,
+            "column": 23,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromiseFromHandler",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1489,
+            "column": 31,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1546,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise0",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1591,
+            "column": 10,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromises",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1671,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._fulfill",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1615,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 5420,
+            "column": 46,
+            "whitespace": "    "
+          }
+        ]
+      }
+    }
+  ],
+  "pending": [],
+  "failures": [
+    {
+      "title": "completes BC flow: login → upload → gen-1 → download (normal + upscale) → feedback → bookmark → gen-2",
+      "fullTitle": "BC-flow-test completes BC flow: login → upload → gen-1 → download (normal + upscale) → feedback → bookmark → gen-2",
+      "file": null,
+      "currentRetry": 0,
+      "err": {
+        "message": "Timed out retrying after 90050ms: `cy.click()` failed because this element is `disabled`:\n\n`<button type=\"button\" disabled=\"\" id=\"v5-tool-backsplash-change-generate-button\" class=\"font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer gap-2 text-sm h-14 w-full justify-center hover:bg-primary/75 active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary bg-primary-main rounded-full z-50 text-static-white p-0\">...</button>`\n\nFix this problem, or use `{force: true}` to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with",
+        "name": "CypressError",
+        "stack": "CypressError: Timed out retrying after 90050ms: `cy.click()` failed because this element is `disabled`:\n\n`<button type=\"button\" disabled=\"\" id=\"v5-tool-backsplash-change-generate-button\" class=\"font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer gap-2 text-sm h-14 w-full justify-center hover:bg-primary/75 active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary bg-primary-main rounded-full z-50 text-static-white p-0\">...</button>`\n\nFix this problem, or use `{force: true}` to disable error checking.\n\nhttps://on.cypress.io/element-cannot-be-interacted-with\n    at Object.isNotDisabled (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:153405:58)\n    at runAllChecks (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:115625:26)\n    at retryActionability (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:115714:16)\n    at tryCatcher (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise.attempt.Promise.try (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:4285:29)\n    at whenStable (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:152243:70)\n    at <unknown> (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:152158:14)\n    at tryCatcher (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1777:23)\n    at Promise._settlePromiseFromHandler (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1489:31)\n    at Promise._settlePromise (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1546:18)\n    at Promise._settlePromise0 (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1591:10)\n    at Promise._settlePromises (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1671:18)\n    at Promise._fulfill (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:1615:18)\n    at <unknown> (https://app.aihomedesign.com/__cypress/runner/cypress_runner.js:5420:46)",
+        "parsedStack": [
+          {
+            "message": "CypressError: Timed out retrying after 90050ms: `cy.click()` failed because this element is `disabled`:",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "`<button type=\"button\" disabled=\"\" id=\"v5-tool-backsplash-change-generate-button\" class=\"font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer gap-2 text-sm h-14 w-full justify-center hover:bg-primary/75 active:bg-primary/75 disabled:bg-primary aria-disabled:bg-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary bg-primary-main rounded-full z-50 text-static-white p-0\">...</button>`",
+            "whitespace": ""
+          },
+          {
+            "message": "",
+            "whitespace": ""
+          },
+          {
+            "message": "Fix this problem, or use `{force: true}` to disable error checking.",
+            "whitespace": ""
+          },
+          {
+            "function": "Object.isNotDisabled",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 153405,
+            "column": 58,
+            "whitespace": "    "
+          },
+          {
+            "function": "runAllChecks",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 115625,
+            "column": 26,
+            "whitespace": "    "
+          },
+          {
+            "function": "retryActionability",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 115714,
+            "column": 16,
+            "whitespace": "    "
+          },
+          {
+            "function": "tryCatcher",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1777,
+            "column": 23,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise.attempt.Promise.try",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 4285,
+            "column": 29,
+            "whitespace": "    "
+          },
+          {
+            "function": "whenStable",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 152243,
+            "column": 70,
+            "whitespace": "    "
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 152158,
+            "column": 14,
+            "whitespace": "    "
+          },
+          {
+            "function": "tryCatcher",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1777,
+            "column": 23,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromiseFromHandler",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1489,
+            "column": 31,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1546,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromise0",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1591,
+            "column": 10,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._settlePromises",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1671,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "Promise._fulfill",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 1615,
+            "column": 18,
+            "whitespace": "    "
+          },
+          {
+            "function": "<unknown>",
+            "fileUrl": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "originalFile": "https://app.aihomedesign.com/__cypress/runner/cypress_runner.js",
+            "line": 5420,
+            "column": 46,
+            "whitespace": "    "
+          }
+        ]
+      }
+    }
+  ],
+  "passes": []
+}
