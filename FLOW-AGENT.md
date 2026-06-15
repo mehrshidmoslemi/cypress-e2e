@@ -111,3 +111,5 @@ Current limitation:
 - If a specific optimized/raw file does not exist for a flow, the agent falls back to the available file.
 - `run-scenario` maps doc scenario IDs to available Cypress flows.
 - Some doc scenarios are currently marked `manual` because they do not yet have Cypress spec mapping (for example: authentication OTP edge cases, pricing, and credit/account behavior).
+
+
