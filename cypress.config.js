@@ -1,4 +1,7 @@
+require('./cypress/config/env')
+
 const { defineConfig } = require('cypress')
+const { getOtpFromGmail, waitForEmailWithSubject } = require('./cypress/tasks/gmail-otp')
 
 module.exports = defineConfig({
   defaultCommandTimeout: 90000,
@@ -15,7 +18,10 @@ module.exports = defineConfig({
     screenshotOnRunFailure: true,
     specPattern: 'cypress/e2e/**/*.cy.{js,ts}',
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      on('task', {
+        getOtpFromGmail,
+        waitForEmailWithSubject,
+      })
     },
   },
 })

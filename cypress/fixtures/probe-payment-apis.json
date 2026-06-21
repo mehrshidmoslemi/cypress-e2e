@@ -1,0 +1,58 @@
+[
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/latest-subscription-transaction",
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "body": {
+      "user_id": "6282bf00-e310-4a45-8881-aae94a7c959c",
+      "active_plan_id": "9515cf7369ce22772023bb14",
+      "balance": 9848,
+      "remaining_time": 5,
+      "total_time": 365,
+      "test_balance": 0,
+      "test_remaining_time": -106751,
+      "test_time": 0,
+      "free_plan": false,
+      "renewal_canceled": false,
+      "plan_expire_date": "2027-05-26T08:27:11Z",
+      "total_test_duration": 0
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "body": {
+      "active_plan_id": "9515cf7369ce22772023bb14",
+      "active_plan_name": "enterprise",
+      "active_plan_title": "pages_pricing_plan_enterprise_title",
+      "badge_link": "",
+      "background_color": "",
+      "cycle": "yearly",
+      "previous_plan_id": "8515cf7369ce22772023bb14",
+      "previous_plan_name": "enterprise",
+      "previous_plan_title": "pages_pricing_plan_enterprise_title",
+      "previous_plan_cycle": "monthly"
+    }
+  }
+]

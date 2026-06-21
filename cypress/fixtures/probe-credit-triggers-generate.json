@@ -1,0 +1,12 @@
+[
+  {
+    "id": "reka-popover-trigger-v-0-0-6",
+    "text": "More",
+    "outerHtml": "<div class=\"flex flex-col cursor-pointer gap-2 text-label-md items-center justify-center p-0 w-full h-full shadow-2xl opacity-70 hover:opacity-100 transition-opacity\" id=\"reka-popover-trigger-v-0-0-6\" type=\"button\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"\" data-state=\"closed\" variant=\"ghost\" color=\"neutral\"><img data-nuxt-img=\"\" srcset=\"/_ipx/_/icons/dots-circle-horizontal.svg 1x, /_ipx/_/icons/dots-circle-horizontal.svg 2x\" class=\"size-6\" src=\"/_ipx/_/icons/dots-circle-horiz"
+  },
+  {
+    "id": "reka-popover-trigger-v-0-0-2",
+    "text": "",
+    "outerHtml": "<div class=\"w-12 h-12 rounded-full mx-auto mt-auto relative overflow-hidden\" id=\"reka-popover-trigger-v-0-0-2\" type=\"button\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"reka-popover-content-v-0-0-4\" data-state=\"closed\"><span class=\"inline-flex items-center justify-center shrink-0 select-none rounded-full align-middle size-12 text-2xl w-full h-full cursor-pointer bg-darkest [&amp;&gt;span]:text-lightest text-title-sm [&amp;&gt;span]:flex [&amp;&gt;span]:justify-center [&amp;&gt;sp"
+  }
+]
