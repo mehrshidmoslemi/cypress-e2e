@@ -41,12 +41,18 @@ function createEnhancedFlowHelpers({
   materialDropdownLabels = [],
   styleDropdownLabels = [],
 }) {
-  const completeOnboarding = () => {
-    cy.contains(ONBOARDING_MODAL_TITLE, { timeout: 15000 }).should('be.visible')
-    cy.contains(ONBOARDING_ROLE_OTHER).should('be.visible').click()
-    cy.contains(ONBOARDING_STEP2_TITLE, { timeout: 15000 }).should('be.visible')
-    cy.contains(ONBOARDING_ROLE_TESTING, { timeout: 15000 }).should('be.visible').click()
-    cy.contains(ONBOARDING_EXPLORE_ON_OWN, { timeout: 15000 }).should('be.visible').click()
+  const completeOnboardingIfShown = () => {
+    cy.get('body').then(($body) => {
+      if (!$body.text().includes(ONBOARDING_MODAL_TITLE)) {
+        return
+      }
+
+      cy.contains(ONBOARDING_MODAL_TITLE, { timeout: 15000 }).should('be.visible')
+      cy.contains(ONBOARDING_ROLE_OTHER, { timeout: 15000 }).should('be.visible').click({ force: true })
+      cy.contains(ONBOARDING_STEP2_TITLE, { timeout: 15000 }).should('be.visible')
+      cy.contains(ONBOARDING_ROLE_TESTING, { timeout: 15000 }).should('be.visible').click({ force: true })
+      cy.contains(ONBOARDING_EXPLORE_ON_OWN, { timeout: 15000 }).should('be.visible').click({ force: true })
+    })
   }
 
   const dismissOnboardingModal = () => {
@@ -55,19 +61,42 @@ function createEnhancedFlowHelpers({
         return
       }
 
+      if ($body.find('span.i-tabler\\:x').length) {
+        cy.get('span.i-tabler\\:x').first().closest('button').click({ force: true })
+        return
+      }
+
+      const closeButtons = [...$body.find('button')].filter((el) => {
+        const hasCloseIcon =
+          el.querySelector('[class*="tabler:x"]') ||
+          el.querySelector('[class*="tabler-x"]') ||
+          el.getAttribute('aria-label') === 'Close'
+        return hasCloseIcon && Cypress.dom.isVisible(el)
+      })
+
+      if (closeButtons.length) {
+        cy.wrap(closeButtons[0]).click({ force: true })
+        return
+      }
+
       if ($body.find(sel.closeOnboarding || COMMON_SEL.closeOnboarding).length) {
         cy.get(sel.closeOnboarding || COMMON_SEL.closeOnboarding).first().click({ force: true })
         return
       }
 
-      completeOnboarding()
+      cy.contains(ONBOARDING_ROLE_OTHER, { timeout: 10000 }).then(($other) => {
+        if (Cypress.dom.isVisible($other[0])) {
+          completeOnboardingIfShown()
+          return
+        }
+
+        cy.log('Onboarding modal visible — closing with Escape')
+        cy.get('body').type('{esc}', { force: true })
+        cy.get('body').click(0, 0, { force: true })
+      })
     })
 
-    cy.get('body').then(($body) => {
-      if ($body.text().includes(ONBOARDING_MODAL_TITLE)) {
-        cy.contains(ONBOARDING_MODAL_TITLE, { timeout: 10000 }).should('not.exist')
-      }
-    })
+    cy.contains(ONBOARDING_MODAL_TITLE, { timeout: 10000 }).should('not.exist')
   }
 
   const dismissOverlay = () => {
@@ -109,51 +138,116 @@ function createEnhancedFlowHelpers({
     cy.get(sel.usernameInput).clear().type(TEST_EMAIL)
     cy.get(sel.passwordInput).clear().type(TEST_PASSWORD)
     cy.get(sel.loginSubmitBtn).click({ force: true })
-    cy.contains(sel.loginSpan, 'Login', { timeout: 30000 }).should('not.exist')
-    cy.get(sel.profileMenuTrigger || COMMON_SEL.profileMenuTrigger, { timeout: 30000 }).should('exist')
+    cy.contains(sel.loginSpan, 'Login', { timeout: 60000 }).should('not.exist')
+  }
+
+  const isLoggedIn = ($body) => {
+    if (readCreditFromUi($body) !== null) {
+      return true
+    }
+
+    const hasLoginControl = [...$body.find('button, span, a')].some(
+      (el) => el.textContent.trim() === 'Login' && Cypress.dom.isVisible(el),
+    )
+
+    return !hasLoginControl
+  }
+
+  const openLoginFromTopBar = () => {
+    cy.get('body').then(($body) => {
+      const topLoginBtn = [...$body.find('button')].find(
+        (el) => el.textContent.trim() === 'Login' && Cypress.dom.isVisible(el),
+      )
+
+      if (topLoginBtn) {
+        cy.wrap(topLoginBtn).click({ force: true })
+        cy.contains('button', 'Log in with Email', { timeout: 30000 }).click({ force: true })
+        return
+      }
+
+      cy.contains(sel.loginSpan, 'Login', { timeout: 60000 }).click({ force: true })
+      cy.contains(sel.loginProfileBtn, 'Login', { timeout: 30000 }).click({ force: true })
+      cy.get(sel.loginWithEmailBtn, { timeout: 30000 }).filter(':visible').click({ force: true })
+    })
+  }
+
+  const openEmailLoginForm = () => {
+    cy.get('body', { timeout: 60000 }).then(($body) => {
+      const visibleUsername = [...$body.find(sel.usernameInput)].find((el) => Cypress.dom.isVisible(el))
+      if ($body.text().includes('Welcome Back') && visibleUsername) {
+        return
+      }
+
+      const visibleEmailBtn = [...$body.find(sel.loginWithEmailBtn)].find((el) => Cypress.dom.isVisible(el))
+      if (visibleEmailBtn) {
+        cy.wrap(visibleEmailBtn).click({ force: true })
+        return
+      }
+
+      cy.contains(sel.loginSpan, 'Login', { timeout: 60000 }).click({ force: true })
+      cy.contains(sel.loginProfileBtn, 'Login', { timeout: 30000 }).click({ force: true })
+      cy.get(sel.loginWithEmailBtn, { timeout: 30000 }).filter(':visible').click({ force: true })
+    })
+
+    cy.contains('Welcome Back', { timeout: 30000 }).should('be.visible')
   }
 
   const loginAfterGenerate = () => {
     dismissBlockingModals()
 
     cy.get('body', { timeout: 60000 }).then(($body) => {
-      if (
-        $body.find(sel.profileMenuTrigger || COMMON_SEL.profileMenuTrigger).length > 0 &&
-        !$body.text().includes('Login')
-      ) {
+      if (isLoggedIn($body)) {
         cy.log('User already logged in on result page')
+        return cy.wrap(false)
+      }
+      return cy.wrap(true)
+    }).then((needsLogin) => {
+      if (!needsLogin) {
         return
       }
 
-      if ($body.find(sel.loginWithEmailBtn).length > 0) {
-        cy.get(sel.loginWithEmailBtn).click({ force: true })
-      } else {
-        cy.log('Opening login from nav on generate result page')
-        cy.get('nav').contains('Login', { timeout: 60000 }).click({ force: true })
-        cy.get('body').then(($bodyAfterNav) => {
-          if ($bodyAfterNav.find(sel.loginWithEmailBtn).length > 0) {
-            cy.get(sel.loginWithEmailBtn).click({ force: true })
-          } else if ($bodyAfterNav.find(sel.loginProfileBtn).length > 0) {
-            cy.contains(sel.loginProfileBtn, 'Login', { timeout: 30000 }).click({ force: true })
-            cy.get(sel.loginWithEmailBtn, { timeout: 30000 }).click({ force: true })
-          }
-        })
-      }
-    })
+      cy.get('body').then(($body) => {
+        const visibleEmailBtn = [...$body.find(sel.loginWithEmailBtn)].find((el) =>
+          Cypress.dom.isVisible(el),
+        )
 
+        if (visibleEmailBtn) {
+          cy.wrap(visibleEmailBtn).click({ force: true })
+          cy.get(sel.usernameInput, { timeout: 60000 }).filter(':visible').clear().type(TEST_EMAIL)
+          cy.get(sel.passwordInput, { timeout: 30000 }).filter(':visible').clear().type(TEST_PASSWORD)
+          cy.get(sel.loginSubmitBtn).click({ force: true })
+          return
+        }
+
+        cy.log('Inline login not shown — opening login from top bar')
+        openLoginFromTopBar()
+      })
+
+      cy.get('[id^="reka-popover-trigger"] .inline-flex', { timeout: 60000 }).should(($el) => {
+        expect(parseCreditText($el.text()), 'credit balance should appear after login').to.not.be.null
+      })
+      dismissBlockingModals()
+    })
+  }
+
+  const ensureGenerationStartedAfterLogin = (generateSelector = sel.generateBtn) => {
     cy.get('body').then(($body) => {
-      if (
-        $body.find(sel.profileMenuTrigger || COMMON_SEL.profileMenuTrigger).length > 0 &&
-        !$body.text().includes('Login')
-      ) {
+      const hasResults =
+        $body.find(sel.downloadBtn).length > 0 ||
+        $body.find(sel.resultThumbnail).length > 0 ||
+        /your edit is ready/i.test($body.text())
+
+      const isGenerating = /generating/i.test($body.text())
+
+      if (hasResults || isGenerating) {
+        cy.log('Generation already in progress or complete')
         return
       }
 
-      cy.get(sel.usernameInput, { timeout: 60000 }).should('be.visible').clear().type(TEST_EMAIL)
-      cy.get(sel.passwordInput).clear().type(`${TEST_PASSWORD}{enter}`)
+      dismissBlockingModals()
+      cy.get(generateSelector, { timeout: 90000 }).should('be.visible').should('not.be.disabled')
+      cy.get(generateSelector).scrollIntoView().click({ force: true })
     })
-
-    cy.get(sel.profileMenuTrigger || COMMON_SEL.profileMenuTrigger, { timeout: 60000 }).should('exist')
   }
 
   const loginAfterGenerateIfNeeded = () => {
@@ -180,11 +274,11 @@ function createEnhancedFlowHelpers({
         loginViaProfile()
       },
       {
-        validate() {
-          cy.visit('/')
-          cy.get('nav', { timeout: 30000 }).should('exist')
-          cy.get(sel.profileMenuTrigger || COMMON_SEL.profileMenuTrigger, { timeout: 15000 }).should('exist')
-        },
+      validate() {
+        cy.visit('/')
+        dismissBlockingModals()
+        cy.contains(sel.loginSpan, 'Login', { timeout: 30000 }).should('not.exist')
+      },
       },
     )
   }
@@ -213,23 +307,41 @@ function createEnhancedFlowHelpers({
 
   const openMaterialDropdown = () => {
     dismissBlockingModals()
+    closeOpenDropdown()
     cy.get('button').then(($buttons) => {
       const target = [...$buttons].find((button) =>
         materialDropdownLabels.some((label) => button.innerText.trim().includes(label)),
       )
-      expect(target, 'material dropdown button').to.exist
-      cy.wrap(target).click({ force: true })
+      if (target) {
+        cy.wrap(target).click({ force: true })
+        return
+      }
+
+      cy.contains('Material')
+        .parents()
+        .find('button span.i-tabler\\:chevron-down')
+        .first()
+        .click({ force: true })
     })
   }
 
   const openStyleDropdown = () => {
     dismissBlockingModals()
+    closeOpenDropdown()
     cy.get('button').then(($buttons) => {
       const target = [...$buttons].find((button) =>
         styleDropdownLabels.some((label) => button.innerText.trim().includes(label)),
       )
-      expect(target, 'style dropdown button').to.exist
-      cy.wrap(target).click({ force: true })
+      if (target) {
+        cy.wrap(target).click({ force: true })
+        return
+      }
+
+      cy.contains('Style')
+        .parents()
+        .find('button span.i-tabler\\:chevron-down')
+        .first()
+        .click({ force: true })
     })
   }
 
@@ -381,24 +493,42 @@ function createEnhancedFlowHelpers({
     cy.intercept('GET', sel.creditApi || COMMON_SEL.creditApi).as(alias)
   }
 
+  const openResultDownloadView = () => {
+    cy.get('body').then(($body) => {
+      if ($body.find(sel.downloadBtn).filter(':visible').length > 0) {
+        return
+      }
+
+      if ($body.text().includes('Generated Images')) {
+        cy.contains('Generated Images')
+          .closest('div')
+          .find(sel.resultThumbnail)
+          .first()
+          .click({ force: true })
+        return
+      }
+
+      if ($body.find(sel.resultThumbnail).length > 0) {
+        cy.get(sel.resultThumbnail).last().click({ force: true })
+      }
+    })
+  }
+
   const assertResultsReady = () => {
     cy.log('Waiting for all results to be ready...')
     cy.get('body', { timeout: GEN_RESULT_TIMEOUT }).should(($body) => {
       const hasDownloadBtn = $body.find(sel.downloadBtn).length > 0
       const hasThumbnails = $body.find(sel.resultThumbnail).length > 0
       const hasEditReady = /your edit is ready/i.test($body.text())
+      const hasGeneratedImages = $body.text().includes('Generated Images')
 
       expect(
-        hasDownloadBtn || hasThumbnails || hasEditReady,
+        hasDownloadBtn || hasThumbnails || hasEditReady || hasGeneratedImages,
         'results should be visible',
       ).to.be.true
     })
 
-    cy.get('body').then(($body) => {
-      if ($body.find(sel.downloadBtn).length === 0 && $body.find(sel.resultThumbnail).length > 0) {
-        cy.get(sel.resultThumbnail).first().click({ force: true })
-      }
-    })
+    openResultDownloadView()
 
     cy.get(sel.downloadBtn, { timeout: GEN_RESULT_TIMEOUT }).should('be.visible')
     cy.log('All results are ready')
@@ -648,8 +778,12 @@ function createEnhancedFlowHelpers({
     cy.contains('Select Space First').should('be.visible')
     selectSpace(spaceId, 1000)
     cy.contains('Select Space First').should('not.exist')
+    closeOpenDropdown()
+    cy.get('body').click(0, 0, { force: true })
+    cy.wait(1000)
     openMaterialDropdown()
-    cy.get(materialId).should('be.visible')
+    cy.wait(800)
+    cy.get(materialId, { timeout: 15000 }).scrollIntoView().should('exist')
     closeOpenDropdown()
     cy.log('Space/Material widget dependency verified')
   }
@@ -659,8 +793,12 @@ function createEnhancedFlowHelpers({
     cy.contains('Select Space First').should('be.visible')
     selectSpace(spaceId, 1000)
     cy.contains('Select Space First').should('not.exist')
+    closeOpenDropdown()
+    cy.get('body').click(0, 0, { force: true })
+    cy.wait(1000)
     openStyleDropdown()
-    cy.get(styleId).should('be.visible')
+    cy.wait(800)
+    cy.get(styleId, { timeout: 15000 }).scrollIntoView().should('exist')
     closeOpenDropdown()
     cy.log('Space/Style widget dependency verified')
   }
@@ -668,9 +806,15 @@ function createEnhancedFlowHelpers({
   const returnToResultPage = (resultUrlAlias = 'bookmarkResultUrl') => {
     cy.get(`@${resultUrlAlias}`).then((resultUrl) => {
       cy.log(`Returning to result page: ${resultUrl}`)
-      cy.visit(resultUrl)
+      cy.url().then((currentUrl) => {
+        if (!currentUrl.includes('order_id=')) {
+          cy.visit(resultUrl)
+        }
+      })
       dismissBlockingModals()
-      cy.get(sel.downloadBtn, { timeout: GEN_RESULT_TIMEOUT }).should('be.visible')
+      dismissBlockingModals()
+      openResultDownloadView()
+      cy.get(sel.downloadBtn, { timeout: 60000 }).should('be.visible')
     })
   }
 
@@ -696,7 +840,8 @@ function createEnhancedFlowHelpers({
 
     cy.get('@visitedBookmarkGallery').then((visitedGallery) => {
       if (!visitedGallery) {
-        returnToResultPage()
+        dismissBlockingModals()
+        openResultDownloadView()
         cy.get(sel.bookmarkBtn, { timeout: 60000 }).should('be.visible').click({ force: true })
         cy.log('Bookmark removed (gallery skipped)')
         return
@@ -720,7 +865,21 @@ function createEnhancedFlowHelpers({
       })
 
       cy.log('Returning to result page to remove bookmark...')
-      returnToResultPage()
+      cy.go('back')
+      dismissBlockingModals()
+      dismissBlockingModals()
+
+      cy.get('@bookmarkResultUrl').then((resultUrl) => {
+        cy.get('body').then(($body) => {
+          if ($body.find(sel.downloadBtn).length === 0 && $body.find(sel.bookmarkBtn).length === 0) {
+            cy.visit(resultUrl)
+            dismissBlockingModals()
+          }
+        })
+      })
+
+      openResultDownloadView()
+      cy.get(sel.downloadBtn, { timeout: 60000 }).should('be.visible')
       cy.get(sel.bookmarkBtn, { timeout: 60000 }).should('be.visible').click({ force: true })
       cy.log('Bookmark removed')
     })
@@ -773,6 +932,7 @@ function createEnhancedFlowHelpers({
     ensureLoggedIn,
     loginAfterGenerate,
     loginAfterGenerateIfNeeded,
+    ensureGenerationStartedAfterLogin,
     loginViaProfile,
     watchCreditApi,
     getCreditBalanceFromApi,

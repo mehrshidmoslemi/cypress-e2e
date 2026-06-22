@@ -23,7 +23,7 @@ const SEL = {
 const flow = createEnhancedFlowHelpers({
   sel: SEL,
   sessionId: 'fc-flow-user-10000',
-  materialDropdownLabels: ['Cream Marble', 'Brown Marble', 'Grey Marble', 'Modern'],
+  materialDropdownLabels: ['White Marble', 'Cream Marble', 'Brown Marble', 'Grey Marble', 'Black Marble'],
 })
 
 const selectFCService = () => {
@@ -56,6 +56,14 @@ const openToolSidebar = () => {
   cy.get(SEL.generateBtn, { timeout: 90000 }).should('be.visible')
 }
 
+const enablePointerEvents = () => {
+  cy.window().then((win) => {
+    win.document.querySelectorAll('.pointer-events-none').forEach((el) => {
+      el.style.setProperty('pointer-events', 'auto', 'important')
+    })
+  })
+}
+
 describe('FC-flow-test-enhanced', () => {
   it('completes full FC flow in a single generation', () => {
     flow.watchCreditApi('creditApi')
@@ -70,9 +78,10 @@ describe('FC-flow-test-enhanced', () => {
       flow.dismissBlockingModals()
       cy.get(SEL.startNowLink).contains('Start Now').click({ force: true })
       cy.get(SEL.fileInput).selectFile('cypress/fixtures/images/FC-test.jpg', { force: true })
-      selectFCService()
-
       flow.waitForUploadComplete()
+      enablePointerEvents()
+      selectFCService()
+      cy.wait(2000)
       cy.log('Testing validation error...')
       flow.clickGenerate()
       flow.verifyValidationError()

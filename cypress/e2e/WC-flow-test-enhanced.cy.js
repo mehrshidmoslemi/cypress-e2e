@@ -23,7 +23,7 @@ const SEL = {
 const flow = createEnhancedFlowHelpers({
   sel: SEL,
   sessionId: 'wc-flow-user-10000',
-  materialDropdownLabels: ['White Brick Wall', 'Navy Blue Wall', 'Grey Marble', 'Modern'],
+  materialDropdownLabels: ['Brick Wall', 'White Brick Wall', 'Navy Blue Wall', 'Grey Marble'],
 })
 
 const selectWCService = () => {
@@ -56,6 +56,14 @@ const openToolSidebar = () => {
   cy.get(SEL.generateBtn, { timeout: 90000 }).should('be.visible')
 }
 
+const enablePointerEvents = () => {
+  cy.window().then((win) => {
+    win.document.querySelectorAll('.pointer-events-none').forEach((el) => {
+      el.style.setProperty('pointer-events', 'auto', 'important')
+    })
+  })
+}
+
 describe('WC-flow-test-enhanced', () => {
   it('completes full WC flow in a single generation', () => {
     flow.watchCreditApi('creditApi')
@@ -70,9 +78,10 @@ describe('WC-flow-test-enhanced', () => {
       flow.dismissBlockingModals()
       cy.get(SEL.startNowLink).contains('Start Now').click({ force: true })
       cy.get(SEL.fileInput).selectFile('cypress/fixtures/images/WC-test.jpg', { force: true })
-      selectWCService()
-
       flow.waitForUploadComplete()
+      enablePointerEvents()
+      selectWCService()
+      cy.wait(2000)
       cy.log('Testing validation error...')
       flow.clickGenerate()
       flow.verifyValidationError()

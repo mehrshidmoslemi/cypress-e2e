@@ -29,7 +29,40 @@ const openToolSidebar = () => {
   cy.get(SEL.generateBtn, { timeout: 90000 }).should('be.visible')
 }
 
+const loginViaHomepageAndReturn = () => {
+  cy.session(
+    'ir-flow-user-10000',
+    () => {
+      cy.visit('/')
+      flow.dismissBlockingModals()
+      flow.loginViaProfile()
+      flow.dismissBlockingModals()
+    },
+    {
+      validate() {
+        cy.visit('/')
+        flow.dismissBlockingModals()
+        cy.contains('span', 'Login', { timeout: 30000 }).should('not.exist')
+      },
+    },
+  )
+
+  cy.get('@irOrderUrl').then((orderUrl) => {
+    cy.visit(orderUrl)
+  })
+  flow.dismissBlockingModals()
+  cy.url({ timeout: 60000 }).should('include', 'order_id=')
+}
+
 describe('IR-flow-test-enhanced', () => {
+  beforeEach(() => {
+    cy.on('uncaught:exception', (err) => {
+      if (err.message.includes("reading 'error'")) {
+        return false
+      }
+    })
+  })
+
   it('completes full IR flow in a single generation', () => {
     cy.clearCookies()
     cy.visit('/')
@@ -60,15 +93,19 @@ describe('IR-flow-test-enhanced', () => {
     flow.dismissBlockingModals()
     cy.get(SEL.generateBtn, { timeout: 60000 }).should('be.visible')
 
-    flow.clickGenerate()
     flow.dismissBlockingModals()
+    cy.get(SEL.generateBtn).scrollIntoView().should('be.visible').click({ force: true })
+    cy.url({ timeout: 60000 }).should('include', 'order_id=')
+    cy.url().as('irOrderUrl')
     flow.watchCreditApi('creditApi')
-    flow.loginAfterGenerateIfNeeded()
-    cy.wait('@creditApi', { timeout: 60000 })
+    loginViaHomepageAndReturn()
+    flow.dismissBlockingModals()
+    cy.wait('@creditApi', { timeout: 90000 })
 
     flow.readCreditBalance().then((creditsAfterLogin) => {
       cy.log(`Credit after login: ${creditsAfterLogin}`)
 
+      flow.ensureGenerationStartedAfterLogin(SEL.generateBtn)
       flow.waitForAllResultsReady({ skipGenerateRetry: true })
 
       flow.assertCreditAfterAction(
