@@ -133,14 +133,20 @@ const closeOpenDropdown = () => {
 
 const loginViaProfile = () => {
   dismissBlockingModals()
+  cy.get('nav', { timeout: 60000 }).should('exist')
   cy.contains(SEL.loginSpan, 'Login', { timeout: 60000 }).should('be.visible').click({ force: true })
   cy.contains(SEL.loginProfileBtn, 'Login', { timeout: 30000 }).click({ force: true })
   cy.get(SEL.loginWithEmailBtn).click({ force: true })
   cy.get(SEL.usernameInput).clear().type(TEST_EMAIL)
   cy.get(SEL.passwordInput).clear().type(TEST_PASSWORD)
   cy.get(SEL.loginSubmitBtn).click({ force: true })
-  cy.contains(SEL.loginSpan, 'Login', { timeout: 30000 }).should('not.exist')
-  cy.get(SEL.profileMenuTrigger, { timeout: 30000 }).should('exist')
+  dismissBlockingModals()
+  cy.get('body', { timeout: 90000 }).should(($body) => {
+    const hasLogin = [...$body.find('button, span, a')].some(
+      (el) => el.textContent.trim() === 'Login' && Cypress.dom.isVisible(el),
+    )
+    expect(hasLogin, 'user should be logged in').to.be.false
+  })
 }
 
 const ensureLoggedIn = () => {
@@ -154,8 +160,14 @@ const ensureLoggedIn = () => {
     {
       validate() {
         cy.visit('/')
-        cy.get('nav', { timeout: 30000 }).should('exist')
-        cy.get(SEL.profileMenuTrigger, { timeout: 15000 }).should('exist')
+        dismissBlockingModals()
+        cy.get('nav', { timeout: 60000 }).should('exist')
+        cy.get('body', { timeout: 30000 }).should(($body) => {
+          const hasLogin = [...$body.find('button, span, a')].some(
+            (el) => el.textContent.trim() === 'Login' && Cypress.dom.isVisible(el),
+          )
+          expect(hasLogin, 'session should be authenticated').to.be.false
+        })
       },
     },
   )
@@ -254,11 +266,23 @@ const readCreditFromUi = ($body) => {
   return null
 }
 
+const extractCreditBalance = (body) => {
+  const balance = body?.balance
+  if (typeof balance === 'number') {
+    return balance
+  }
+  if (typeof balance === 'string' && /^\d+$/.test(balance)) {
+    return parseInt(balance, 10)
+  }
+  return null
+}
+
+const findCreditCallWithBalance = (calls) =>
+  [...calls].reverse().find((call) => extractCreditBalance(call.response?.body) !== null)
+
 const fetchCreditBalanceDirect = () => {
-  return cy.get('@creditApi.all').then((calls) => {
-    const lastAuthCall = [...calls]
-      .reverse()
-      .find((call) => typeof call.response?.body?.balance === 'number')
+  return cy.get('@creditApi.all', { timeout: 30000 }).then((calls) => {
+    const lastAuthCall = findCreditCallWithBalance(calls)
 
     expect(lastAuthCall, 'prior credit API call should exist').to.exist
 
@@ -268,7 +292,7 @@ const fetchCreditBalanceDirect = () => {
         url: lastAuthCall.request.url,
         headers: lastAuthCall.request.headers,
       })
-      .then((response) => response.body.balance)
+      .then((response) => extractCreditBalance(response.body))
   })
 }
 
@@ -321,14 +345,99 @@ const assertCreditAfterAction = (beforeCredits, delta, message) => {
 }
 
 const getCreditBalanceFromApi = (alias = 'creditApi') => {
-  return cy.get(`@${alias}.all`, { timeout: 30000 }).then((calls) => {
-    const latestWithBalance = [...calls]
-      .reverse()
-      .find((call) => typeof call.response?.body?.balance === 'number')
+  const resolveFromCalls = (calls) => {
+    const latestWithBalance = findCreditCallWithBalance(calls)
+    return latestWithBalance ? extractCreditBalance(latestWithBalance.response.body) : null
+  }
 
-    expect(latestWithBalance, 'credit API should return balance').to.exist
-    return latestWithBalance.response.body.balance
+  return cy.get(`@${alias}.all`, { timeout: 30000 }).then((calls) => {
+    const balance = resolveFromCalls(calls)
+    if (balance !== null) {
+      return balance
+    }
+
+    cy.reload()
+    cy.wait(`@${alias}`, { timeout: 60000 })
+    return cy.get(`@${alias}.all`).then((freshCalls) => {
+      const freshBalance = resolveFromCalls(freshCalls)
+      expect(freshBalance, 'credit API should return balance').to.exist
+      return freshBalance
+    })
   })
+}
+
+const hasCompletedResults = ($body) => {
+  if ($body.find(SEL.downloadBtn).length > 0) {
+    return true
+  }
+  if (/your edit is ready/i.test($body.text())) {
+    return true
+  }
+  if ($body.text().includes('Generated Images')) {
+    return true
+  }
+  return false
+}
+
+const openResultDownloadView = () => {
+  cy.get('body').then(($body) => {
+    if ($body.find(SEL.downloadBtn).filter(':visible').length > 0) {
+      return
+    }
+
+    if ($body.text().includes('Generated Images')) {
+      cy.contains('Generated Images')
+        .closest('div')
+        .find(SEL.resultThumbnail)
+        .first()
+        .click({ force: true })
+    }
+  })
+}
+
+const waitForDownloadButton = (startedAt = Date.now()) => {
+  return cy.get('body', { timeout: 10000 }).then(($body) => {
+    if ($body.find(SEL.downloadBtn).filter(':visible').length > 0) {
+      return
+    }
+
+    if (Date.now() - startedAt > GEN_RESULT_TIMEOUT) {
+      expect($body.find(SEL.downloadBtn).filter(':visible').length, 'download button should be visible').to.be.greaterThan(0)
+      return
+    }
+
+    openResultDownloadView()
+
+    const elapsed = Date.now() - startedAt
+    const isGenerating = /generating/i.test($body.text())
+    if (!isGenerating && !hasCompletedResults($body) && elapsed > 90000) {
+      cy.log('Results view slow — reloading order page')
+      cy.reload()
+      cy.url().should('include', 'order_id=')
+    }
+
+    cy.wait(3000)
+    return waitForDownloadButton(startedAt)
+  })
+}
+
+const assertResultsReady = () => {
+  cy.log('Waiting for all results to be ready...')
+
+  cy.get('body', { timeout: GEN_RESULT_TIMEOUT }).should(($body) => {
+    const isGenerating = /generating/i.test($body.text())
+    expect(
+      hasCompletedResults($body) || isGenerating,
+      'generation should be in progress or complete',
+    ).to.be.true
+  })
+
+  cy.get('body', { timeout: GEN_RESULT_TIMEOUT }).should(($body) => {
+    expect(hasCompletedResults($body), 'generation should complete with results').to.be.true
+  })
+
+  waitForDownloadButton()
+  cy.log('All results are ready')
 }
 
 const getCreditCount = (apiAlias = 'creditApi') => {
@@ -343,29 +452,6 @@ const getCreditCount = (apiAlias = 'creditApi') => {
 
 const watchCreditApi = (alias) => {
   cy.intercept('GET', SEL.creditApi).as(alias)
-}
-
-const assertResultsReady = () => {
-  cy.log('Waiting for all results to be ready...')
-  cy.get('body', { timeout: GEN_RESULT_TIMEOUT }).should(($body) => {
-    const hasDownloadBtn = $body.find(SEL.downloadBtn).length > 0
-    const hasThumbnails = $body.find(SEL.resultThumbnail).length > 0
-    const hasEditReady = /your edit is ready/i.test($body.text())
-
-    expect(
-      hasDownloadBtn || hasThumbnails || hasEditReady,
-      'results should be visible',
-    ).to.be.true
-  })
-
-  cy.get('body').then(($body) => {
-    if ($body.find(SEL.downloadBtn).length === 0 && $body.find(SEL.resultThumbnail).length > 0) {
-      cy.get(SEL.resultThumbnail).first().click({ force: true })
-    }
-  })
-
-  cy.get(SEL.downloadBtn, { timeout: GEN_RESULT_TIMEOUT }).should('be.visible')
-  cy.log('All results are ready')
 }
 
 const waitForAllResultsReady = ({ isRegenerate = false } = {}) => {
@@ -390,8 +476,7 @@ const waitForAllResultsReady = ({ isRegenerate = false } = {}) => {
     const stuckOnConfig =
       !isGenerating &&
       $body.find(SEL.generateBtn).length > 0 &&
-      $body.find(SEL.downloadBtn).length === 0 &&
-      !/your edit is ready/i.test($body.text())
+      !hasCompletedResults($body)
 
     if (stuckOnConfig) {
       cy.log('Config panel still visible — retrying generate')

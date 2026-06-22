@@ -5,7 +5,7 @@
  * Coverage    : Upload → Mask → Login → Generate → Credit (−1) → Assert → Download → Feedback → Bookmark → Regenerate (no credit)
  */
 
-const { COMMON_SEL, createEnhancedFlowHelpers, TEST_EMAIL, TEST_PASSWORD } = require('../support/flow-enhanced-shared')
+const { COMMON_SEL, createEnhancedFlowHelpers } = require('../support/flow-enhanced-shared')
 
 const SEL = {
   ...COMMON_SEL,
@@ -15,10 +15,6 @@ const SEL = {
   removeBtn: '#v5-service-item-removal-remove-button',
   doneBtn: '#v5-service-item-removal-done-button',
   generateBtn: '#v5-service-item-removal-generate-button',
-  loginWithEmailBtn: '#login-with-email-button',
-  usernameInput: 'input[name="username"]',
-  passwordInput: 'input[name="password"]',
-  loginSubmitBtn: '#loginwithemail-login-button',
 }
 
 const flow = createEnhancedFlowHelpers({
@@ -27,12 +23,6 @@ const flow = createEnhancedFlowHelpers({
 })
 
 const TEST_IMAGE = 'cypress/fixtures/images/IR-test.jpg'
-
-const ONBOARDING_ROLE_OTHER = 'Other'
-const ONBOARDING_ROLE_TESTING = 'Just testing AIHomeDesign'
-const ONBOARDING_MODAL_TITLE = 'Which best describes you?'
-const ONBOARDING_STEP2_TITLE = 'What are you trying to do today?'
-const ONBOARDING_EXPLORE_ON_OWN = "I'll explore on my own"
 
 const drawMaskOnCanvas = () => {
   cy.contains('Brush').should('be.visible')
@@ -105,52 +95,86 @@ const enablePointerEvents = () => {
   })
 }
 
-const dismissOnboardingModal = () => {
+const openMaskToolSidebar = () => {
   cy.get('body').then(($body) => {
-    const titleEl = [...$body[0].querySelectorAll('*')].find((el) => {
-      const text = el.textContent?.trim() || ''
-      return text === ONBOARDING_MODAL_TITLE && Cypress.dom.isVisible(el)
-    })
-
-    if (!titleEl) {
-      cy.log('Onboarding modal not shown — skipping')
+    const hasGenerate = [...$body.find('button')].some(
+      (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
+    )
+    if (hasGenerate) {
       return
     }
 
-    completeOnboarding()
+    const labels = ['Item Removal Mask', 'AI Item Removal', 'Item Removal']
+    const match = [...$body.find('.text-body-md, span.text-body-md')].find((el) =>
+      labels.some((label) => el.textContent.includes(label)),
+    )
+
+    if (match) {
+      cy.wrap(match).closest('div.cursor-pointer').click({ force: true })
+      return
+    }
+
+    cy.contains(/item removal/i, { timeout: 60000 }).click({ force: true })
   })
 }
 
-const dismissCookieConsent = () => {
-  cy.get('body').then(($body) => {
-    if ($body.text().includes('We use cookies')) {
-      cy.contains('button', 'Accept all').click({ force: true })
-      cy.contains('We use cookies', { timeout: 10000 }).should('not.exist')
+const submitMaskAfterLogin = () => {
+  flow.dismissServerErrorModal()
+
+  cy.get('body', { timeout: 30000 }).then(($body) => {
+    if ($body.text().includes('Add to project')) {
+      cy.log('Edit ready panel shown — clicking Add to project')
+      cy.contains('button', 'Add to project', { timeout: 15000 }).click({ force: true })
     }
   })
-}
 
-const dismissBlockingModals = () => {
-  dismissOnboardingModal()
-  dismissCookieConsent()
+  cy.get('body', { timeout: 30000 }).then(($body) => {
+    if ($body.find(SEL.doneBtn).filter(':visible').length > 0) {
+      cy.get(SEL.doneBtn).scrollIntoView().click({ force: true })
+      return
+    }
+
+    const hasGenerate = [...$body.find('button')].some(
+      (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
+    )
+    if (hasGenerate) {
+      cy.contains('button', 'Generate').filter(':visible').scrollIntoView().click({ force: true })
+      return
+    }
+
+    if ($body.find(SEL.removeBtn).filter(':visible').length > 0) {
+      cy.log('Re-clicking Remove after login to reveal Done/Generate')
+      cy.get(SEL.removeBtn).scrollIntoView().click({ force: true })
+    }
+  })
+
+  cy.get('body', { timeout: 90000 }).should(($body) => {
+    const hasDone = $body.find(SEL.doneBtn).filter(':visible').length > 0
+    const hasGenerate = [...$body.find('button')].some(
+      (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
+    )
+    expect(hasDone || hasGenerate, 'Done or Generate should be visible after mask submit').to.be.true
+  })
+
+  cy.get('body').then(($body) => {
+    if ($body.find(SEL.doneBtn).filter(':visible').length > 0) {
+      cy.get(SEL.doneBtn).scrollIntoView().click({ force: true })
+      return
+    }
+
+    cy.contains('button', 'Generate').filter(':visible').scrollIntoView().click({ force: true })
+  })
 }
 
 const regenerateMask = () => {
-  dismissBlockingModals()
+  flow.dismissBlockingModals()
   cy.get('body').type('{esc}')
   cy.wait(1000)
 
   flow.readCreditBalance().then((beforeRegenCredits) => {
     cy.log(`Credit before regenerate: ${beforeRegenCredits}`)
 
-    cy.get('body').then(($body) => {
-      const hasGenerate = [...$body.find('button')].some(
-        (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
-      )
-      if (!hasGenerate) {
-        cy.contains('.text-body-md', 'Item Removal Mask').click({ force: true })
-      }
-    })
+    openMaskToolSidebar()
 
     cy.contains('button', 'Generate', { timeout: 60000 }).should('be.visible').click({ force: true })
     flow.waitForAllResultsReady({ isRegenerate: true })
@@ -162,92 +186,39 @@ const regenerateMask = () => {
   })
 }
 
-const loginWithEmail = () => {
-  dismissBlockingModals()
-
-  cy.get('body', { timeout: 30000 }).should(($body) => {
-    const hasLoginPrompt =
-      $body.text().includes('Welcome Back') ||
-      $body.find(SEL.loginWithEmailBtn).length > 0 ||
-      $body.find(SEL.usernameInput).length > 0
-    expect(hasLoginPrompt, 'login prompt should be visible after remove').to.be.true
-  })
-
-  cy.get('body').then(($body) => {
-    if ($body.find(SEL.usernameInput).length === 0) {
-      cy.contains('button', 'Log in with Email').click({ force: true })
-    }
-  })
-
-  cy.get(SEL.usernameInput, { timeout: 30000 })
-    .should('be.visible')
-    .clear()
-    .type(TEST_EMAIL, { force: true })
-  cy.get(SEL.passwordInput).clear().type(TEST_PASSWORD, { force: true })
-  cy.get(SEL.loginSubmitBtn).click({ force: true })
-
-  cy.contains('Welcome Back', { timeout: 60000 }).should('not.exist')
-  cy.wait(5000)
-}
-
-const completeOnboarding = () => {
-  cy.contains(ONBOARDING_MODAL_TITLE, { timeout: 15000 }).should('be.visible')
-  cy.contains(ONBOARDING_ROLE_OTHER).should('be.visible').click()
-  cy.contains(ONBOARDING_STEP2_TITLE, { timeout: 15000 }).should('be.visible')
-  cy.contains(ONBOARDING_ROLE_TESTING, { timeout: 15000 }).should('be.visible').click()
-  cy.contains(ONBOARDING_EXPLORE_ON_OWN, { timeout: 15000 }).should('be.visible').click()
-}
-
 describe('IR-mask-flow-test', () => {
-  beforeEach(() => {
-    cy.on('uncaught:exception', (err) => {
-      if (err.message.includes("reading 'error'")) {
-        return false
-      }
-      if (err.message.includes('An unknown error has occurred')) {
-        return false
-      }
-    })
-  })
-
   it('completes IR flow', () => {
-    // ── 1. Visit site ─────────────────────────────────────────────────────────
     cy.clearCookies()
-    cy.visit('https://app.aihomedesign.com/')
-    cy.wait(3000)
-    dismissBlockingModals()
+    cy.visit('/')
+    flow.dismissBlockingModals()
 
-    // ── 2. Open IR uploader ───────────────────────────────────────────────────
-    dismissBlockingModals()
+    flow.watchCreditApi('creditApi')
     cy.get(SEL.irCard).click({ force: true })
     cy.get(SEL.fileInput).selectFile(TEST_IMAGE, { force: true })
-    cy.wait(7000)
+    flow.waitForUploadComplete()
 
-    // ── 2. Mask setup & draw ──────────────────────────────────────────────────
-    dismissBlockingModals()
+    flow.dismissBlockingModals()
     enablePointerEvents()
     cy.contains('Select Area', { timeout: 10000 }).should('be.visible').click({ force: true })
     cy.get(SEL.brushSize).filter('[style*="width: 32px"]').click({ force: true })
     drawMaskOnCanvas()
-    dismissBlockingModals()
     cy.get(SEL.removeBtn).click({ force: true })
 
-    // ── 3. Login ──────────────────────────────────────────────────────────────
-    flow.watchCreditApi('creditApi')
-    loginWithEmail()
-    dismissBlockingModals()
-    cy.wait('@creditApi', { timeout: 90000 }).then(({ response }) => {
-      const creditsAfterLogin = response.body.balance
+    flow.loginAfterGenerate({
+      reopenLogin: () => cy.get(SEL.removeBtn).click({ force: true }),
+    })
+    cy.wait('@creditApi', { timeout: 90000 })
+
+    flow.getCreditBalanceFromApi('creditApi').then((creditsAfterLogin) => {
       cy.log(`Credit after login: ${creditsAfterLogin}`)
 
-      dismissBlockingModals()
-      cy.get('canvas:visible', { timeout: 60000 }).first().should('be.visible')
-
-      // ── 4. Submit mask & wait for result ──────────────────────────────────────
       cy.url().as('orderUrl')
       captureBeforeImageSrc()
-      cy.get(SEL.doneBtn).scrollIntoView().click({ force: true })
-      flow.waitForAllResultsReady({ skipGenerateRetry: true })
+      submitMaskAfterLogin()
+      flow.waitForAllResultsReady({
+        generateSelector: `${SEL.doneBtn}, ${SEL.generateBtn}`,
+        skipGenerateRetry: true,
+      })
       assertRemoveChangedImage()
 
       flow.assertCreditAfterAction(
@@ -255,23 +226,19 @@ describe('IR-mask-flow-test', () => {
         -1,
         'first generate should deduct 1 credit',
       ).then(() => {
-        // ── 5. Download & feedback ────────────────────────────────────────────────
         cy.get(SEL.downloadBtn).click({ force: true })
         cy.get(SEL.normalDownloadBtn).click({ force: true })
         cy.wait(10000)
 
         cy.get('body').type('{esc}')
         cy.wait(2000)
-        dismissBlockingModals()
+        flow.dismissBlockingModals()
         cy.get(SEL.thumbUpBtn).closest('button').click({ force: true })
         cy.get(SEL.moodBtn).closest('button').click({ force: true })
         cy.get(SEL.feedbackDescription).type('The image is clear and the colors are accurate.')
         cy.get(SEL.feedbackSubmitBtn).contains('Submit').click({ force: true })
 
-        // ── 6. Regenerate (should not deduct credits) ─────────────────────────────
         regenerateMask()
-
-        // ── 7. Bookmark ───────────────────────────────────────────────────────────
         cy.get(SEL.bookmarkBtn).click({ force: true })
       })
     })

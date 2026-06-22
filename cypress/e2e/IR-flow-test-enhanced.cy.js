@@ -42,7 +42,13 @@ const loginViaHomepageAndReturn = () => {
       validate() {
         cy.visit('/')
         flow.dismissBlockingModals()
-        cy.contains('span', 'Login', { timeout: 30000 }).should('not.exist')
+        cy.get('nav', { timeout: 60000 }).should('exist')
+        cy.get('body', { timeout: 30000 }).should(($body) => {
+          const hasLogin = [...$body.find('button, span, a')].some(
+            (el) => el.textContent.trim() === 'Login' && Cypress.dom.isVisible(el),
+          )
+          expect(hasLogin, 'session should be authenticated').to.be.false
+        })
       },
     },
   )

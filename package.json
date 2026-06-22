@@ -5,6 +5,7 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
+    "cy:enhanced": "cypress run --spec \"cypress/e2e/*-enhanced.cy.js,cypress/e2e/IR-mask-flow-test.cy.js\"",
     "cy:vs": "cypress run --spec cypress/e2e/VS-flow-test.cy.js",
     "flow-agent:list": "node tools/flow-agent.js list",
     "flow-agent:scenarios": "node tools/flow-agent.js scenarios",
