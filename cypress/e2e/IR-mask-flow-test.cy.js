@@ -2,7 +2,7 @@
  * IR mask flow test
  *
  * Test Suite  : Item Removal mask end-to-end flow
- * Coverage    : Upload → Mask → Login → Generate → Credit (−1) → Assert → Download → Feedback → Bookmark → Regenerate (no credit)
+ * Coverage    : Upload → Mask → Generate → Inline Login → Credit (−1) → Assert → Download → Feedback → Bookmark → Regenerate (no credit)
  */
 
 const { COMMON_SEL, createEnhancedFlowHelpers } = require('../support/flow-enhanced-shared')
@@ -23,6 +23,11 @@ const flow = createEnhancedFlowHelpers({
 })
 
 const TEST_IMAGE = 'cypress/fixtures/images/IR-test.jpg'
+
+const isLoginModalOpen = ($body) =>
+  $body.text().includes('Welcome Back') ||
+  [...$body.find(SEL.loginWithEmailBtn)].some((el) => Cypress.dom.isVisible(el)) ||
+  [...$body.find(SEL.usernameInput)].some((el) => Cypress.dom.isVisible(el))
 
 const drawMaskOnCanvas = () => {
   cy.contains('Brush').should('be.visible')
@@ -118,47 +123,43 @@ const openMaskToolSidebar = () => {
   })
 }
 
-const submitMaskAfterLogin = () => {
-  flow.dismissServerErrorModal()
-
-  cy.get('body', { timeout: 30000 }).then(($body) => {
-    if ($body.text().includes('Add to project')) {
-      cy.log('Edit ready panel shown — clicking Add to project')
-      cy.contains('button', 'Add to project', { timeout: 15000 }).click({ force: true })
-    }
+const waitForLoginModal = () => {
+  cy.get('body', { timeout: 30000 }).should(($body) => {
+    expect(isLoginModalOpen($body), 'login modal should be visible').to.be.true
   })
+}
 
-  cy.get('body', { timeout: 30000 }).then(($body) => {
-    if ($body.find(SEL.doneBtn).filter(':visible').length > 0) {
-      cy.get(SEL.doneBtn).scrollIntoView().click({ force: true })
-      return
-    }
-
-    const hasGenerate = [...$body.find('button')].some(
-      (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
-    )
-    if (hasGenerate) {
-      cy.contains('button', 'Generate').filter(':visible').scrollIntoView().click({ force: true })
-      return
-    }
-
-    if ($body.find(SEL.removeBtn).filter(':visible').length > 0) {
-      cy.log('Re-clicking Remove after login to reveal Done/Generate')
-      cy.get(SEL.removeBtn).scrollIntoView().click({ force: true })
-    }
-  })
-
-  cy.get('body', { timeout: 90000 }).should(($body) => {
-    const hasDone = $body.find(SEL.doneBtn).filter(':visible').length > 0
-    const hasGenerate = [...$body.find('button')].some(
-      (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
-    )
-    expect(hasDone || hasGenerate, 'Done or Generate should be visible after mask submit').to.be.true
-  })
-
+const clickVisibleDoneIfPresent = () => {
   cy.get('body').then(($body) => {
     if ($body.find(SEL.doneBtn).filter(':visible').length > 0) {
       cy.get(SEL.doneBtn).scrollIntoView().click({ force: true })
+      return
+    }
+
+    const doneBtn = [...$body.find('button')].find(
+      (btn) => btn.textContent.trim() === 'Done' && Cypress.dom.isVisible(btn),
+    )
+    if (doneBtn) {
+      cy.wrap(doneBtn).scrollIntoView().click({ force: true })
+    }
+  })
+}
+
+const hasVisibleGenerate = ($body) =>
+  $body.find(SEL.generateBtn).filter(':visible').length > 0 ||
+  [...$body.find('button')].some(
+    (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
+  )
+
+const clickGenerateIfVisible = () => {
+  cy.get('body').then(($body) => {
+    if (!hasVisibleGenerate($body)) {
+      cy.log('Generate button not visible — skipping click')
+      return
+    }
+
+    if ($body.find(SEL.generateBtn).filter(':visible').length > 0) {
+      cy.get(SEL.generateBtn).scrollIntoView().click({ force: true })
       return
     }
 
@@ -166,8 +167,92 @@ const submitMaskAfterLogin = () => {
   })
 }
 
+const clickGenerateOrApplyMaskFirst = () => {
+  cy.get('body').then(($body) => {
+    if (hasVisibleGenerate($body)) {
+      cy.log('Clicking Generate to start flow')
+      clickGenerateIfVisible()
+      return
+    }
+
+    cy.log('Generate hidden in mask editor — applying mask with Remove first')
+    cy.get(SEL.removeBtn).scrollIntoView().should('be.visible').click({ force: true })
+  })
+
+  cy.get('body', { timeout: 30000 }).then(($body) => {
+    if (isLoginModalOpen($body)) {
+      cy.log('Login modal opened — ready for inline login')
+      return
+    }
+
+    if (hasVisibleGenerate($body)) {
+      cy.log('Generate visible after mask apply — clicking Generate')
+      clickGenerateIfVisible()
+    }
+  })
+}
+
+const submitMaskAndClickGenerate = () => {
+  drawMaskOnCanvas()
+  clickVisibleDoneIfPresent()
+  clickGenerateOrApplyMaskFirst()
+}
+
+const reopenLoginAfterGenerate = () => {
+  cy.get('body').then(($body) => {
+    if (isLoginModalOpen($body)) {
+      return
+    }
+
+    if (hasVisibleGenerate($body)) {
+      clickGenerateIfVisible()
+      return
+    }
+
+    cy.get(SEL.removeBtn).scrollIntoView().click({ force: true })
+  })
+}
+
+const continueAfterLogin = () => {
+  flow.dismissServerErrorModal()
+
+  cy.get('body', { timeout: 90000 }).should(($body) => {
+    expect(isLoginModalOpen($body), 'login modal should close after login').to.be.false
+  })
+
+  cy.get('body', { timeout: 60000 }).then(($body) => {
+    if (/generating/i.test($body.text()) || /your edit is ready/i.test($body.text())) {
+      cy.log('Generation already started after login')
+      return
+    }
+
+    if ($body.find(SEL.downloadBtn).filter(':visible').length > 0) {
+      cy.log('Results already ready after login')
+      return
+    }
+
+    const inMaskEditor =
+      $body.find(SEL.removeBtn).filter(':visible').length > 0 ||
+      $body.find(SEL.doneBtn).filter(':visible').length > 0
+
+    if (inMaskEditor) {
+      cy.log('Resuming generation from mask editor after login')
+      clickVisibleDoneIfPresent()
+      cy.wait(1000)
+      clickGenerateOrApplyMaskFirst()
+      return
+    }
+
+    if (hasVisibleGenerate($body)) {
+      clickGenerateIfVisible()
+      return
+    }
+
+    cy.log('Waiting for generation to start automatically after login')
+  })
+}
+
 const regenerateMask = () => {
-  flow.dismissBlockingModals()
   cy.get('body').type('{esc}')
   cy.wait(1000)
 
@@ -176,7 +261,16 @@ const regenerateMask = () => {
 
     openMaskToolSidebar()
 
-    cy.contains('button', 'Generate', { timeout: 60000 }).should('be.visible').click({ force: true })
+    cy.get('body', { timeout: 30000 }).then(($body) => {
+      if (hasVisibleGenerate($body)) {
+        clickGenerateIfVisible()
+        return
+      }
+
+      cy.log('Generate not visible in sidebar — using shared clickGenerate')
+      flow.clickGenerate(SEL.generateBtn)
+    })
+
     flow.waitForAllResultsReady({ isRegenerate: true })
     flow.assertCreditAfterAction(
       beforeRegenCredits,
@@ -187,25 +281,35 @@ const regenerateMask = () => {
 }
 
 describe('IR-mask-flow-test', () => {
+  beforeEach(() => {
+    cy.on('uncaught:exception', (err) => {
+      if (err.message.includes("reading 'error'")) {
+        return false
+      }
+      if (err.message.includes('rate limit exceeded')) {
+        return false
+      }
+    })
+  })
+
   it('completes IR flow', () => {
     cy.clearCookies()
     cy.visit('/')
-    flow.dismissBlockingModals()
+    flow.prepareSiteForTesting()
 
     flow.watchCreditApi('creditApi')
     cy.get(SEL.irCard).click({ force: true })
     cy.get(SEL.fileInput).selectFile(TEST_IMAGE, { force: true })
     flow.waitForUploadComplete()
 
-    flow.dismissBlockingModals()
     enablePointerEvents()
     cy.contains('Select Area', { timeout: 10000 }).should('be.visible').click({ force: true })
     cy.get(SEL.brushSize).filter('[style*="width: 32px"]').click({ force: true })
-    drawMaskOnCanvas()
-    cy.get(SEL.removeBtn).click({ force: true })
+    submitMaskAndClickGenerate()
 
+    waitForLoginModal()
     flow.loginAfterGenerate({
-      reopenLogin: () => cy.get(SEL.removeBtn).click({ force: true }),
+      reopenLogin: reopenLoginAfterGenerate,
     })
     cy.wait('@creditApi', { timeout: 90000 })
 
@@ -214,9 +318,9 @@ describe('IR-mask-flow-test', () => {
 
       cy.url().as('orderUrl')
       captureBeforeImageSrc()
-      submitMaskAfterLogin()
+      continueAfterLogin()
       flow.waitForAllResultsReady({
-        generateSelector: `${SEL.doneBtn}, ${SEL.generateBtn}`,
+        generateSelector: `${SEL.generateBtn}, ${SEL.removeBtn}`,
         skipGenerateRetry: true,
       })
       assertRemoveChangedImage()

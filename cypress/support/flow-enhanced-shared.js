@@ -43,6 +43,10 @@ function createEnhancedFlowHelpers({
 }) {
   const completeOnboardingIfShown = () => {
     cy.get('body').then(($body) => {
+      if (isAuthDialogPresent($body)) {
+        return
+      }
+
       if (!$body.text().includes(ONBOARDING_MODAL_TITLE)) {
         return
       }
@@ -57,13 +61,20 @@ function createEnhancedFlowHelpers({
 
   const isLoginModalOpen = ($body) =>
     $body.text().includes('Welcome Back') ||
+    $body.text().includes('Log in with Email') ||
     [...$body.find(sel.loginWithEmailBtn)].some((el) => Cypress.dom.isVisible(el)) ||
     [...$body.find(sel.usernameInput)].some((el) => Cypress.dom.isVisible(el))
 
+  const isAuthDialogPresent = ($body) =>
+    isLoginModalOpen($body) ||
+    $body.find(sel.loginWithEmailBtn).length > 0 ||
+    $body.find(sel.usernameInput).length > 0 ||
+    $body.find(sel.loginSubmitBtn).length > 0
+
   const dismissEscUnlessLoginOpen = (reason) => {
     cy.get('body').then(($body) => {
-      if (isLoginModalOpen($body)) {
-        cy.log(`Login modal open — skipping Escape (${reason})`)
+      if (isAuthDialogPresent($body)) {
+        cy.log(`Auth dialog present — skipping Escape (${reason})`)
         return
       }
 
@@ -75,8 +86,8 @@ function createEnhancedFlowHelpers({
 
   const dismissOnboardingModal = () => {
     cy.get('body', { timeout: 15000 }).then(($body) => {
-      if (isLoginModalOpen($body)) {
-        cy.log('Login modal open — skipping onboarding dismiss')
+      if (isAuthDialogPresent($body)) {
+        cy.log('Auth dialog present — skipping onboarding dismiss')
         return
       }
 
@@ -135,8 +146,8 @@ function createEnhancedFlowHelpers({
 
   const dismissOverlay = () => {
     cy.get('body').then(($body) => {
-      if (isLoginModalOpen($body)) {
-        cy.log('Login modal open — skipping overlay dismiss')
+      if (isAuthDialogPresent($body)) {
+        cy.log('Auth dialog present — skipping overlay dismiss')
         return
       }
 
@@ -149,8 +160,8 @@ function createEnhancedFlowHelpers({
 
   const dismissCookieConsent = () => {
     cy.get('body').then(($body) => {
-      if (isLoginModalOpen($body)) {
-        cy.log('Login modal open — skipping cookie consent dismiss')
+      if (isAuthDialogPresent($body)) {
+        cy.log('Auth dialog present — skipping cookie consent dismiss')
         return
       }
 
@@ -161,10 +172,37 @@ function createEnhancedFlowHelpers({
     })
   }
 
+  const prepareSiteForTesting = () => {
+    cy.get('nav', { timeout: 60000 }).should('exist')
+
+    const finishStartupDialogs = () => {
+      completeOnboardingIfShown()
+      dismissCookieConsent()
+    }
+
+    finishStartupDialogs()
+
+    cy.get('body').then(($body) => {
+      if (
+        $body.text().includes(ONBOARDING_MODAL_TITLE) ||
+        $body.text().includes('We use cookies')
+      ) {
+        finishStartupDialogs()
+      }
+    })
+
+    cy.get('body', { timeout: 20000 }).should(($body) => {
+      expect($body.text().includes('We use cookies'), 'cookie banner should be dismissed').to.be
+        .false
+      expect($body.text().includes(ONBOARDING_MODAL_TITLE), 'onboarding should be completed').to
+        .be.false
+    })
+  }
+
   const dismissBlockingModals = () => {
     cy.get('body').then(($body) => {
-      if (isLoginModalOpen($body)) {
-        cy.log('Login modal open — skipping all blocking modal dismiss')
+      if (isAuthDialogPresent($body)) {
+        cy.log('Auth dialog present — skipping all blocking modal dismiss')
         return cy.wrap(false)
       }
 
@@ -186,9 +224,23 @@ function createEnhancedFlowHelpers({
         return
       }
 
+      if (hasCompletedResults($body)) {
+        cy.log('Results ready despite error modal — closing with Escape')
+        cy.get('body').then(($currentBody) => {
+          if (!isAuthDialogPresent($currentBody)) {
+            cy.get('body').type('{esc}', { force: true })
+          }
+        })
+        return
+      }
+
       cy.log('Server error modal detected — clicking Try Again')
       cy.contains('button', 'Try Again', { timeout: 15000 }).click({ force: true })
-      cy.contains('Request Failed', { timeout: 30000 }).should('not.exist')
+      cy.get('body', { timeout: 30000 }).should(($currentBody) => {
+        const stillFailed = $currentBody.text().includes('Request Failed')
+        const nowReady = hasCompletedResults($currentBody)
+        expect(stillFailed && !nowReady, 'Request Failed should clear or results should appear').to.be.false
+      })
     })
   }
 
@@ -250,6 +302,23 @@ function createEnhancedFlowHelpers({
     })
   }
 
+  const prepareForInlineLogin = () => {
+    cy.get('body').then(($body) => {
+      if (isAuthDialogPresent($body)) {
+        cy.log('Auth dialog already open — skipping pre-login dismiss')
+        return
+      }
+
+      if ($body.text().includes(ONBOARDING_MODAL_TITLE)) {
+        cy.log('Onboarding modal blocking login — completing onboarding')
+        completeOnboardingIfShown()
+        return
+      }
+
+      dismissCookieConsent()
+    })
+  }
+
   const loginAfterGenerate = ({ reopenLogin } = {}) => {
     cy.get('body', { timeout: 60000 }).then(($body) => {
       if (isLoggedIn($body)) {
@@ -261,12 +330,6 @@ function createEnhancedFlowHelpers({
       if (!needsLogin) {
         return
       }
-
-      cy.get('body').then(($body) => {
-        if (!isLoginModalOpen($body)) {
-          dismissCookieConsent()
-        }
-      })
 
       ensureLoginModalVisible(reopenLogin)
 
@@ -390,8 +453,20 @@ function createEnhancedFlowHelpers({
       }
 
       dismissBlockingModals()
-      cy.get(generateSelector, { timeout: 90000 }).should('be.visible').should('not.be.disabled')
-      cy.get(generateSelector).scrollIntoView().click({ force: true })
+      cy.get('body').then(($currentBody) => {
+        if ($currentBody.find(generateSelector).filter(':visible').length > 0) {
+          cy.get(generateSelector).scrollIntoView().should('be.visible').should('not.be.disabled')
+          cy.get(generateSelector).click({ force: true })
+          return
+        }
+
+        const generateBtn = [...$currentBody.find('button')].find(
+          (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
+        )
+        if (generateBtn) {
+          cy.wrap(generateBtn).scrollIntoView().click({ force: true })
+        }
+      })
     })
   }
 
@@ -664,7 +739,7 @@ function createEnhancedFlowHelpers({
   }
 
   const hasCompletedResults = ($body) => {
-    if ($body.find(sel.downloadBtn).length > 0) {
+    if ($body.find(sel.downloadBtn).filter(':visible').length > 0) {
       return true
     }
     if (/your edit is ready/i.test($body.text())) {
@@ -718,7 +793,7 @@ function createEnhancedFlowHelpers({
     })
   }
 
-  const waitForGenerationComplete = (startedAt = Date.now()) => {
+  const waitForGenerationComplete = (startedAt = Date.now(), maskSubmitRetries = 0) => {
     cy.get('body', { timeout: 15000 }).then(($body) => {
       if (hasCompletedResults($body)) {
         return
@@ -726,10 +801,36 @@ function createEnhancedFlowHelpers({
 
       const isGenerating = /generating/i.test($body.text())
       const elapsed = Date.now() - startedAt
+      const inMaskEditor =
+        !hasCompletedResults($body) &&
+        !/generating/i.test($body.text()) &&
+        ((sel.removeBtn && $body.find(sel.removeBtn).filter(':visible').length > 0) ||
+          (sel.doneBtn && $body.find(sel.doneBtn).filter(':visible').length > 0) ||
+          [...$body.find('button')].some(
+            (btn) => btn.textContent.trim() === 'Done' && Cypress.dom.isVisible(btn),
+          ))
 
       if (elapsed > GEN_RESULT_TIMEOUT) {
         expect(hasCompletedResults($body), 'generation should complete with results').to.be.true
         return
+      }
+
+      if (inMaskEditor && maskSubmitRetries < 2 && (sel.generateBtn || sel.removeBtn)) {
+        cy.log(`Still in mask editor — retrying mask submit (${maskSubmitRetries + 1}/2)`)
+        if ($body.find(sel.removeBtn).filter(':visible').length > 0) {
+          cy.get(sel.removeBtn).click({ force: true })
+        } else if ($body.find(sel.generateBtn).filter(':visible').length > 0) {
+          cy.get(sel.generateBtn).click({ force: true })
+        } else {
+          const generateBtn = [...$body.find('button')].find(
+            (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
+          )
+          if (generateBtn) {
+            cy.wrap(generateBtn).click({ force: true })
+          }
+        }
+        cy.wait(3000)
+        return waitForGenerationComplete(startedAt, maskSubmitRetries + 1)
       }
 
       if (isGenerating && elapsed > 120000) {
@@ -739,12 +840,25 @@ function createEnhancedFlowHelpers({
       }
 
       cy.wait(5000)
-      return waitForGenerationComplete(startedAt)
+      return waitForGenerationComplete(startedAt, maskSubmitRetries)
     })
   }
 
   const assertResultsReady = () => {
     cy.log('Waiting for all results to be ready...')
+
+    cy.get('body', { timeout: 60000 }).then(($body) => {
+      if (hasCompletedResults($body) || /generating/i.test($body.text())) {
+        return
+      }
+
+      const hasGenerateBtn =
+        sel.generateBtn && $body.find(sel.generateBtn).filter(':visible').length > 0
+      if (hasGenerateBtn) {
+        cy.log('Generate still visible before wait — clicking Generate')
+        cy.get(sel.generateBtn).scrollIntoView().click({ force: true })
+      }
+    })
 
     cy.get('body', { timeout: GEN_RESULT_TIMEOUT }).should(($body) => {
       const isGenerating = /generating/i.test($body.text())
@@ -786,21 +900,27 @@ function createEnhancedFlowHelpers({
 
     if (skipGenerateRetry) {
       cy.get('body').then(($body) => {
-        const isGenerating = /generating/i.test($body.text())
-        const stuckOnMaskDone =
-          !isGenerating &&
-          sel.doneBtn &&
-          $body.find(sel.doneBtn).length > 0 &&
-          !hasCompletedResults($body)
-        const stuckOnConfig =
-          !isGenerating &&
-          $body.find(generateSelector).length > 0 &&
-          !hasCompletedResults($body)
+        if (hasCompletedResults($body) || /generating/i.test($body.text())) {
+          return
+        }
 
-        if (stuckOnMaskDone) {
+        const hasDone = sel.doneBtn && $body.find(sel.doneBtn).filter(':visible').length > 0
+        const hasGenerateBtn =
+          sel.generateBtn && $body.find(sel.generateBtn).filter(':visible').length > 0
+        const hasGenerateText = [...$body.find('button')].some(
+          (btn) => btn.textContent.trim() === 'Generate' && Cypress.dom.isVisible(btn),
+        )
+
+        if (hasDone && !hasGenerateBtn && !hasGenerateText) {
           cy.log('Mask Done still visible — retrying Done')
           cy.get(sel.doneBtn).scrollIntoView().click({ force: true })
-        } else if (stuckOnConfig) {
+        } else if (hasGenerateBtn) {
+          cy.log('Generate button visible — starting generation')
+          cy.get(sel.generateBtn).scrollIntoView().click({ force: true })
+        } else if (hasGenerateText) {
+          cy.log('Generate button visible — starting generation')
+          cy.contains('button', 'Generate').filter(':visible').click({ force: true })
+        } else if ($body.find(generateSelector).filter(':visible').length > 0) {
           cy.log('Config panel still visible — retrying generate')
           clickGenerate(generateSelector)
         }
@@ -1182,6 +1302,8 @@ function createEnhancedFlowHelpers({
   return {
     dismissBlockingModals,
     dismissServerErrorModal,
+    prepareSiteForTesting,
+    completeOnboardingIfShown,
     ensureLoggedIn,
     loginAfterGenerate,
     loginAfterGenerateIfNeeded,

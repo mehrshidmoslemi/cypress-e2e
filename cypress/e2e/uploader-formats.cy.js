@@ -33,6 +33,7 @@ const SUPPORTED_FILES = [
 // ── Unsupported formats (must show error and not complete upload) ──────────────
 const UNSUPPORTED_FILES = [
   { fixture: 'images/corrupted-test.jpg', fileName: 'corrupted-test.jpg' },
+  { fixture: 'images/invalid-format-test.mp4', fileName: 'invalid-format-test.mp4' },
   { fixture: 'images/ratio-test.png', fileName: 'ratio-test.png' },
   { fixture: 'images/volume-test.jpg', fileName: 'volume-test.jpg' },
 ]
@@ -43,6 +44,7 @@ const MIME_BY_EXTENSION = {
   heif: 'image/heif',
   jpg: 'image/jpeg',
   jpeg: 'image/jpeg',
+  mp4: 'video/mp4',
   png: 'image/png',
   tif: 'image/tiff',
   tiff: 'image/tiff',
