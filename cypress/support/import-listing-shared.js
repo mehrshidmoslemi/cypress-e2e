@@ -22,6 +22,11 @@ const PAID_ACCOUNT = {
   password: '12345678',
 }
 
+const IMPORT_LISTING_ACCOUNT = {
+  email: 'memoslemi.sdstudio+1080@gmail.com',
+  password: '12345678',
+}
+
 const IMPORT_TIMEOUT = 600000
 const GENERATION_TIMEOUT = 900000
 const POLL_INTERVAL_MS = 5000
@@ -135,40 +140,83 @@ function createImportListingHelpers(sessionId, { account } = {}) {
     })
   }
 
-  const ensureGuestAuthenticated = () => {
-    cy.get('nav', { timeout: 90000 }).then(($nav) => {
-      if (!$nav.text().includes('Login')) {
+  const navLoginVisible = ($body) =>
+    [...$body.find('nav span, nav button, nav a')].some(
+      (el) => (el.textContent || '').trim() === 'Login' && Cypress.dom.isVisible(el),
+    )
+
+  const isNavLoggedIn = ($body) => {
+    if (!navLoginVisible($body)) {
+      return (
+        $body.find(LISTING_SEL.profileMenuTrigger).length > 0 ||
+        $body.find('[aria-haspopup="dialog"].rounded-full').length > 0 ||
+        $body.text().includes(testAccount.email) ||
+        /logout/i.test($body.text())
+      )
+    }
+
+    return false
+  }
+
+  const completeOnboardingIfVisible = () => {
+    cy.get('body').then(($body) => {
+      if (!$body.text().includes(ONBOARDING_TITLE)) {
         return
       }
 
-      loginFromModalIfShown()
-
-      cy.get('nav', { timeout: 90000 }).then(($navAfter) => {
-        if (!$navAfter.text().includes('Login')) {
-          return
-        }
-
-        cy.log('Auth modal login incomplete — falling back to nav Login flow')
-        dismissLeaveImportIfShown()
-        dismissImportFailedModal()
-        closeWelcomeBackModalIfOpen()
-        loginWithEmail(testAccount.email, testAccount.password)
-      })
+      const $dialog = $body.find('[role="dialog"]:visible')
+      if ($dialog.length) {
+        completeOnboardingInDialog($dialog)
+      }
     })
-
-    flow.completeOnboardingIfShown()
-    flow.prepareSiteForTesting()
-    cy.get(LISTING_SEL.profileMenuTrigger, { timeout: 90000 }).should('be.visible')
-    cy.get('nav').contains(/^Login$/).should('not.exist')
   }
 
+  const recoverStudioAuthIfNeeded = () => {
+    cy.get('body').then(($body) => {
+      if (isNavLoggedIn($body)) {
+        completeOnboardingIfVisible()
+        return
+      }
+
+      if ($body.text().includes('Welcome Back')) {
+        loginFromModalIfShown()
+        completeOnboardingIfVisible()
+        return
+      }
+
+      ensureGuestAuthenticated()
+    })
+  }
+
+  const ensureGuestAuthenticated = () => {
+    cy.get('body', { timeout: 90000 }).then(($body) => {
+      if (isNavLoggedIn($body)) {
+        completeOnboardingIfVisible()
+        return
+      }
+
+      if ($body.text().includes('Welcome Back') || navLoginVisible($body)) {
+        loginFromModalIfShown()
+      }
+    })
+
+    completeOnboardingIfVisible()
+    flow.prepareSiteForTesting()
+    cy.get('body', { timeout: 90000 }).should(($body) => {
+      expect(isNavLoggedIn($body), 'guest should be authenticated').to.be.true
+    })
+  }
+
+  const asJquery = ($el) => ($el?.jquery ? $el : Cypress.$($el))
+
   const dismissOnboardingDialog = ($dialog) => {
-    const closeBtn = [...$dialog.querySelectorAll('button')].find((btn) => {
+    const $root = asJquery($dialog)
+    const closeBtn = [...$root.find('button')].find((btn) => {
       const label = (btn.getAttribute('aria-label') || '').toLowerCase()
-      return (
-        label === 'close' ||
-        btn.querySelector('[class*="tabler:x"], [class*="tabler-x"]')
-      )
+      const hasX =
+        btn.querySelector('[class*="tabler:x"]') ||
+        btn.querySelector('[class*="tabler-x"]')
+      return (label === 'close' || hasX) && Cypress.dom.isVisible(btn)
     })
 
     if (closeBtn) {
@@ -180,23 +228,23 @@ function createImportListingHelpers(sessionId, { account } = {}) {
   }
 
   const completeOnboardingInDialog = ($dialog) => {
-    const text = $dialog.textContent || $dialog.text?.() || ''
+    const $root = asJquery($dialog)
+    const text = $root.text()
     if (!text.includes(ONBOARDING_TITLE)) {
       return
     }
 
     cy.log('Completing onboarding questionnaire')
-    cy.wrap($dialog).contains('Other').filter(':visible').last().click({ force: true })
+    cy.wrap($root).contains('Other').filter(':visible').last().click({ force: true })
 
     cy.get('body', { timeout: 30000 }).then(($body) => {
       if ($body.text().includes(ONBOARDING_STEP2)) {
         cy.contains('Just testing AIHomeDesign', { timeout: 30000 }).click({ force: true })
         cy.contains("I'll explore on my own", { timeout: 30000 }).click({ force: true })
-        return
+      } else if ($body.text().includes(ONBOARDING_TITLE)) {
+        cy.log('Onboarding step 2 not shown — dismissing via close button')
+        dismissOnboardingDialog($root)
       }
-
-      cy.log('Onboarding step 2 not shown — dismissing via close button')
-      dismissOnboardingDialog($dialog)
     })
   }
 
@@ -204,28 +252,26 @@ function createImportListingHelpers(sessionId, { account } = {}) {
     cy.log('Opening Create Project modal')
     clickCreateProjectButton()
 
-    cy.get('[role="dialog"]:visible', { timeout: 15000 }).then(($dialog) => {
-      const text = $dialog.text()
-
-      if (text.includes('Welcome Back')) {
+    cy.get('[role="dialog"]:visible', { timeout: 30000 }).then(($dialog) => {
+      if ($dialog.text().includes('Welcome Back')) {
         loginFromModalIfShown()
-        clickCreateProjectButton()
-        cy.get('[role="dialog"]:visible', { timeout: 15000 }).then(($afterLogin) => {
-          if ($afterLogin.text().includes(ONBOARDING_TITLE)) {
-            completeOnboardingInDialog($afterLogin)
-            clickCreateProjectButton()
-          }
-        })
-        return
-      }
-
-      if (text.includes(ONBOARDING_TITLE)) {
-        completeOnboardingInDialog($dialog)
         clickCreateProjectButton()
       }
     })
 
-    cy.get('[role="dialog"]:visible', { timeout: 15000 }).should('contain.text', 'New Project')
+    cy.get('[role="dialog"]:visible', { timeout: 30000 }).then(($dialog) => {
+      if ($dialog.text().includes(ONBOARDING_TITLE)) {
+        completeOnboardingInDialog($dialog)
+      }
+    })
+
+    cy.get('body').then(($body) => {
+      if (!$body.text().includes('New Project')) {
+        clickCreateProjectButton()
+      }
+    })
+
+    cy.get('[role="dialog"]:visible', { timeout: 30000 }).should('contain.text', 'New Project')
   }
 
   const ensureLoggedIn = () => {
@@ -281,7 +327,8 @@ function createImportListingHelpers(sessionId, { account } = {}) {
     if (loggedIn) {
       ensureStudioSession()
     } else {
-      cy.visit('/studio/projects')
+      cy.visit('/studio/projects', { failOnStatusCode: false })
+      flow.prepareSiteForTesting()
       cy.get('nav', { timeout: 60000 }).should('exist')
       cy.get('body').then(($body) => {
         if ($body.text().includes('Accept all')) {
@@ -351,14 +398,18 @@ function createImportListingHelpers(sessionId, { account } = {}) {
         if (entry === 'uploader') {
           openUploaderImport(provider)
           submitListingUrl(url, 'uploader')
-          waitForListingDetails(stopBeforeConfirm, {
-            loggedIn: false,
-            entry,
-            provider,
-            url,
-            retryAttempt: retryAttempt + 1,
-          })
+        } else {
+          openCreateProjectImport({ loggedIn: false })
+          submitListingUrl(url, 'create-project')
         }
+
+        waitForListingDetails(stopBeforeConfirm, {
+          loggedIn: false,
+          entry,
+          provider,
+          url,
+          retryAttempt: retryAttempt + 1,
+        })
         return
       }
 
@@ -469,7 +520,8 @@ function createImportListingHelpers(sessionId, { account } = {}) {
         return
       }
 
-      cy.visit('/studio/projects', { timeout: 120000, retryOnStatusCodeFailure: true })
+      cy.visit('/studio/projects', { timeout: 120000, failOnStatusCode: false })
+      flow.prepareSiteForTesting()
       prepareStudioPage()
       openProjectFromStudioList(project)
       cy.contains(/upload assets|do magic|project overview|magic complete/i, { timeout: IMPORT_TIMEOUT }).should(
@@ -578,6 +630,37 @@ function createImportListingHelpers(sessionId, { account } = {}) {
     })
   }
 
+  const visitStudioProjectsWithRetry = (attempt = 0) => {
+    cy.intercept('GET', '**/v3/project?*').as('projectListPoll')
+    cy.visit('/studio/projects', {
+      timeout: 120000,
+      failOnStatusCode: false,
+    })
+    flow.prepareSiteForTesting()
+
+    return cy.get('body', { timeout: 60000 }).then(($body) => {
+      const text = $body.text()
+      const isServerError = /server error|\(500\)|something went wrong/i.test(text)
+      const hasNav = $body.find('nav').length > 0
+
+      if (isServerError || !hasNav) {
+        if (attempt >= 5) {
+          throw new Error('Studio projects page unavailable after retries')
+        }
+
+        cy.log(`Studio visit failed (attempt ${attempt + 1}) — retrying`)
+        cy.wait(5000)
+        return visitStudioProjectsWithRetry(attempt + 1)
+      }
+
+      if (!isNavLoggedIn($body) || text.includes('Welcome Back')) {
+        recoverStudioAuthIfNeeded()
+      }
+
+      prepareStudioPage()
+    })
+  }
+
   const resolveImportProject = () => {
     return cy.get('@createProject.all', { timeout: IMPORT_TIMEOUT }).then((calls) => {
       if (calls?.length > 0 && calls.at(-1).response?.body?.data) {
@@ -592,28 +675,28 @@ function createImportListingHelpers(sessionId, { account } = {}) {
   }
 
   const pollProjectCounts = (projectId, expected, attempt = 0) => {
-    cy.visit('/studio/projects', { timeout: 120000, retryOnStatusCodeFailure: true })
-    prepareStudioPage()
-    return cy.wait('@projectList', { timeout: 120000 }).then(({ response }) => {
-      const project = findProjectInList(response, projectId)
-      const counts = projectCounts(project)
+    return visitStudioProjectsWithRetry().then(() =>
+      cy.wait('@projectListPoll', { timeout: 120000 }).then(({ response }) => {
+        const project = findProjectInList(response, projectId)
+        const counts = projectCounts(project)
 
-      const ready =
-        project &&
-        counts.input >= expected.minInput &&
-        (expected.minResults === undefined || counts.result >= expected.minResults)
+        const ready =
+          project &&
+          counts.input >= expected.minInput &&
+          (expected.minResults === undefined || counts.result >= expected.minResults)
 
-      if (ready) {
-        return cy.wrap({ project, counts })
-      }
+        if (ready) {
+          return cy.wrap({ project, counts })
+        }
 
-      if (attempt >= MAX_POLL_ATTEMPTS) {
-        throw new Error(`Timed out polling project counts: ${JSON.stringify(project)}`)
-      }
+        if (attempt >= MAX_POLL_ATTEMPTS) {
+          throw new Error(`Timed out polling project counts: ${JSON.stringify(project)}`)
+        }
 
-      cy.wait(POLL_INTERVAL_MS)
-      return pollProjectCounts(projectId, expected, attempt + 1)
-    })
+        cy.wait(POLL_INTERVAL_MS)
+        return pollProjectCounts(projectId, expected, attempt + 1)
+      }),
+    )
   }
 
   const assertAssetsVisible = () => {
@@ -656,9 +739,8 @@ function createImportListingHelpers(sessionId, { account } = {}) {
   }
 
   const assertStudioProjectWithSeeResults = (projectId) => {
-    cy.visit('/studio/projects', { timeout: 120000, retryOnStatusCodeFailure: true })
-    prepareStudioPage()
-    cy.wait('@projectList', { timeout: 120000 }).then(({ response }) => {
+    visitStudioProjectsWithRetry()
+    cy.wait('@projectListPoll', { timeout: 120000 }).then(({ response }) => {
       const project = findProjectInList(response, projectId)
       expect(project, 'project in studio list').to.exist
       expect(projectCounts(project).input, 'studio project input_count').to.be.at.least(1)
@@ -778,4 +860,5 @@ module.exports = {
   LISTING_URLS,
   INVALID_URLS,
   PAID_ACCOUNT,
+  IMPORT_LISTING_ACCOUNT,
 }

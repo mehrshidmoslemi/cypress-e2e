@@ -1,0 +1,7 @@
+[
+  {
+    "text": "Move to",
+    "html": "<button type=\"button\" id=\"reka-popover-trigger-v-0-65\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"\" data-state=\"closed\" class=\"rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer text-sm gap-1.5 text-default focus:outline-none focus-visible:bg-elev",
+    "parent": "<div class=\"flex gap-8 items-center\"><div class=\"flex gap-2 items-center\"><div class=\"relative flex items-start flex-row\"><div class=\"flex items-center h-6\"><button class=\"rounded-sm ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary size-5 ring-0 border border-light\" id=\"v-0-64\" role=\"checkbox\" type=\"button\" aria-checked=\"false\" aria-required=\"false\" data-state=\"unchecked\" aria-label=\"Select All\"><!----><!--v-if--></button></div><div class=\"w-full ms-2 text-base\"><label for=\"v-0-64\" class=\"block font-medium text-body-md\">Select All</label><!----></div></div></div><button type=\"button\" id=\"reka-popover-trigger-v-0-65\" aria-haspopup=\"dialog\" aria-expanded=\"false\" aria-controls=\"\" data-state=\"closed\" class=\"rounded-md"
+  }
+]

@@ -1,0 +1,66 @@
+{
+  "buttons": [
+    {
+      "text": "",
+      "id": ""
+    },
+    {
+      "text": "More",
+      "id": ""
+    },
+    {
+      "text": "Studio",
+      "id": ""
+    },
+    {
+      "text": "Create Project",
+      "id": "v5-studio-header-create-project-button"
+    },
+    {
+      "text": "Sort by:Newest",
+      "id": "reka-dropdown-menu-trigger-v-0-0"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-16"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-17"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-18"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-19"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-20"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-21"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-22"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-23"
+    },
+    {
+      "text": "Select To Move",
+      "id": ""
+    }
+  ],
+  "dialogs": [
+    {
+      "text": "Select To Move",
+      "html": "<div class=\"p-2 rounded-lg\"><button type=\"button\" class=\"rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75 transition-colors cursor-pointer text-sm gap-1.5 h-10 p-4 text-default active:bg-elevated focus:outline-none focus-visible:bg-elevated hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent w-full justify-start hover:bg-[#fafafacc] hover:dark:bg-[#202121cc] opacity-100\"><span class=\"iconify i-tabler:folder-plus shrink-0 size-5\" aria-hidden=\"true\"></span><span class=\"truncate\">Select To Move</span><!----></button></div><!---->"
+    }
+  ]
+}

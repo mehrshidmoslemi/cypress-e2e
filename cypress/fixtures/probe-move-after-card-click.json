@@ -1,0 +1,57 @@
+{
+  "buttons": [
+    {
+      "text": "",
+      "id": ""
+    },
+    {
+      "text": "More",
+      "id": ""
+    },
+    {
+      "text": "Studio",
+      "id": ""
+    },
+    {
+      "text": "Create Project",
+      "id": "v5-studio-header-create-project-button"
+    },
+    {
+      "text": "Sort by:Newest",
+      "id": "reka-dropdown-menu-trigger-v-0-0"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-16"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-17"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-18"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-19"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-20"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-21"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-22"
+    },
+    {
+      "text": "",
+      "id": "reka-popover-trigger-v-0-23"
+    }
+  ],
+  "dialogs": []
+}

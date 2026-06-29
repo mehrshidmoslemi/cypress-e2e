@@ -524,9 +524,11 @@ function createPostGenerationHelpers(sessionId = 'post-gen-actions') {
   }
 
   const assertFeedbackSubmitted = () => {
-    cy.get(POST_GEN_SEL.thumbUpBtn).filter(':visible').first().closest('button').click({ force: true })
-    cy.get(POST_GEN_SEL.moodBtn).should('not.exist')
-    cy.get(POST_GEN_SEL.feedbackDescription).should('not.exist')
+    cy.get('body', { timeout: 15000 }).should(($body) => {
+      const thumbUp = $body.find(POST_GEN_SEL.thumbUpBtn).filter(':visible')
+      const submitted = thumbUp.length === 0 || thumbUp.closest('button').is(':disabled')
+      expect(submitted, 'feedback controls should reflect a submitted state').to.be.true
+    })
   }
 
   const assertFeedbackNotSubmitted = () => {

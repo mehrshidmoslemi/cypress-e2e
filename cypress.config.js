@@ -14,6 +14,9 @@ module.exports = defineConfig({
   responseTimeout: 90000,
   // Prevent a single chat-driven test from hanging forever.
   execTimeout: 600000,
+  // Release browser memory between tests (helps large import/magic flows).
+  numTestsKeptInMemory: 0,
+  experimentalMemoryManagement: true,
   e2e: {
     downloadsFolder: 'cypress/downloads',
     baseUrl: 'https://app.aihomedesign.com',
