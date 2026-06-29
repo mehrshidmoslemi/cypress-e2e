@@ -1,0 +1,210 @@
+[
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:square-rounded-plus size-6 text-white absolute inset-0"
+    ],
+    "visible": true,
+    "top": 80,
+    "left": 20
+  },
+  {
+    "text": "More",
+    "aria": null,
+    "id": "",
+    "icons": [],
+    "visible": true,
+    "top": 499,
+    "left": 8
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:chevron-left shrink-0 size-5"
+    ],
+    "visible": true,
+    "top": 202,
+    "left": 104
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:maximize size-6"
+    ],
+    "visible": true,
+    "top": 104,
+    "left": 192
+  },
+  {
+    "text": "Before/After",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:square-toggle shrink-0 size-5",
+      "truncate"
+    ],
+    "visible": true,
+    "top": 96,
+    "left": 248
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:thumb-up size-6 text-darkest"
+    ],
+    "visible": true,
+    "top": 100,
+    "left": 629
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "v5-resultpage-bookmark",
+    "icons": [
+      "iconify i-tabler:bookmark shrink-0 size-5"
+    ],
+    "visible": true,
+    "top": 104,
+    "left": 701
+  },
+  {
+    "text": "Download",
+    "aria": null,
+    "id": "v5-resultpage-primary-download-button",
+    "icons": [
+      "iconify i-tabler:download shrink-0 size-5",
+      "truncate"
+    ],
+    "visible": true,
+    "top": 100,
+    "left": 749
+  },
+  {
+    "text": "Add to project",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "truncate",
+      "iconify i-tabler:chevron-right shrink-0 size-5"
+    ],
+    "visible": true,
+    "top": 270,
+    "left": 1058
+  },
+  {
+    "text": "Upload new photo",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "truncate",
+      "iconify i-tabler:chevron-right shrink-0 size-4"
+    ],
+    "visible": true,
+    "top": 326,
+    "left": 1061
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:info-circle shrink-0 size-5"
+    ],
+    "visible": true,
+    "top": 392,
+    "left": 1224
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:info-circle shrink-0 size-5"
+    ],
+    "visible": true,
+    "top": 496,
+    "left": 1224
+  },
+  {
+    "text": "AI Item Removal",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "inline-flex items-center justify-center select-none align-middle text-[10px] size-8 rounded-lg bg-darker dark:bg-light p-1.5 shrink-0",
+      "truncate",
+      "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto"
+    ],
+    "visible": true,
+    "top": 536,
+    "left": 1001
+  },
+  {
+    "text": "AI Image Enhancement",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "inline-flex items-center justify-center select-none align-middle text-[10px] size-8 rounded-lg bg-darker dark:bg-light p-1.5 shrink-0",
+      "truncate",
+      "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto"
+    ],
+    "visible": true,
+    "top": 585,
+    "left": 1001
+  },
+  {
+    "text": "AI Day to Dusk",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "inline-flex items-center justify-center select-none align-middle text-[10px] size-8 rounded-lg bg-darker dark:bg-light p-1.5 shrink-0",
+      "truncate",
+      "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto"
+    ],
+    "visible": true,
+    "top": 634,
+    "left": 1001
+  },
+  {
+    "text": "AI Furniture Restyle",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "inline-flex items-center justify-center select-none align-middle text-[10px] size-8 rounded-lg bg-darker dark:bg-light p-1.5 shrink-0",
+      "truncate",
+      "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto"
+    ],
+    "visible": true,
+    "top": 683,
+    "left": 1001
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:info-circle shrink-0 size-5"
+    ],
+    "visible": true,
+    "top": 526,
+    "left": 1224
+  },
+  {
+    "text": "",
+    "aria": null,
+    "id": "",
+    "icons": [
+      "iconify i-tabler:arrow-up shrink-0 size-5"
+    ],
+    "visible": true,
+    "top": 643,
+    "left": 1203
+  }
+]

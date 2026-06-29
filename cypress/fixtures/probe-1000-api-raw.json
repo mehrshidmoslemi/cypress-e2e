@@ -1,0 +1,15 @@
+{
+  "status": 200,
+  "body": {
+    "data": [],
+    "message": "ok",
+    "pagination": {
+      "limit": 6,
+      "next_page": "",
+      "page": 1,
+      "previous_page": "",
+      "total_count": 0,
+      "total_pages": 0
+    }
+  }
+}

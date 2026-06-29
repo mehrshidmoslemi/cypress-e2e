@@ -123,9 +123,40 @@ const openMaskToolSidebar = () => {
   })
 }
 
+const reopenLoginAfterGenerate = () => {
+  cy.get('body').then(($body) => {
+    if (isLoginModalOpen($body)) {
+      return
+    }
+
+    if (hasVisibleGenerate($body)) {
+      clickGenerateIfVisible()
+      return
+    }
+
+    cy.get(SEL.removeBtn).scrollIntoView().click({ force: true })
+  })
+}
+
 const waitForLoginModal = () => {
   cy.get('body', { timeout: 30000 }).should(($body) => {
     expect(isLoginModalOpen($body), 'login modal should be visible').to.be.true
+  })
+
+  cy.log('Waiting 5s for login modal to settle before entering credentials')
+  cy.wait(5000)
+
+  cy.get('body').then(($body) => {
+    if (isLoginModalOpen($body)) {
+      return
+    }
+
+    cy.log('Login modal closed during settle — re-opening')
+    reopenLoginAfterGenerate()
+  })
+
+  cy.get('body', { timeout: 30000 }).should(($body) => {
+    expect(isLoginModalOpen($body), 'login modal should remain open').to.be.true
   })
 }
 
@@ -196,21 +227,6 @@ const submitMaskAndClickGenerate = () => {
   drawMaskOnCanvas()
   clickVisibleDoneIfPresent()
   clickGenerateOrApplyMaskFirst()
-}
-
-const reopenLoginAfterGenerate = () => {
-  cy.get('body').then(($body) => {
-    if (isLoginModalOpen($body)) {
-      return
-    }
-
-    if (hasVisibleGenerate($body)) {
-      clickGenerateIfVisible()
-      return
-    }
-
-    cy.get(SEL.removeBtn).scrollIntoView().click({ force: true })
-  })
 }
 
 const continueAfterLogin = () => {

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "v5-resultpage-bookmark",
+    "text": "",
+    "visible": true,
+    "className": "rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:op"
+  },
+  {
+    "id": "v5-resultpage-primary-download-button",
+    "text": "Download",
+    "visible": true,
+    "className": "font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 ar"
+  }
+]

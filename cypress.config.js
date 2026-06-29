@@ -1,7 +1,11 @@
 require('./cypress/config/env')
 
 const { defineConfig } = require('cypress')
+const fs = require('fs')
+const path = require('path')
 const { getOtpFromGmail, waitForEmailWithSubject } = require('./cypress/tasks/gmail-otp')
+
+const downloadsDir = path.join(__dirname, 'cypress', 'downloads')
 
 module.exports = defineConfig({
   defaultCommandTimeout: 90000,
@@ -11,6 +15,7 @@ module.exports = defineConfig({
   // Prevent a single chat-driven test from hanging forever.
   execTimeout: 600000,
   e2e: {
+    downloadsFolder: 'cypress/downloads',
     baseUrl: 'https://app.aihomedesign.com',
     viewportWidth: 1280,
     viewportHeight: 720,
@@ -21,6 +26,32 @@ module.exports = defineConfig({
       on('task', {
         getOtpFromGmail,
         waitForEmailWithSubject,
+        clearDownloads() {
+          if (!fs.existsSync(downloadsDir)) {
+            fs.mkdirSync(downloadsDir, { recursive: true })
+            return null
+          }
+
+          fs.readdirSync(downloadsDir).forEach((fileName) => {
+            fs.unlinkSync(path.join(downloadsDir, fileName))
+          })
+          return null
+        },
+        getLatestDownload() {
+          if (!fs.existsSync(downloadsDir)) {
+            return null
+          }
+
+          const files = fs
+            .readdirSync(downloadsDir)
+            .map((fileName) => ({
+              fileName,
+              mtimeMs: fs.statSync(path.join(downloadsDir, fileName)).mtimeMs,
+            }))
+            .sort((a, b) => b.mtimeMs - a.mtimeMs)
+
+          return files[0]?.fileName || null
+        },
       })
     },
   },

@@ -1,0 +1,47 @@
+{
+  "buttons": [
+    "Upgrade",
+    "Home",
+    "Studio",
+    "Pricing",
+    "Help",
+    "More",
+    "Back",
+    "Studio",
+    "Probe Tabs 1782642005907",
+    "Import",
+    "Choose Tool",
+    "Images",
+    "Notes",
+    "Property Details"
+  ],
+  "allTextareas": [],
+  "noteCandidates": [
+    {
+      "tag": "HTML",
+      "class": "dark",
+      "text": "  (()=>{\"use strict\";const e=window.Cypress=parent.Cypress;if(!e)throw new Error"
+    },
+    {
+      "tag": "BODY",
+      "class": "",
+      "text": "Upgrade Home Studio Pricing Help More Back /Studio/Probe Tabs 17826420059070 Fil"
+    },
+    {
+      "tag": "DIV",
+      "class": "isolate",
+      "text": "Upgrade Home Studio Pricing Help More Back /Studio/Probe Tabs 17826420059070 Fil"
+    },
+    {
+      "tag": "DIV",
+      "class": "min-h-screen",
+      "text": "Upgrade Home Studio Pricing Help More Back /Studio/Probe Tabs 17826420059070 Fil"
+    },
+    {
+      "tag": "DIV",
+      "class": "w-full max-w-screen min-h-full overflow-x-hidden",
+      "text": "Upgrade Home Studio Pricing Help More Back /Studio/Probe Tabs 17826420059070 Fil"
+    }
+  ],
+  "body": "Upgrade\nHome\nStudio\nPricing\nHelp\nMore\nBack\n/\nStudio\n/\nProbe Tabs 1782642005907\n0 Files\nImport\nChoose Tool\nProbe Tabs 1782642005907\nImages\nNotes\nProperty Details\n\nNotes\n\nAdd a note..."
+}

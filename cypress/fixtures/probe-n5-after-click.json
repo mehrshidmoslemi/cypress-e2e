@@ -1,0 +1,12 @@
+[
+  {
+    "tag": "INPUT",
+    "ce": null,
+    "placeholder": "Title"
+  },
+  {
+    "tag": "TEXTAREA",
+    "ce": null,
+    "placeholder": "Write your note..."
+  }
+]

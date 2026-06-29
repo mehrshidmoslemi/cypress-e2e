@@ -1,0 +1,10 @@
+[
+  {
+    "tag": "BUTTON",
+    "id": "v5-resultpage-bookmark",
+    "text": "",
+    "className": "rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:op",
+    "visible": true,
+    "hasBookmarkClass": true
+  }
+]

@@ -1,0 +1,180 @@
+[
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "type": "button",
+    "value": "",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not"
+  },
+  {
+    "tag": "SPAN",
+    "text": "",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "iconify i-tabler:x shrink-0 size-6"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "type": "button",
+    "value": "for_sale",
+    "role": "radio",
+    "ariaChecked": "false",
+    "ariaHaspopup": null,
+    "class": "rounded-full ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:out"
+  },
+  {
+    "tag": "LABEL",
+    "text": "For Sale",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "block font-medium text-default"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "type": "button",
+    "value": "for_rent",
+    "role": "radio",
+    "ariaChecked": "false",
+    "ariaHaspopup": null,
+    "class": "rounded-full ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:out"
+  },
+  {
+    "tag": "LABEL",
+    "text": "For Rent",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "block font-medium text-default"
+  },
+  {
+    "tag": "LABEL",
+    "text": "Property Type",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "block font-medium text-default"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "type": "button",
+    "value": "",
+    "role": "combobox",
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "relative group inline-flex items-center focus:outline-none disabled:cursor-not-allowed disabled:opac"
+  },
+  {
+    "tag": "SPAN",
+    "text": "",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "truncate text-dimmed"
+  },
+  {
+    "tag": "SPAN",
+    "text": "",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "absolute inset-y-0 end-0 flex items-center pe-3"
+  },
+  {
+    "tag": "SPAN",
+    "text": "",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "iconify i-lucide:chevron-down shrink-0 size-6 text-dark"
+  },
+  {
+    "tag": "LABEL",
+    "text": "Bedrooms",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "block font-medium text-default"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "type": "text",
+    "value": "0",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "w-full border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 t"
+  },
+  {
+    "tag": "LABEL",
+    "text": "Bathrooms",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "block font-medium text-default"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "type": "text",
+    "value": "0",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "w-full border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 t"
+  },
+  {
+    "tag": "LABEL",
+    "text": "Square Footage",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "block font-medium text-default"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "type": "text",
+    "value": "0",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "w-full border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 t"
+  },
+  {
+    "tag": "LABEL",
+    "text": "Year Built",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "block font-medium text-default"
+  },
+  {
+    "tag": "INPUT",
+    "text": "",
+    "type": "text",
+    "value": "0",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "w-full border-0 appearance-none focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 t"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Save Details",
+    "type": "submit",
+    "value": "",
+    "role": null,
+    "ariaChecked": null,
+    "ariaHaspopup": null,
+    "class": "font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed di"
+  }
+]

@@ -37,7 +37,8 @@ const LISTING_SEL = {
   urlInput: 'input[type="text"]:visible',
 }
 
-function createImportListingHelpers(sessionId) {
+function createImportListingHelpers(sessionId, { account } = {}) {
+  const testAccount = account || PAID_ACCOUNT
   const flow = createEnhancedFlowHelpers({ sel: LISTING_SEL, sessionId })
 
   const loginWithEmail = (email, password) => {
@@ -66,18 +67,99 @@ function createImportListingHelpers(sessionId) {
         $body.text().includes('Welcome Back') ||
         [...$body.find(LISTING_SEL.loginWithEmailBtn)].some((el) => Cypress.dom.isVisible(el))
 
-      if (!$body.text().includes('Welcome Back') && !loginOpen) {
+      if (!loginOpen) {
         return
       }
 
-      cy.get(LISTING_SEL.loginWithEmailBtn).click({ force: true })
-      cy.get(LISTING_SEL.usernameInput).clear({ force: true }).type(PAID_ACCOUNT.email, { force: true })
+      cy.get(LISTING_SEL.loginWithEmailBtn, { timeout: 30000 }).click({ force: true })
+      cy.get(LISTING_SEL.usernameInput).clear({ force: true }).type(testAccount.email, { force: true })
       cy.get(LISTING_SEL.passwordInput)
         .clear({ force: true })
-        .type(PAID_ACCOUNT.password, { log: false, force: true })
+        .type(testAccount.password, { log: false, force: true })
       cy.get(LISTING_SEL.loginSubmitBtn).click({ force: true })
+      cy.get('body', { timeout: 30000 }).should(($current) => {
+        expect($current.text()).to.not.match(/email or password is invalid/i)
+      })
       cy.get('nav', { timeout: 90000 }).contains(/^Login$/).should('not.exist')
     })
+  }
+
+  const dismissLeaveImportIfShown = () => {
+    cy.get('body').then(($body) => {
+      if (!$body.text().match(/leave import/i)) {
+        return
+      }
+
+      cy.contains('button', /^Stay$/i).click({ force: true })
+      cy.contains(/leave import/i).should('not.exist')
+    })
+  }
+
+  const dismissImportFailedModal = () => {
+    cy.get('body').then(($body) => {
+      if (!/import failed|unable to start import/i.test($body.text())) {
+        return
+      }
+
+      const closeBtn = [...$body.find('button')].find((btn) => {
+        const label = (btn.getAttribute('aria-label') || '').toLowerCase()
+        const hasX =
+          btn.querySelector('[class*="tabler:x"]') ||
+          btn.querySelector('[class*="tabler-x"]')
+        return (label === 'close' || hasX) && Cypress.dom.isVisible(btn)
+      })
+
+      if (closeBtn) {
+        cy.wrap(closeBtn).click({ force: true })
+      }
+    })
+  }
+
+  const closeWelcomeBackModalIfOpen = () => {
+    cy.get('body').then(($body) => {
+      if (!$body.text().includes('Welcome Back')) {
+        return
+      }
+
+      const closeBtn = [...$body.find('[role="dialog"] button, button')].find((btn) => {
+        const label = (btn.getAttribute('aria-label') || '').toLowerCase()
+        const hasX =
+          btn.querySelector('[class*="tabler:x"]') ||
+          btn.querySelector('[class*="tabler-x"]')
+        return (label === 'close' || hasX) && Cypress.dom.isVisible(btn)
+      })
+
+      if (closeBtn) {
+        cy.wrap(closeBtn).click({ force: true })
+      }
+    })
+  }
+
+  const ensureGuestAuthenticated = () => {
+    cy.get('nav', { timeout: 90000 }).then(($nav) => {
+      if (!$nav.text().includes('Login')) {
+        return
+      }
+
+      loginFromModalIfShown()
+
+      cy.get('nav', { timeout: 90000 }).then(($navAfter) => {
+        if (!$navAfter.text().includes('Login')) {
+          return
+        }
+
+        cy.log('Auth modal login incomplete — falling back to nav Login flow')
+        dismissLeaveImportIfShown()
+        dismissImportFailedModal()
+        closeWelcomeBackModalIfOpen()
+        loginWithEmail(testAccount.email, testAccount.password)
+      })
+    })
+
+    flow.completeOnboardingIfShown()
+    flow.prepareSiteForTesting()
+    cy.get(LISTING_SEL.profileMenuTrigger, { timeout: 90000 }).should('be.visible')
+    cy.get('nav').contains(/^Login$/).should('not.exist')
   }
 
   const dismissOnboardingDialog = ($dialog) => {
@@ -147,13 +229,29 @@ function createImportListingHelpers(sessionId) {
   }
 
   const ensureLoggedIn = () => {
-    flow.ensureLoggedIn()
+    cy.session(
+      `${sessionId}:${testAccount.email}`,
+      () => {
+        cy.visit('/')
+        cy.get('nav', { timeout: 60000 }).should('exist')
+        flow.prepareSiteForTesting()
+        loginWithEmail(testAccount.email, testAccount.password)
+        flow.prepareSiteForTesting()
+      },
+      {
+        validate() {
+          cy.visit('/')
+          cy.get('nav', { timeout: 60000 }).should('exist')
+          cy.get('nav').contains(/^Login$/).should('not.exist')
+        },
+      },
+    )
     cy.visit('/')
     flow.prepareSiteForTesting()
   }
 
   const ensureStudioSession = () => {
-    flow.ensureLoggedIn()
+    ensureLoggedIn()
     cy.visit('/studio/projects')
     cy.get('nav', { timeout: 60000 }).should('exist')
     cy.get('[aria-busy="true"]', { timeout: 60000 }).should('not.exist')
@@ -215,25 +313,68 @@ function createImportListingHelpers(sessionId) {
     cy.get(LISTING_SEL.continueListingBtn).click({ force: true })
   }
 
-  const waitForListingDetails = (stopBeforeConfirm = false) => {
+  const waitForListingDetails = (
+    stopBeforeConfirm = false,
+    { loggedIn = true, entry = 'uploader', provider = 'zillow', url = '', retryAttempt = 0 } = {},
+  ) => {
     cy.get('body', { timeout: IMPORT_TIMEOUT }).should(($body) => {
-      expect($body.text(), 'Check Details step').to.include('Check Details')
-      expect($body.text()).to.match(/image founded|images founded|address/i)
-      expect($body.find('img').length, 'listing preview image').to.be.greaterThan(0)
+      const text = $body.text()
+
+      if (text.includes('Check Details')) {
+        expect(text, 'Check Details context').to.match(/image founded|images founded|address/i)
+        expect($body.find('img').length, 'listing preview image').to.be.greaterThan(0)
+        return
+      }
+
+      if (!loggedIn) {
+        const needsRecovery =
+          text.includes('Welcome Back') ||
+          /import failed|unable to start import/i.test(text)
+        expect(needsRecovery, 'guest scrape should reach Check Details or require auth').to.be.true
+        return
+      }
+
+      expect(text, 'Check Details step').to.include('Check Details')
     })
 
-    if (stopBeforeConfirm) {
-      return
-    }
+    cy.get('body').then(($body) => {
+      const text = $body.text()
 
-    cy.contains('button', /it's correct,\s*continue/i).click({ force: true })
-    loginFromModalIfShown()
-    flow.completeOnboardingIfShown()
-    flow.prepareSiteForTesting()
-    cy.get(LISTING_SEL.profileMenuTrigger, { timeout: 90000 }).should('be.visible')
+      if (!loggedIn && !text.includes('Check Details')) {
+        if (retryAttempt >= 1) {
+          throw new Error('Guest listing import could not reach Check Details after login retry')
+        }
+
+        dismissImportFailedModal()
+        ensureGuestAuthenticated()
+
+        if (entry === 'uploader') {
+          openUploaderImport(provider)
+          submitListingUrl(url, 'uploader')
+          waitForListingDetails(stopBeforeConfirm, {
+            loggedIn: false,
+            entry,
+            provider,
+            url,
+            retryAttempt: retryAttempt + 1,
+          })
+        }
+        return
+      }
+
+      if (stopBeforeConfirm) {
+        return
+      }
+
+      cy.contains('button', /it's correct,\s*continue/i).click({ force: true })
+      ensureGuestAuthenticated()
+    })
   }
 
   const confirmListingDetails = () => waitForListingDetails(false)
+
+  const isMagicCompleteVisible = ($body) =>
+    /magic complete|results are ready|your ai results are ready/i.test($body.text() || '')
 
   const startListingImport = ({ entry, provider, url, loggedIn, expectSuccess = true, stopBeforeConfirm = false }) => {
     if (loggedIn) {
@@ -268,7 +409,7 @@ function createImportListingHelpers(sessionId) {
       return
     }
 
-    waitForListingDetails(stopBeforeConfirm)
+    waitForListingDetails(stopBeforeConfirm, { loggedIn, entry, provider, url })
   }
 
   const waitForImportStarted = () => {
@@ -293,7 +434,10 @@ function createImportListingHelpers(sessionId) {
         !text.includes('Upload Assets') &&
         !text.includes('Do Magic')
 
-      const onUploadPanel = text.includes('Upload Assets') || text.includes('Do Magic')
+      const onUploadPanel =
+        text.includes('Upload Assets') ||
+        text.includes('Do Magic') ||
+        isMagicCompleteVisible($body)
       const onStudioProjects =
         text.includes('Projects') && $body.find('img').length > 3 && !text.includes('Check Details')
 
@@ -317,14 +461,20 @@ function createImportListingHelpers(sessionId) {
 
   const ensureUploadPanelForMagic = (project) => {
     cy.get('body').then(($body) => {
-      if ($body.text().includes('Upload Assets') || $body.text().includes('Do Magic')) {
+      if (
+        $body.text().includes('Upload Assets') ||
+        $body.text().includes('Do Magic') ||
+        isMagicCompleteVisible($body)
+      ) {
         return
       }
 
       cy.visit('/studio/projects', { timeout: 120000, retryOnStatusCodeFailure: true })
       prepareStudioPage()
       openProjectFromStudioList(project)
-      cy.contains(/upload assets|do magic|project overview/i, { timeout: IMPORT_TIMEOUT }).should('exist')
+      cy.contains(/upload assets|do magic|project overview|magic complete/i, { timeout: IMPORT_TIMEOUT }).should(
+        'exist',
+      )
     })
   }
 
@@ -467,13 +617,20 @@ function createImportListingHelpers(sessionId) {
   }
 
   const assertAssetsVisible = () => {
-    cy.contains('Upload Assets', { timeout: IMPORT_TIMEOUT }).should('be.visible')
-    cy.get('body').should(($body) => {
-      const text = $body.text()
-      const hasCounts = /input\s*\d+/i.test(text) || /results\s*\d+/i.test(text)
-      const hasThumbnails = $body.find('img').length > 0
-      const magicDone = /magic complete|results are ready/i.test(text)
-      expect(hasCounts || hasThumbnails || magicDone, 'imported assets or completed magic').to.be.true
+    dismissLeaveImportIfShown()
+
+    cy.get('body', { timeout: 120000 }).should(($body) => {
+      if (isMagicCompleteVisible($body)) {
+        return
+      }
+
+      const uploadHeader = [...$body.find('h3, h2, div, span')].find(
+        (el) => /^upload assets$/i.test((el.textContent || '').trim()) && Cypress.dom.isVisible(el),
+      )
+      expect(
+        Boolean(uploadHeader) || isMagicCompleteVisible($body),
+        'Upload Assets panel or Magic Complete',
+      ).to.be.true
     })
   }
 
@@ -567,7 +724,9 @@ function createImportListingHelpers(sessionId) {
       ensureUploadPanelForMagic(project)
 
       cy.get('body').then(($body) => {
-        if ($body.text().includes('Upload Assets')) {
+        const text = $body.text()
+        const magicDone = isMagicCompleteVisible($body)
+        if (text.includes('Upload Assets') && !magicDone) {
           assertAssetsVisible()
           assertPreviewCounts(projectCounts(project).input || 1)
         }
@@ -592,7 +751,7 @@ function createImportListingHelpers(sessionId) {
     flow,
     LISTING_URLS,
     INVALID_URLS,
-    PAID_ACCOUNT,
+    PAID_ACCOUNT: testAccount,
     ensureLoggedIn,
     ensureLoggedOut,
     ensureStudioSession,

@@ -1,0 +1,147 @@
+{
+  "inputs": [
+    {
+      "tag": "BUTTON",
+      "text": "Upgrade",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "More",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Back",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Probe Tabs 1782642005907",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Import",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Choose Tool",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Images",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Notes",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Property Details",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Edit",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Add",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Add",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button",
+      "value": "for_sale"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button",
+      "value": "for_rent"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "type": "button",
+      "value": ""
+    },
+    {
+      "tag": "INPUT",
+      "text": "",
+      "type": "text",
+      "placeholder": "Enter number",
+      "value": "0"
+    },
+    {
+      "tag": "INPUT",
+      "text": "",
+      "type": "text",
+      "placeholder": "Enter number",
+      "value": "0"
+    },
+    {
+      "tag": "INPUT",
+      "text": "",
+      "type": "text",
+      "placeholder": "Enter number",
+      "value": "0"
+    },
+    {
+      "tag": "INPUT",
+      "text": "",
+      "type": "text",
+      "placeholder": "Enter year",
+      "value": "0"
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Save Details",
+      "type": "submit",
+      "value": ""
+    }
+  ],
+  "body": "Upgrade\nHome\nStudio\nAPI\nPricing\nHelp\nMore\nBack\n/\nStudio\n/\nProbe Tabs 1782642005907\n0 Files\nImport\nChoose Tool\nProbe Tabs 1782642005907\nImages\nNotes\nProperty Details\nProperty Details\nEdit\nListing Status\nAdd\nYear Built\n0\nProperty Type\nAdd\nBathrooms\n0\nBedrooms\n0\nProperty details\nFor Sale\nFor Rent\nProperty Type\n \nHouse\nCondo\nCommercial\nVacant Land\nMulti-Family\nTownhouse\nIndustrial\nOther\nBedrooms\nBathrooms\nSquare Footage\nYear Built\nSave Details"
+}

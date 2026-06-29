@@ -1,0 +1,122 @@
+[
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "More",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Before/After",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": "v5-resultpage-bookmark"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Download",
+    "aria": null,
+    "id": "v5-resultpage-primary-download-button"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Origin",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "AI Virtual Staging",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Add to project",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Upload new photo",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "AI Item Removal",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "AI Image Enhancement",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "AI Day to Dusk",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "AI Furniture Restyle",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "aria": null,
+    "id": ""
+  }
+]

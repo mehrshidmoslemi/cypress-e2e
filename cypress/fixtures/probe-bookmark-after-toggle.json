@@ -1,0 +1,62 @@
+[
+  {
+    "id": "",
+    "text": "More",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "Before/After",
+    "visible": true
+  },
+  {
+    "id": "v5-resultpage-bookmark",
+    "text": "",
+    "visible": true
+  },
+  {
+    "id": "v5-resultpage-primary-download-button",
+    "text": "Download",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "Origin",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "AI Virtual Staging",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "Add to project",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "Upload new photo",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "AI Item Removal",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "AI Image Enhancement",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "AI Day to Dusk",
+    "visible": true
+  },
+  {
+    "id": "",
+    "text": "AI Furniture Restyle",
+    "visible": true
+  }
+]

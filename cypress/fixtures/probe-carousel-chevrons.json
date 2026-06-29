@@ -1,0 +1,100 @@
+[
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5",
+    "text": "",
+    "visible": true,
+    "top": 202,
+    "left": 928
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5",
+    "text": "Add to project",
+    "visible": true,
+    "top": 270,
+    "left": 1058
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-4",
+    "text": "Upload new photo",
+    "visible": true,
+    "top": 326,
+    "left": 1061
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Virtual Staging",
+    "visible": true,
+    "top": 432,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Day to Dusk",
+    "visible": true,
+    "top": 481,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Item Removal",
+    "visible": true,
+    "top": 530,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Image Enhancement",
+    "visible": true,
+    "top": 579,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Interior Designer",
+    "visible": true,
+    "top": 628,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Furniture Restyle",
+    "visible": true,
+    "top": 677,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Wall Change",
+    "visible": false,
+    "top": 726,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Floor Change",
+    "visible": false,
+    "top": 775,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Backsplash Change",
+    "visible": false,
+    "top": 824,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Ceiling Change",
+    "visible": false,
+    "top": 873,
+    "left": 1001
+  },
+  {
+    "className": "iconify i-tabler:chevron-right shrink-0 size-5 ms-auto",
+    "text": "AI Under Construction",
+    "visible": false,
+    "top": 922,
+    "left": 1001
+  }
+]

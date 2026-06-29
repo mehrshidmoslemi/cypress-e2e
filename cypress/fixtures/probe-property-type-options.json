@@ -1,0 +1,14 @@
+[
+  {
+    "text": "House",
+    "role": "option"
+  },
+  {
+    "text": "Condo",
+    "role": "option"
+  },
+  {
+    "text": "Townhouse",
+    "role": "option"
+  }
+]
