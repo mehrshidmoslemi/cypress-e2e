@@ -1,74 +1,99 @@
 /**
  * run-cypress.js
- * cypress رو اجرا می‌کنه، JSON رو از stdout extract می‌کنه و در فایل ذخیره می‌کنه
+ * تست‌های پوشه e2e-final-tests را با reporter json اجرا می‌کند،
+ * خروجی JSON را از stdout استخراج کرده و در cypress-results.json ذخیره می‌کند.
+ *
+ * این فایل توسط n8n (نود Execute Command) فراخوانی می‌شود.
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+const { execSync } = require('child_process')
+const fs = require('fs')
+const path = require('path')
 
-const projectPath = 'C:\\Users\\me.moslemi\\Desktop\\cypress-e2e';
-const resultsFile = path.join(projectPath, 'cypress-results.json');
+const projectPath = 'C:\\Users\\me.moslemi\\Desktop\\cypress-e2e'
+const resultsFile = path.join(projectPath, 'cypress-results.json')
+const debugFile = resultsFile + '.debug.txt'
 
-// حذف نتایج قبلی
-if (fs.existsSync(resultsFile)) fs.unlinkSync(resultsFile);
+// حذف نتایج قبلی تا اگر اجرای جدید crash کرد، نتایج قدیمی گزارش نشود
+for (const f of [resultsFile, debugFile]) {
+  if (fs.existsSync(f)) {
+    try {
+      fs.unlinkSync(f)
+    } catch (e) {}
+  }
+}
 
-let stdout = '';
-let parsed = null;
+let stdout = ''
 try {
-  // فقط از specPattern استفاده می‌کنیم (قابل اعتمادتر روی ویندوز)
-  const cmd = 'npx cypress run --headed --reporter json --config "specPattern=cypress/e2e-final-tests/**/*.cy.js"';
-  console.log('[run-cypress] Running:', cmd);
+  // headed طبق درخواست؛ reporter json برای پارس دقیق نتایج
+  const cmd =
+    'npx cypress run --headed --reporter json --config "specPattern=cypress/e2e-final-tests/**/*.cy.js"'
+  console.log('[run-cypress] Running:', cmd)
   stdout = execSync(cmd, {
     cwd: projectPath,
     encoding: 'utf8',
-    maxBuffer: 50 * 1024 * 1024,
-    stdio: ['pipe', 'pipe', 'pipe']
-  });
+    maxBuffer: 100 * 1024 * 1024,
+    stdio: ['pipe', 'pipe', 'pipe'],
+  })
 } catch (err) {
-  stdout = err.stdout || '';
+  // cypress در صورت fail شدن تست‌ها exit code غیرصفر می‌دهد - این طبیعی است
+  stdout = (err.stdout || '') + (err.stderr || '')
 }
 
-// پیدا کردن JSON از stdout (نسخه مقاوم)
-let jsonData = null;
-let jsonStart = stdout.indexOf('{\n  "stats"');
-if (jsonStart === -1) jsonStart = stdout.indexOf('{"stats"');
-if (jsonStart === -1) {
-  // جستجوی گسترده‌تر: پیدا کردن اولین { قبل از "stats"
-  const statsIdx = stdout.indexOf('"stats"');
-  if (statsIdx !== -1) {
-    for (let i = statsIdx; i >= 0; i--) {
-      if (stdout[i] === '{') { jsonStart = i; break; }
+// استخراج بلوک JSON از stdout (reporter json آن را در stdout چاپ می‌کند)
+function extractJson(text) {
+  let start = text.indexOf('{\n  "stats"')
+  if (start === -1) start = text.indexOf('{"stats"')
+  if (start === -1) {
+    const statsIdx = text.indexOf('"stats"')
+    if (statsIdx !== -1) {
+      for (let i = statsIdx; i >= 0; i--) {
+        if (text[i] === '{') {
+          start = i
+          break
+        }
+      }
     }
   }
-}
+  if (start === -1) return null
 
-if (jsonStart !== -1) {
-  let depth = 0;
-  let end = -1;
-  for (let i = jsonStart; i < stdout.length; i++) {
-    if (stdout[i] === '{') depth++;
-    else if (stdout[i] === '}') {
-      depth--;
-      if (depth === 0) { end = i; break; }
+  let depth = 0
+  for (let i = start; i < text.length; i++) {
+    if (text[i] === '{') depth++
+    else if (text[i] === '}') {
+      depth--
+      if (depth === 0) {
+        try {
+          return JSON.parse(text.substring(start, i + 1))
+        } catch (e) {
+          return null
+        }
+      }
     }
   }
-  if (end !== -1) {
-    try {
-      jsonData = JSON.parse(stdout.substring(jsonStart, end + 1));
-    } catch(e) {}
-  }
+  return null
 }
 
-if (jsonData) {
-  fs.writeFileSync(resultsFile, JSON.stringify(jsonData, null, 2), 'utf8');
-  console.log('RESULTS_SAVED:' + resultsFile);
-  console.log('PASSED:' + (jsonData.stats.passes || 0));
-  console.log('FAILED:' + (jsonData.stats.failures || 0));
+const jsonData = extractJson(stdout)
+
+if (jsonData && jsonData.stats) {
+  fs.writeFileSync(resultsFile, JSON.stringify(jsonData, null, 2), 'utf8')
+  console.log('RESULTS_SAVED:' + resultsFile)
+  console.log('PASSED:' + (jsonData.stats.passes || 0))
+  console.log('FAILED:' + (jsonData.stats.failures || 0))
 } else {
-  console.log('RESULTS_PARSE_FAILED');
-  // ذخیره stdout خام برای debug
-  fs.writeFileSync(resultsFile + '.debug.txt', stdout, 'utf8');
+  // اجرای cypress قبل از رسیدن به تست‌ها crash کرده (مثلاً خطای config)
+  console.log('RESULTS_PARSE_FAILED')
+  fs.writeFileSync(debugFile, stdout, 'utf8')
+  // یک فایل نتیجه‌ی حداقلی می‌سازیم تا n8n بداند اجرا خراب شده
+  const fallback = {
+    stats: { suites: 0, tests: 0, passes: 0, pending: 0, failures: 0, start: null, end: null, duration: 0 },
+    tests: [],
+    passes: [],
+    failures: [],
+    runnerError: true,
+  }
+  fs.writeFileSync(resultsFile, JSON.stringify(fallback, null, 2), 'utf8')
 }
 
-process.exit(0);
+process.exit(0)

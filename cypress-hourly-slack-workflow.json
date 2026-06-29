@@ -1,0 +1,199 @@
+{
+  "name": "Cypress E2E Hourly Runner & Slack Reporter",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "node-schedule",
+      "name": "Every 1 Hour",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 320]
+    },
+    {
+      "parameters": {},
+      "id": "node-manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nconst pad = (n) => String(n).padStart(2, '0');\nconst runId =\n  'run-' +\n  now.getFullYear() +\n  pad(now.getMonth() + 1) +\n  pad(now.getDate()) +\n  '-' +\n  pad(now.getHours()) +\n  pad(now.getMinutes()) +\n  pad(now.getSeconds());\n\nreturn [\n  {\n    json: {\n      runId,\n      startTime: now.toISOString(),\n      startTimeFormatted: now.toLocaleString('fa-IR', { timeZone: 'Asia/Tehran' }),\n      testsPath: 'cypress/e2e-final-tests',\n      baseUrl: 'https://app.aihomedesign.com',\n    },\n  },\n];"
+      },
+      "id": "node-config",
+      "name": "Set Run Metadata",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 400]
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "=:rocket: *Cypress E2E Tests Starting...*\n*Run ID:* `{{ $json.runId }}`\n*Tests:* `{{ $json.testsPath }}`\n*Time:* {{ $json.startTimeFormatted }}\n\n_Running tests, please wait for the full report..._"
+      },
+      "id": "node-slack-start",
+      "name": "Slack - Notify Start",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [720, 400],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File C:\\Users\\me.moslemi\\Desktop\\cypress-e2e\\run-cypress.ps1"
+      },
+      "id": "node-run",
+      "name": "Run Cypress Tests",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [960, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// نتایج را از فایل JSON که run-cypress.js ساخته می‌خوانیم و پارس می‌کنیم\nconst fs = require('fs');\n\nconst meta = $('Set Run Metadata').first().json;\nconst resultsFile = 'C:\\\\Users\\\\me.moslemi\\\\Desktop\\\\cypress-e2e\\\\cypress-results.json';\n\nconst endTime = new Date();\nconst startTime = new Date(meta.startTime);\nconst durationMs = endTime - startTime;\nconst durationMin = Math.floor(durationMs / 60000);\nconst durationSec = Math.floor((durationMs % 60000) / 1000);\n\nlet parsed = null;\nlet parseError = null;\ntry {\n  if (fs.existsSync(resultsFile)) {\n    parsed = JSON.parse(fs.readFileSync(resultsFile, 'utf8'));\n  } else {\n    parseError = 'Results file not found: ' + resultsFile;\n  }\n} catch (e) {\n  parseError = 'Failed to parse results file: ' + e.message;\n}\n\nlet passed = 0,\n  failed = 0,\n  pending = 0,\n  skipped = 0;\nconst passedTests = [];\nconst failedTests = [];\nlet runnerError = false;\n\nfunction cleanError(msg) {\n  if (!msg) return 'Unknown error';\n  return String(msg)\n    .replace(/^CypressError:\\s*/, '')\n    .replace(/\\r/g, '')\n    .trim();\n}\n\nif (parsed && parsed.stats) {\n  runnerError = parsed.runnerError === true;\n  const s = parsed.stats;\n  passed = s.passes || 0;\n  failed = s.failures || 0;\n  pending = s.pending || 0;\n  skipped = s.skipped || 0;\n\n  // منبع اصلی: آرایه‌های passes / failures (استاندارد mocha json reporter)\n  const passArr = Array.isArray(parsed.passes) ? parsed.passes : [];\n  const failArr = Array.isArray(parsed.failures) ? parsed.failures : [];\n\n  if (passArr.length || failArr.length) {\n    for (const t of passArr) {\n      passedTests.push({\n        title: t.fullTitle || t.title || 'Unknown test',\n        duration: t.duration || 0,\n      });\n    }\n    for (const t of failArr) {\n      const errMsg = t.err ? t.err.message : '';\n      failedTests.push({\n        title: t.fullTitle || t.title || 'Unknown test',\n        error: cleanError(errMsg),\n        duration: t.duration || 0,\n      });\n    }\n  } else if (Array.isArray(parsed.tests)) {\n    // fallback: از روی آرایه tests تفکیک می‌کنیم\n    for (const t of parsed.tests) {\n      const hasErr = !!(t.err && t.err.message);\n      const title = t.fullTitle || t.title || 'Unknown test';\n      if (hasErr) {\n        failedTests.push({ title, error: cleanError(t.err.message), duration: t.duration || 0 });\n      } else if (t.pending) {\n        // pending\n      } else {\n        passedTests.push({ title, duration: t.duration || 0 });\n      }\n    }\n    if (!passed && !failed) {\n      passed = passedTests.length;\n      failed = failedTests.length;\n    }\n  }\n}\n\nconst total = passed + failed + pending + skipped;\nconst successRate = total > 0 ? Math.round((passed / total) * 100) : 0;\n\nlet overallStatus;\nif (runnerError || parseError) overallStatus = 'ERROR';\nelse if (total === 0) overallStatus = 'NO_TESTS';\nelse if (failed === 0) overallStatus = 'PASS';\nelse overallStatus = 'FAIL';\n\nreturn [\n  {\n    json: {\n      runId: meta.runId,\n      overallStatus,\n      successRate,\n      stats: { passed, failed, pending, skipped, total },\n      passedTests,\n      failedTests,\n      duration: durationMin + 'm ' + durationSec + 's',\n      startTimeFormatted: meta.startTimeFormatted,\n      endTimeFormatted: endTime.toLocaleString('fa-IR', { timeZone: 'Asia/Tehran' }),\n      baseUrl: meta.baseUrl,\n      hasErrors: failed > 0 || overallStatus === 'ERROR' || overallStatus === 'NO_TESTS',\n      parseError,\n      runnerError,\n    },\n  },\n];"
+      },
+      "id": "node-parse",
+      "name": "Parse Test Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1200, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-has-errors",
+              "leftValue": "={{ $json.hasErrors }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if",
+      "name": "Has Failures?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1440, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\nconst SLACK_LIMIT = 2900; // امن زیر سقف 3000 کاراکتری Slack\n\nfunction header() {\n  let icon, title;\n  if (d.overallStatus === 'ERROR') {\n    icon = ':warning:';\n    title = 'Cypress Test Report \\u2014 RUNNER ERROR';\n  } else if (d.overallStatus === 'NO_TESTS') {\n    icon = ':warning:';\n    title = 'Cypress Test Report \\u2014 NO TESTS FOUND';\n  } else {\n    icon = ':red_circle:';\n    title = 'Cypress Test Report \\u2014 FAILED';\n  }\n  const lines = [];\n  lines.push(icon + ' *' + title + '*');\n  lines.push('\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501');\n  lines.push('*Run ID:* `' + d.runId + '`');\n  lines.push(\n    '*Summary:* :white_check_mark: ' +\n      d.stats.passed +\n      ' passed  |  :x: ' +\n      d.stats.failed +\n      ' failed  |  Total: ' +\n      d.stats.total +\n      '  (' +\n      d.successRate +\n      '%)'\n  );\n  lines.push('*Duration:* ' + d.duration);\n  return lines;\n}\n\nconst lines = header();\n\nif (d.parseError) {\n  lines.push('');\n  lines.push(':warning: *' + d.parseError + '*');\n}\nif (d.runnerError) {\n  lines.push('');\n  lines.push(':warning: *Cypress crashed before running tests. See cypress-results.json.debug.txt*');\n}\n\n// تست‌های Fail شده با علت\nif (d.failedTests && d.failedTests.length > 0) {\n  lines.push('');\n  lines.push(':x: *Failed Tests (' + d.failedTests.length + '):*');\n  for (const t of d.failedTests) {\n    lines.push('\\u2022 *' + t.title + '*');\n    const err = (t.error || 'Unknown error').substring(0, 450);\n    lines.push('   ```' + err + '```');\n  }\n}\n\n// تست‌های Pass شده\nif (d.passedTests && d.passedTests.length > 0) {\n  lines.push('');\n  lines.push(':white_check_mark: *Passed Tests (' + d.passedTests.length + '):*');\n  for (const t of d.passedTests) {\n    lines.push('\\u2022 ' + t.title);\n  }\n}\n\nlines.push('');\nlines.push('\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501');\nlines.push('_' + d.startTimeFormatted + '  \\u2192  ' + d.endTimeFormatted + '_');\n\nlet text = lines.join('\\n');\nif (text.length > SLACK_LIMIT) {\n  text = text.substring(0, SLACK_LIMIT) + '\\n\\n_... (report truncated due to Slack length limit)_';\n}\n\nreturn [{ json: { slackText: text, ...d } }];"
+      },
+      "id": "node-fail-report",
+      "name": "Build Failure Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1680, 260]
+    },
+    {
+      "parameters": {
+        "jsCode": "const d = $input.first().json;\nconst SLACK_LIMIT = 2900;\n\nconst lines = [];\nlines.push(':large_green_circle: *Cypress Test Report \\u2014 ALL PASSED*');\nlines.push('\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501');\nlines.push('*Run ID:* `' + d.runId + '`');\nlines.push('*Summary:* :white_check_mark: ' + d.stats.passed + ' passed  |  Total: ' + d.stats.total + '  (100%)');\nlines.push('*Duration:* ' + d.duration);\n\nif (d.passedTests && d.passedTests.length > 0) {\n  lines.push('');\n  lines.push(':white_check_mark: *Passed Tests (' + d.passedTests.length + '):*');\n  for (const t of d.passedTests) {\n    lines.push('\\u2022 ' + t.title);\n  }\n}\n\nlines.push('');\nlines.push('\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501\\u2501');\nlines.push('_' + d.startTimeFormatted + '  \\u2192  ' + d.endTimeFormatted + '_');\n\nlet text = lines.join('\\n');\nif (text.length > SLACK_LIMIT) {\n  text = text.substring(0, SLACK_LIMIT) + '\\n\\n_... (report truncated due to Slack length limit)_';\n}\n\nreturn [{ json: { slackText: text, ...d } }];"
+      },
+      "id": "node-pass-report",
+      "name": "Build Success Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1680, 540]
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "={{ $json.slackText }}"
+      },
+      "id": "node-slack-fail",
+      "name": "Slack - Send Failure Report",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [1920, 260],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "={{ $json.slackText }}"
+      },
+      "id": "node-slack-pass",
+      "name": "Slack - Send Success Report",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [1920, 540],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every 1 Hour": {
+      "main": [[{ "node": "Set Run Metadata", "type": "main", "index": 0 }]]
+    },
+    "Manual Trigger": {
+      "main": [[{ "node": "Set Run Metadata", "type": "main", "index": 0 }]]
+    },
+    "Set Run Metadata": {
+      "main": [[{ "node": "Slack - Notify Start", "type": "main", "index": 0 }]]
+    },
+    "Slack - Notify Start": {
+      "main": [[{ "node": "Run Cypress Tests", "type": "main", "index": 0 }]]
+    },
+    "Run Cypress Tests": {
+      "main": [[{ "node": "Parse Test Results", "type": "main", "index": 0 }]]
+    },
+    "Parse Test Results": {
+      "main": [[{ "node": "Has Failures?", "type": "main", "index": 0 }]]
+    },
+    "Has Failures?": {
+      "main": [
+        [{ "node": "Build Failure Report", "type": "main", "index": 0 }],
+        [{ "node": "Build Success Report", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build Failure Report": {
+      "main": [[{ "node": "Slack - Send Failure Report", "type": "main", "index": 0 }]]
+    },
+    "Build Success Report": {
+      "main": [[{ "node": "Slack - Send Success Report", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "timezone": "Asia/Tehran"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": ["cypress", "e2e", "testing", "slack", "hourly"]
+}

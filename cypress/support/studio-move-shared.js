@@ -43,19 +43,52 @@ function createStudioMoveHelpers(sessionId = 'studio-move') {
     })
   }
 
+  const isNavLoggedIn = ($body) => {
+    const hasLogin = [...$body.find('nav button, nav span, nav a')].some(
+      (el) => el.textContent.trim() === 'Login' && Cypress.dom.isVisible(el),
+    )
+    if (hasLogin) {
+      return false
+    }
+
+    return $body.find(STUDIO_SEL.profileMenuTrigger).filter(':visible').length > 0
+  }
+
   const loginWithEmail = () => {
     const account = getAccount()
-    cy.contains(STUDIO_SEL.loginSpan, 'Login', { timeout: 60000 }).click({ force: true })
-    cy.contains(STUDIO_SEL.loginProfileBtn, 'Login', { timeout: 30000 }).click({ force: true })
-    cy.get(STUDIO_SEL.loginWithEmailBtn).click({ force: true })
-    cy.get(STUDIO_SEL.usernameInput).clear().type(account.email)
-    cy.get(STUDIO_SEL.passwordInput).clear().type(account.password, { log: false })
-    cy.get(STUDIO_SEL.loginSubmitBtn).click({ force: true })
-    cy.get('body', { timeout: 30000 }).should(($body) => {
-      expect($body.text()).to.not.match(/email or password is invalid/i)
+
+    cy.get('body', { timeout: 60000 })
+      .then(($body) => {
+        if (isNavLoggedIn($body)) {
+          cy.log(`Already logged in as ${account.email}`)
+          return cy.wrap(false)
+        }
+        return cy.wrap(true)
+      })
+      .then((needsLogin) => {
+        if (!needsLogin) {
+          return
+        }
+
+        cy.contains(STUDIO_SEL.loginSpan, 'Login', { timeout: 60000 }).click({ force: true })
+        cy.contains(STUDIO_SEL.loginProfileBtn, 'Login', { timeout: 30000 }).click({ force: true })
+        cy.get(STUDIO_SEL.loginWithEmailBtn).click({ force: true })
+        cy.get(STUDIO_SEL.usernameInput).clear().type(account.email)
+        cy.get(STUDIO_SEL.passwordInput).clear().type(account.password, { log: false })
+        cy.get(STUDIO_SEL.loginSubmitBtn).click({ force: true })
+      })
+
+    cy.get('body', { timeout: 30000 }).then(($body) => {
+      if ($body.text().match(/email or password is invalid/i)) {
+        throw new Error(
+          `Login failed for ${account.email}. Check STUDIO_MOVE_PASSWORD in .env (expected 12345678, not 123456).`,
+        )
+      }
     })
-    cy.get(STUDIO_SEL.profileMenuTrigger, { timeout: 90000 }).should('be.visible')
-    cy.get('nav').contains(/^Login$/).should('not.exist')
+
+    cy.get('body', { timeout: 90000 }).should(($body) => {
+      expect(isNavLoggedIn($body), `user should be logged in as ${account.email}`).to.be.true
+    })
   }
 
   const ensureLoggedIn = () => {
@@ -74,7 +107,9 @@ function createStudioMoveHelpers(sessionId = 'studio-move') {
         validate() {
           cy.visit('/')
           cy.get('nav', { timeout: 60000 }).should('exist')
-          cy.get('nav').contains(/^Login$/).should('not.exist')
+          cy.get('body').should(($body) => {
+            expect(isNavLoggedIn($body), 'cached session should still be authenticated').to.be.true
+          })
         },
       },
     )
@@ -95,6 +130,26 @@ function createStudioMoveHelpers(sessionId = 'studio-move') {
     cy.get(STUDIO_SEL.fileInput).first().selectFile(fixturePath, { force: true })
     flow.waitForUploadComplete()
     cy.get('body').type('{esc}', { force: true })
+  }
+
+  const visitStudioProjectsWithRetry = (attempt = 0) => {
+    cy.visit('/studio/projects', { failOnStatusCode: false })
+    cy.get('body', { timeout: 60000 }).should('exist')
+
+    cy.get('body').then(($body) => {
+      const hasNav = $body.find('nav').length > 0
+      const hasServerError =
+        $body.text().includes('Request Failed') || $body.text().includes('500')
+
+      if ((!hasNav || hasServerError) && attempt < 4) {
+        cy.wait(3000)
+        visitStudioProjectsWithRetry(attempt + 1)
+        return
+      }
+
+      flow.dismissServerErrorModal()
+      flow.prepareSiteForTesting()
+    })
   }
 
   const openStudioProjects = () => {
@@ -340,8 +395,7 @@ function createStudioMoveHelpers(sessionId = 'studio-move') {
   }
 
   const assertImageNotInSingleFiles = (imageSrc, attempt = 0) => {
-    cy.visit('/studio/projects')
-    flow.prepareSiteForTesting()
+    visitStudioProjectsWithRetry()
     waitForSingleFilesReady()
 
     const token = uniqueImageToken(imageSrc)
@@ -371,6 +425,7 @@ function createStudioMoveHelpers(sessionId = 'studio-move') {
     openStartNowUploader,
     uploadPhoto,
     openStudioProjects,
+    visitStudioProjectsWithRetry,
     waitForSingleFilesReady,
     waitForNewSingleFileAfterUpload,
     captureSingleFileSrcSet,

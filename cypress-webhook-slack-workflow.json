@@ -1,0 +1,125 @@
+{
+  "name": "Cypress E2E Webhook Receiver & Slack Reporter",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cypress-report",
+        "options": {}
+      },
+      "id": "node-webhook",
+      "name": "Webhook - Receive Results",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 400],
+      "webhookId": "cypress-report"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-has-errors",
+              "leftValue": "={{ ($json.body.overallStatus || $json.overallStatus) !== 'PASS' }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "node-if",
+      "name": "Has Failures?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [520, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// payload یا در body است (webhook) یا مستقیم در json\nconst raw = $input.first().json;\nconst d = raw.body && raw.body.runId ? raw.body : raw;\nconst SLACK_LIMIT = 2900;\n\nconst stats = d.stats || { passed: 0, failed: 0, total: 0 };\n\nfunction headerLines() {\n  let icon, title;\n  if (d.overallStatus === 'ERROR') {\n    icon = ':warning:';\n    title = 'Cypress Test Report \\u2014 RUNNER ERROR';\n  } else if (d.overallStatus === 'NO_TESTS') {\n    icon = ':warning:';\n    title = 'Cypress Test Report \\u2014 NO TESTS FOUND';\n  } else {\n    icon = ':red_circle:';\n    title = 'Cypress Test Report \\u2014 FAILED';\n  }\n  const lines = [];\n  lines.push(icon + ' *' + title + '*');\n  lines.push('\\u2501'.repeat(23));\n  lines.push('*Run ID:* `' + d.runId + '`');\n  lines.push(\n    '*Summary:* :white_check_mark: ' + stats.passed +\n    ' passed  |  :x: ' + stats.failed +\n    ' failed  |  Total: ' + stats.total +\n    '  (' + (d.successRate != null ? d.successRate : 0) + '%)'\n  );\n  lines.push('*Duration:* ' + (d.duration || '-'));\n  if (d.hostname) lines.push('*Host:* `' + d.hostname + '`');\n  return lines;\n}\n\nconst lines = headerLines();\n\nif (d.runnerError) {\n  lines.push('');\n  lines.push(':warning: *Cypress crashed before running tests (config/runtime error).*');\n}\n\nif (d.failedTests && d.failedTests.length > 0) {\n  lines.push('');\n  lines.push(':x: *Failed Tests (' + d.failedTests.length + '):*');\n  for (const t of d.failedTests) {\n    lines.push('\\u2022 *' + t.title + '*');\n    const err = (t.error || 'Unknown error').substring(0, 450);\n    lines.push('   ```' + err + '```');\n  }\n}\n\nif (d.passedTests && d.passedTests.length > 0) {\n  lines.push('');\n  lines.push(':white_check_mark: *Passed Tests (' + d.passedTests.length + '):*');\n  for (const t of d.passedTests) {\n    lines.push('\\u2022 ' + t.title);\n  }\n}\n\nlines.push('');\nlines.push('\\u2501'.repeat(23));\nlines.push('_' + (d.startTimeFormatted || '') + '  \\u2192  ' + (d.endTimeFormatted || '') + '_');\n\nlet text = lines.join('\\n');\nif (text.length > SLACK_LIMIT) {\n  text = text.substring(0, SLACK_LIMIT) + '\\n\\n_... (report truncated due to Slack length limit)_';\n}\n\nreturn [{ json: { slackText: text } }];"
+      },
+      "id": "node-fail-report",
+      "name": "Build Failure Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 280]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json;\nconst d = raw.body && raw.body.runId ? raw.body : raw;\nconst SLACK_LIMIT = 2900;\nconst stats = d.stats || { passed: 0, total: 0 };\n\nconst lines = [];\nlines.push(':large_green_circle: *Cypress Test Report \\u2014 ALL PASSED*');\nlines.push('\\u2501'.repeat(23));\nlines.push('*Run ID:* `' + d.runId + '`');\nlines.push('*Summary:* :white_check_mark: ' + stats.passed + ' passed  |  Total: ' + stats.total + '  (100%)');\nlines.push('*Duration:* ' + (d.duration || '-'));\nif (d.hostname) lines.push('*Host:* `' + d.hostname + '`');\n\nif (d.passedTests && d.passedTests.length > 0) {\n  lines.push('');\n  lines.push(':white_check_mark: *Passed Tests (' + d.passedTests.length + '):*');\n  for (const t of d.passedTests) {\n    lines.push('\\u2022 ' + t.title);\n  }\n}\n\nlines.push('');\nlines.push('\\u2501'.repeat(23));\nlines.push('_' + (d.startTimeFormatted || '') + '  \\u2192  ' + (d.endTimeFormatted || '') + '_');\n\nlet text = lines.join('\\n');\nif (text.length > SLACK_LIMIT) {\n  text = text.substring(0, SLACK_LIMIT) + '\\n\\n_... (report truncated due to Slack length limit)_';\n}\n\nreturn [{ json: { slackText: text } }];"
+      },
+      "id": "node-pass-report",
+      "name": "Build Success Report",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 520]
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "={{ $json.slackText }}"
+      },
+      "id": "node-slack-fail",
+      "name": "Slack - Send Failure Report",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [1040, 280],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "channel": "C0B7L4MT19C",
+        "text": "={{ $json.slackText }}"
+      },
+      "id": "node-slack-pass",
+      "name": "Slack - Send Success Report",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [1040, 520],
+      "credentials": {
+        "slackApi": {
+          "name": "Slack API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook - Receive Results": {
+      "main": [[{ "node": "Has Failures?", "type": "main", "index": 0 }]]
+    },
+    "Has Failures?": {
+      "main": [
+        [{ "node": "Build Failure Report", "type": "main", "index": 0 }],
+        [{ "node": "Build Success Report", "type": "main", "index": 0 }]
+      ]
+    },
+    "Build Failure Report": {
+      "main": [[{ "node": "Slack - Send Failure Report", "type": "main", "index": 0 }]]
+    },
+    "Build Success Report": {
+      "main": [[{ "node": "Slack - Send Success Report", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Tehran"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": ["cypress", "e2e", "testing", "slack", "webhook"]
+}

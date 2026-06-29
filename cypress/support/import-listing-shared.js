@@ -636,7 +636,6 @@ function createImportListingHelpers(sessionId, { account } = {}) {
       timeout: 120000,
       failOnStatusCode: false,
     })
-    flow.prepareSiteForTesting()
 
     return cy.get('body', { timeout: 60000 }).then(($body) => {
       const text = $body.text()
@@ -657,6 +656,7 @@ function createImportListingHelpers(sessionId, { account } = {}) {
         recoverStudioAuthIfNeeded()
       }
 
+      flow.prepareSiteForTesting()
       prepareStudioPage()
     })
   }

@@ -8,6 +8,10 @@ const { getOtpFromGmail, waitForEmailWithSubject } = require('./cypress/tasks/gm
 const downloadsDir = path.join(__dirname, 'cypress', 'downloads')
 
 module.exports = defineConfig({
+  env: {
+    STUDIO_MOVE_EMAIL: process.env.STUDIO_MOVE_EMAIL,
+    STUDIO_MOVE_PASSWORD: process.env.STUDIO_MOVE_PASSWORD,
+  },
   defaultCommandTimeout: 90000,
   pageLoadTimeout: 90000,
   requestTimeout: 90000,
