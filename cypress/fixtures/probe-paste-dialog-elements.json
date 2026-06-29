@@ -1,0 +1,44 @@
+[
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "text": "More",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "text": "Browse from device",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "text": "Use Existing Photos",
+    "visible": true
+  },
+  {
+    "tag": "INPUT",
+    "type": "text",
+    "text": "می‌خوام تست E2E برای فلو Import from Listing بنویسی (با Cypress).سناریو اصلی:از دو Provider مختلف (Z",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "type": "button",
+    "text": "",
+    "visible": true
+  }
+]

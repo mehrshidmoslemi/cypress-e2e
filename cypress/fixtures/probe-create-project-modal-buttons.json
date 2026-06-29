@@ -1,0 +1,17 @@
+[
+  {
+    "tag": "BUTTON",
+    "text": "More",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Studio",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Sort by:Newest",
+    "visible": true
+  }
+]

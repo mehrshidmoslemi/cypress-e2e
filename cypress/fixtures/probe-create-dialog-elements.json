@@ -1,0 +1,27 @@
+[
+  {
+    "tag": "BUTTON",
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Continue with Google",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Continue with Apple",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Log in with Email",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Create an Account",
+    "visible": true
+  }
+]

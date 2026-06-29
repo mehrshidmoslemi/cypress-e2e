@@ -1,0 +1,42 @@
+[
+  {
+    "text": "More",
+    "visible": true,
+    "disabled": false
+  },
+  {
+    "text": "Studio",
+    "visible": true,
+    "disabled": false
+  },
+  {
+    "text": "Create Project",
+    "visible": true,
+    "disabled": false
+  },
+  {
+    "text": "Sort by:Newest",
+    "visible": true,
+    "disabled": false
+  },
+  {
+    "text": "Load More Projects",
+    "visible": true,
+    "disabled": false
+  },
+  {
+    "text": "Sort by:Newest",
+    "visible": true,
+    "disabled": false
+  },
+  {
+    "text": "Paste",
+    "visible": true,
+    "disabled": false
+  },
+  {
+    "text": "Continue",
+    "visible": true,
+    "disabled": false
+  }
+]

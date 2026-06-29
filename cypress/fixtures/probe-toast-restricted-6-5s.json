@@ -1,0 +1,14 @@
+[
+  {
+    "sel": "[role=\"alert\"]",
+    "text": "Notification [\n  \"You can upload up to 5 files at a time on your current plan.\"\n]"
+  },
+  {
+    "sel": "[role=\"alert\"]",
+    "text": "You can upload up to 5 files at a time on your current plan."
+  },
+  {
+    "sel": "[class*=\"toast\"]",
+    "text": "You can upload up to 5 files at a time on your current plan."
+  }
+]

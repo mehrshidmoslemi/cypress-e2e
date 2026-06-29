@@ -1,0 +1,29 @@
+{
+  "images": [
+    { "fixture": "images/image-resize-0.jpg", "fileName": "image-resize-0.jpg" },
+    { "fixture": "images/image-resize-0 - Copy.jpg", "fileName": "image-resize-0 - Copy.jpg" },
+    { "fixture": "images/image-resize-0 - Copy (2).jpg", "fileName": "image-resize-0 - Copy (2).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (3).jpg", "fileName": "image-resize-0 - Copy (3).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (4).jpg", "fileName": "image-resize-0 - Copy (4).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (5).jpg", "fileName": "image-resize-0 - Copy (5).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (6).jpg", "fileName": "image-resize-0 - Copy (6).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (7).jpg", "fileName": "image-resize-0 - Copy (7).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (8).jpg", "fileName": "image-resize-0 - Copy (8).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (9).jpg", "fileName": "image-resize-0 - Copy (9).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (10).jpg", "fileName": "image-resize-0 - Copy (10).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (11).jpg", "fileName": "image-resize-0 - Copy (11).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (12).jpg", "fileName": "image-resize-0 - Copy (12).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (13).jpg", "fileName": "image-resize-0 - Copy (13).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (14).jpg", "fileName": "image-resize-0 - Copy (14).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (15).jpg", "fileName": "image-resize-0 - Copy (15).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (16).jpg", "fileName": "image-resize-0 - Copy (16).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (17).jpg", "fileName": "image-resize-0 - Copy (17).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (18).jpg", "fileName": "image-resize-0 - Copy (18).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (19).jpg", "fileName": "image-resize-0 - Copy (19).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (20).jpg", "fileName": "image-resize-0 - Copy (20).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (21).jpg", "fileName": "image-resize-0 - Copy (21).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (22).jpg", "fileName": "image-resize-0 - Copy (22).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (23).jpg", "fileName": "image-resize-0 - Copy (23).jpg" },
+    { "fixture": "images/image-resize-0 - Copy (24).jpg", "fileName": "image-resize-0 - Copy (24).jpg" }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "text": "New ProjectNew ProjectAddressor add by URL Paste Import listing data directly from MLS or other sources.Create",
+    "buttons": [
+      "",
+      "Paste",
+      "Create"
+    ],
+    "inputs": [
+      {
+        "type": "text",
+        "placeholder": "123 Main Street",
+        "visible": true
+      },
+      {
+        "type": "text",
+        "placeholder": "https://www.realtor.com/...",
+        "visible": true
+      }
+    ]
+  }
+]

@@ -1,0 +1,307 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v3/asset?project_id&page=1&limit=25&sort=desc&width=480&height=320",
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "asset_id": "6a3a470d975d1a50313131e8",
+          "asset_src": "https://cdn.aihomedesign.com/oDAJifm7uj-u6yOjpfvBXt5MNZy4jNs6C6A8VEKqP-A/rs:fit:480:320:0:0/cb:1782205205306836109/czM6Ly9haWhkLWJlZm9yZS8xNTFjYmU3Mi0zOWU5LTQxZGEtYmUxNi00MTIyMWQzYjhlNmMuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a470e975d1a50313131e9",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a468e975d1a50313131db",
+          "asset_src": "https://cdn.aihomedesign.com/AKqskjm5eYScfsFcGQkH4jheSBMxH-z-B29ql0mpVFw/rs:fit:480:320:0:0/cb:1782205205306865545/czM6Ly9haWhkLWJlZm9yZS8wYjc0NzU1NC1lZWQ4LTRlYTUtYTg5Yy0xOTUwNDBkZjZlNGMuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a468f975d1a50313131dc",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a4170975d1a50313131bc",
+          "asset_src": "https://cdn.aihomedesign.com/-bHI77iO5LaaHLhHzShH7A5EC0f2kXnALChIX_Zktfc/rs:fit:480:320:0:0/cb:1782205205306919498/czM6Ly9haWhkLWJlZm9yZS82Y2RlNDQ0OS1kYmIyLTRiZTMtOTMwMi1lMTE4ZGUwMDc2M2IuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a4170975d1a50313131bd",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3cdf975d1a5031313160",
+          "asset_src": "https://cdn.aihomedesign.com/z_t4Z8_yS6g_a2aA2w34FGENavTz9d_iikIelaca-Eg/rs:fit:480:320:0:0/cb:1782205205306937251/czM6Ly9haWhkLWJlZm9yZS81MTJhYzkwMy1mZGY4LTRmNDUtODZiZi03YjU1OTNlMWE2MWQuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a3ce0975d1a5031313161",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3b3c975d1a503131314d",
+          "asset_src": "https://cdn.aihomedesign.com/5OhtZVpIfhPWrBoAOlnSLn1iIxXMcVLICpSJzGgQHYU/rs:fit:480:320:0:0/cb:1782205205306954344/czM6Ly9haWhkLWJlZm9yZS8wOTFhMjQyZS02MGUzLTRmMTUtYmUxMy02ZmE2ODhhYzVmMGMuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a3b3c975d1a503131314e",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a39d8975d1a503131313a",
+          "asset_src": "https://cdn.aihomedesign.com/j82EYkTLbcScmnRxQGg9RT5Ch9uUL2WgaJcMjP8dMBE/rs:fit:480:320:0:0/cb:1782205205306966457/czM6Ly9haWhkLWFmdGVyLzFmMzU1NDlmLTgyZmMtNDFkYS05MjAzLWY5MGY1ZDk3Y2ZlNC5qcGVn",
+          "bookmarked": true,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3953975d1a503131312e",
+          "asset_src": "https://cdn.aihomedesign.com/Y430ZBL3apZkSPD8gwgGysU53Tw_eTVErOAWV9nX3Gc/rs:fit:480:320:0:0/cb:1782205205306982177/czM6Ly9haWhkLWFmdGVyLzVhOGQxZjc4LTgzNzMtNGE3MC04ZGU3LTM3MTliMGI0OTdlNS5qcGVn",
+          "bookmarked": true,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a394a975d1a5031313126",
+          "asset_src": "https://cdn.aihomedesign.com/H5jcorpvniaIn-NZgROMx3z16Ho9dPM0a_WG_tJV4XQ/rs:fit:480:320:0:0/cb:1782205205306995883/czM6Ly9haWhkLWJlZm9yZS9lMWZlNWE0Ny1iMzA5LTQ0MTMtYTZhNi0xYTY3NTRlZWUzYmUuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a394c975d1a5031313127",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3864975d1a503131311b",
+          "asset_src": "https://cdn.aihomedesign.com/_C87RAxPd9ci0ebmoHmshjEA7TuJRx2dGDG1x8hKwJg/rs:fit:480:320:0:0/cb:1782205205307013657/czM6Ly9haWhkLWJlZm9yZS8zNmQ0YzE5NC03ZGQwLTRhNGYtOTNlNC00MTM3YTcwMDU3YTIuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a3864975d1a503131311c",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a37c6975d1a5031313117",
+          "asset_src": "https://cdn.aihomedesign.com/Gfd0CmoMJqWiYu7f-dpeHsCkfre_m_myDqXpVKJtZ-0/rs:fit:480:320:0:0/cb:1782205205307042742/czM6Ly9haWhkLWFmdGVyLzBmZjVjZDE3LWMwYzYtNDRkZi1hZTI4LTBjYTFiOGVlYjZiNi5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3716975d1a50313130fe",
+          "asset_src": "https://cdn.aihomedesign.com/YUnaIIbLB9v8JHVPBeh0Hy_0hW4HV3GXplajnxdNu7s/rs:fit:480:320:0:0/cb:1782205205307032292/czM6Ly9haWhkLWFmdGVyLzlkNzNmNjRmLTBiMGMtNDFiZC1iOTk3LTJjNTc3YTJmY2RhNi5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a370f975d1a50313130f7",
+          "asset_src": "https://cdn.aihomedesign.com/auLpH0Vwn7mhTs8cmcS16B3_jBRRdSqXIs1l6lOpL1M/rs:fit:480:320:0:0/cb:1782205205307047402/czM6Ly9haWhkLWJlZm9yZS8wNDY5NWNlMS0xODYxLTRmZjAtYjJhZC1jNWZhYjE0N2UwYWMuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a3715975d1a50313130f8",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a36be975d1a50313130d8",
+          "asset_src": "https://cdn.aihomedesign.com/BBeRd_sdXC-uByy7Orp_l7FxcsO9zxNK0g5KwuKdJ90/rs:fit:480:320:0:0/cb:1782205205307052952/czM6Ly9haWhkLWFmdGVyL2NlNDhlNmVjLTkyOTItNDNiYy04NmM1LTQ3ZmZkY2Q2Mjk3MC5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a36bd975d1a50313130d5",
+          "asset_src": "https://cdn.aihomedesign.com/L0OV9CMSrr7ouIk46hi8Iw1mq6OlZVuhQE1NF2eNbYg/rs:fit:480:320:0:0/cb:1782205205306898568/czM6Ly9haWhkLWFmdGVyLzEwOTE0ODliLWIyNDAtNDg2NC1hZDE1LTdlZmFmM2RiYjU1Ni5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a36bd975d1a50313130d2",
+          "asset_src": "https://cdn.aihomedesign.com/9W9CJfd22vAy_3x0tlW1BGX6qF1NPDfDAVM1hC8fXW8/rs:fit:480:320:0:0/cb:1782205205306910100/czM6Ly9haWhkLWFmdGVyL2MwODM2MDNkLWUwMTQtNDg5YS1hZjgyLWVhNjIxNDM3NmY0ZS5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a369c975d1a50313130ca",
+          "asset_src": "https://cdn.aihomedesign.com/M_hypNIBDg9iowhIWcwhH3UZh6S6Rh51jeod9xB5wYs/rs:fit:480:320:0:0/cb:1782205205306925128/czM6Ly9haWhkLWFmdGVyLzZjOTZlODExLWFjYmMtNDc3ZC1iM2EwLTgwZDE0YTg5MmViZS5qcGVn",
+          "bookmarked": true,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a369c975d1a50313130c7",
+          "asset_src": "https://cdn.aihomedesign.com/qwePL-6rn6lI69be9QGgCFu4h8JZkXkmTzcgFzwjlVg/rs:fit:480:320:0:0/cb:1782205205306934466/czM6Ly9haWhkLWFmdGVyLzViMTIwZDJhLWMwNTYtNDFiMi1iMmNmLTE1MjI5OTlkNzFlMC5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a369c975d1a50313130c3",
+          "asset_src": "https://cdn.aihomedesign.com/zOf1vCBThnLBZaQpxLxUo-CHizSoa5H7zXk0-dVvmew/rs:fit:480:320:0:0/cb:1782205205306948253/czM6Ly9haWhkLWFmdGVyLzhjMzFiOTA5LTRjMmMtNDg5My1iM2QzLTUxOTJhYWE3YzM1ZS5qcGVn",
+          "bookmarked": true,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a369a975d1a50313130bb",
+          "asset_src": "https://cdn.aihomedesign.com/ZXYq7_zWaSDzI00H8QxkX_xAyITzJGi2ksBdCAHot7c/rs:fit:480:320:0:0/cb:1782205205306968581/czM6Ly9haWhkLWJlZm9yZS80YjQ0NDczNy03Nzg4LTRlZTYtODFiMy1jZjVjYzdhYjk0NmEuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a369b975d1a50313130bd",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3681975d1a50313130b5",
+          "asset_src": "https://cdn.aihomedesign.com/oXpCygRbqgJUSKluuhYR_8rj7eLRMgBTT9x7vmb_8rI/rs:fit:480:320:0:0/cb:1782205205306978490/czM6Ly9haWhkLWJlZm9yZS9jYWZkNGZkNS01Y2ZlLTRjOWEtYTQ1Mi03MTg5NWVhODNkYmIuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a3682975d1a50313130b6",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3614975d1a50313130a3",
+          "asset_src": "https://cdn.aihomedesign.com/qiycb7tEnssQ1GHD9LEr7vp03nH-j8Y9MKGTSHxWaDw/rs:fit:480:320:0:0/cb:1782205205306987217/czM6Ly9haWhkLWFmdGVyLzgwMGI4OTNjLThlN2MtNGFjOS1hMjMzLWExNTZmZTkzNWNjMS5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3614975d1a50313130a0",
+          "asset_src": "https://cdn.aihomedesign.com/M2jC-_25-Jdd22-GuVnnQMpu9L8db2hz31TBwVIio8c/rs:fit:480:320:0:0/cb:1782205205306999610/czM6Ly9haWhkLWFmdGVyLzRlMWU5Yzg5LWNiNDItNDlmNS04OTgyLTE0MjE4NzI4ZTFiNS5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3614975d1a503131309c",
+          "asset_src": "https://cdn.aihomedesign.com/xVF0iQly6XkbpHcZqRuyIpdQd2OooZV8zzW72QKzD-4/rs:fit:480:320:0:0/cb:1782205205307007114/czM6Ly9haWhkLWFmdGVyLzUzMDA4M2JmLWY4OTItNDkxNS05N2FhLWRhOTkyODg4MDVjOS5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a3611975d1a5031313097",
+          "asset_src": "https://cdn.aihomedesign.com/LWLNBR7GD_eQUXrEhUQDA2LoxbwKhbtBchRM6ckfpl4/rs:fit:480:320:0:0/cb:1782205205307015501/czM6Ly9haWhkLWJlZm9yZS9iZjEwY2IxZS0yYmRmLTQ0ZDUtODQ0MC0zNThlZjY0NWYxZGEuanBlZw",
+          "bookmarked": false,
+          "order_id": "6a3a3612975d1a5031313098",
+          "origin": "gallery",
+          "status": "created"
+        },
+        {
+          "asset_id": "6a3a35bb975d1a5031313090",
+          "asset_src": "https://cdn.aihomedesign.com/CPyq8giueL5V1DvXFYqDvaUsTfVvODq8nqwWCFNB4UI/rs:fit:480:320:0:0/cb:1782205205307022534/czM6Ly9haWhkLWFmdGVyLzBjMDQ2YzQ3LTA2MTUtNDBmZC05ZDFhLTVhYTExMjliZTcxMi5qcGVn",
+          "bookmarked": false,
+          "origin": "processed",
+          "status": "created"
+        }
+      ],
+      "message": "ok",
+      "pagination": {
+        "limit": 25,
+        "next_page": "?page=2&limit=25",
+        "page": 1,
+        "previous_page": "",
+        "total_count": 695,
+        "total_pages": 28
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "url": "https://api.aihomedesign.com/v3/project?width=480&height=320",
+    "status": 201,
+    "body": {
+      "data": {
+        "id": "6a3a4b15975d1a503131325e",
+        "address": "My Photos",
+        "slug": "my-photos-0jzypn",
+        "partner": "aihomedesign",
+        "user_id": "21f2b068-aec5-4509-8c50-b3c0837a7a4a",
+        "email": "memoslemi.sdstudio+10000@gmail.com",
+        "cover": {
+          "asset_id": "",
+          "Src": ""
+        },
+        "notes": null,
+        "details": {
+          "state": "",
+          "property_type": "",
+          "bedrooms": 0,
+          "bathrooms": 0,
+          "year_built": 0,
+          "square_foot": 0,
+          "updated_at": "0001-01-01T00:00:00Z"
+        },
+        "report": {
+          "input_count": 0,
+          "result_count": 0,
+          "bookmarked_count": 0
+        },
+        "created_at": "2026-06-23T09:00:05.177434521Z",
+        "updated_at": "2026-06-23T09:00:05.177434521Z",
+        "cluster_asset_id": "000000000000000000000000"
+      },
+      "message": "Created"
+    }
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v3/asset?project_id=6a3a4b15975d1a503131325e&page=1&limit=25&sort=desc&width=480&height=320",
+    "status": 200,
+    "body": {
+      "data": [
+        {
+          "asset_id": "6a3a4b16975d1a503131325f",
+          "asset_src": "https://cdn.aihomedesign.com/MwSaG4bs8ffcI9ZfBhR4Y-JcDj_OsKDD_k1LsqkGRdQ/rs:fit:480:320:0:0/cb:1782205206382605420/czM6Ly9haWhkLWJlZm9yZS9kYmFiNDQwZC0wNzc2LTQ0M2MtOWQ5ZS1jM2UwYmE4ZWNkYzMuanBlZw",
+          "bookmarked": false,
+          "origin": "gallery",
+          "status": "created"
+        }
+      ],
+      "message": "ok",
+      "pagination": {
+        "limit": 25,
+        "next_page": "",
+        "page": 1,
+        "previous_page": "",
+        "total_count": 1,
+        "total_pages": 1
+      }
+    }
+  },
+  {
+    "method": "POST",
+    "url": "https://api.aihomedesign.com/v3/order?width=480&height=320",
+    "status": 201,
+    "body": {
+      "data": {
+        "order_id": "6a3a4b16975d1a5031313260",
+        "assets": [
+          {
+            "id": "6a3a4b16975d1a503131325f",
+            "src": "https://cdn.aihomedesign.com/13TSb1txKhxKHozgSdwA8EULlDh-oMIVBWwvtdwjv9M/aHR0cHM6Ly9zMy5hbWF6b25hd3MuY29tL2FpaGQtYmVmb3JlL2RiYWI0NDBkLTA3NzYtNDQzYy05ZDllLWMzZTBiYThlY2RjMy5qcGVnP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQTM2T000Qk1KVFNBQ1ZIUFolMkYyMDI2MDYyMyUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA2MjNUMDkwMDA2WiZYLUFtei1FeHBpcmVzPTg2NDAwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZYLUFtei1TaWduYXR1cmU9MDdlMGEwZGJkNWYwMzc1ZmZmMzZjMWMxYjUwZDk2ZDQwMWYyNGYwNTE5ZDMyN2YyODRkZTYxYWQ2MzE1ZjNkMg",
+            "asset_type": "image",
+            "asset_role": "primary_angle"
+          }
+        ]
+      },
+      "message": "ok"
+    }
+  },
+  {
+    "method": "POST",
+    "url": "https://api.aihomedesign.com/v3/order?width=480&height=320",
+    "status": 201,
+    "body": {
+      "data": {
+        "order_id": "6a3a4b17975d1a5031313264",
+        "assets": [
+          {
+            "id": "6a3a4b17975d1a5031313263",
+            "src": "https://cdn.aihomedesign.com/np0OIzMYoKTfupafoCf1_A9owtOWCmj-6m4W44GOO4s/aHR0cHM6Ly9zMy5hbWF6b25hd3MuY29tL2FpaGQtYmVmb3JlLzE4OTM5N2RiLTA5ZmMtNGU3My1hZGI1LWE2NzA0ZjFjZWFkMC5qcGVnP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQTM2T000Qk1KVFNBQ1ZIUFolMkYyMDI2MDYyMyUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNjA2MjNUMDkwMDA3WiZYLUFtei1FeHBpcmVzPTg2NDAwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCZYLUFtei1TaWduYXR1cmU9ZGYxOTFjODZjY2E0ZmRmZDEyY2JhMWIxOGYzOWU3OGEyY2JlMzQ2YmU3NzBiNGU3MTJmNWFkYjE3NWI5Yzk1YQ",
+            "asset_type": "image",
+            "asset_role": "primary_angle"
+          }
+        ]
+      },
+      "message": "ok"
+    }
+  }
+]

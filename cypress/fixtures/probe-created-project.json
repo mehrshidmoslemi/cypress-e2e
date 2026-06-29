@@ -1,0 +1,30 @@
+{
+  "id": "6a3a4c0a975d1a50313132ef",
+  "address": "My Photos",
+  "slug": "my-photos-6p6oo0",
+  "partner": "aihomedesign",
+  "user_id": "21f2b068-aec5-4509-8c50-b3c0837a7a4a",
+  "email": "memoslemi.sdstudio+10000@gmail.com",
+  "cover": {
+    "asset_id": "",
+    "Src": ""
+  },
+  "notes": null,
+  "details": {
+    "state": "",
+    "property_type": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "year_built": 0,
+    "square_foot": 0,
+    "updated_at": "0001-01-01T00:00:00Z"
+  },
+  "report": {
+    "input_count": 0,
+    "result_count": 0,
+    "bookmarked_count": 0
+  },
+  "created_at": "2026-06-23T09:04:10.384817337Z",
+  "updated_at": "2026-06-23T09:04:10.384817337Z",
+  "cluster_asset_id": "000000000000000000000000"
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "i": 0,
+    "tag": "DIV",
+    "class": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4",
+    "href": null
+  },
+  {
+    "i": 1,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  },
+  {
+    "i": 2,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  },
+  {
+    "i": 3,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  },
+  {
+    "i": 4,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  },
+  {
+    "i": 5,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  },
+  {
+    "i": 6,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  },
+  {
+    "i": 7,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  },
+  {
+    "i": 8,
+    "tag": "DIV",
+    "class": "animate-pulse w-full aspect-[4/3] rounded-2xl bg-lighter",
+    "href": null
+  }
+]

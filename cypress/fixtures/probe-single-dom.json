@@ -1,0 +1,9 @@
+{
+  "headerTag": "SECTION",
+  "headerClass": "flex items-center justify-between mb-4",
+  "headerParentTag": "DIV",
+  "headerParentClass": "flex flex-col",
+  "nextSiblingTag": "DIV",
+  "nextSiblingClass": "flex flex-col gap-4 pb-8",
+  "nextChildCount": 1
+}

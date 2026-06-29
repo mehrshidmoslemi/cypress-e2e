@@ -1,0 +1,26 @@
+[
+  {
+    "text": "12Which best describes you?Select the most important one.Real estate agent / RealtorReal estate photographer / Photo editorBrokerage / Real estate teamHomeowner / Property ownerOther",
+    "buttons": []
+  },
+  {
+    "text": "Welcome Back Continue with Google Continue with Apple Log in with Email New Around Here? Create an Account",
+    "buttons": [
+      {
+        "text": ""
+      },
+      {
+        "text": "Continue with Google"
+      },
+      {
+        "text": "Continue with Apple"
+      },
+      {
+        "text": "Log in with Email"
+      },
+      {
+        "text": "Create an Account"
+      }
+    ]
+  }
+]

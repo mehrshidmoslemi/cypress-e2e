@@ -1,0 +1,62 @@
+[
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "time": 1782214008336
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/auth",
+    "time": 1782214009764
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/latest-subscription-transaction",
+    "time": 1782214009764
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+    "time": 1782214010017
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "time": 1782214010153
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "time": 1782214014681
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/auth",
+    "time": 1782214015786
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/latest-subscription-transaction",
+    "time": 1782214015787
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+    "time": 1782214015789
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "time": 1782214015791
+  },
+  {
+    "method": "POST",
+    "url": "https://api.aihomedesign.com/v3/scrapping/request?width=480&height=320",
+    "time": 1782214023868
+  },
+  {
+    "method": "GET",
+    "url": "https://api.aihomedesign.com/v3/scrapping/6a3a6e39e44d305b6bab067b?width=480&height=320",
+    "time": 1782214040337
+  }
+]

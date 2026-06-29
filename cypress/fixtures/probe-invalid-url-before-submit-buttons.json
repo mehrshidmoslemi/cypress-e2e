@@ -1,0 +1,17 @@
+[
+  {
+    "tag": "BUTTON",
+    "text": "More",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Browse from device",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Use Existing Photos",
+    "visible": true
+  }
+]
