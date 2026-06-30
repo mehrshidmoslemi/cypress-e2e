@@ -1,0 +1,578 @@
+[
+  {
+    "tag": "A",
+    "text": "Virtual Staging",
+    "href": "/virtual-staging",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Photo Editing",
+    "href": "/photo-editing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Renovation",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "B2B Solution",
+    "href": "/b2b",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Pricing",
+    "href": "https://app.aihomedesign.com/pricing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Get started for free",
+    "href": "https://app.aihomedesign.com/",
+    "id": "cta-header-primary-desktop",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--default-gradient base-button--md hidden! lg:flex! heade"
+  },
+  {
+    "tag": "A",
+    "text": "Start Editing Free",
+    "href": "https://app.aihomedesign.com/generate",
+    "id": "cta-home-hero-primary",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--primary-gradient base-button--lg w-[182px]"
+  },
+  {
+    "tag": "A",
+    "text": "Use service",
+    "href": "https://app.aihomedesign.com/generate/?tool_slug=tool-virtual-staging",
+    "id": "cta-services-vs-use",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--light base-button--md w-full"
+  },
+  {
+    "tag": "A",
+    "text": "Learn more",
+    "href": "/virtual-staging",
+    "id": "cta-services-vs-learn",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--soft base-button--md w-full !border-white/45 !text-whit"
+  },
+  {
+    "tag": "A",
+    "text": "Use service",
+    "href": "https://app.aihomedesign.com/generate/?tool_slug=tool-item-removal",
+    "id": "cta-services-ir-use",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--light base-button--md w-full"
+  },
+  {
+    "tag": "A",
+    "text": "Learn more",
+    "href": "/item-removal",
+    "id": "cta-services-ir-learn",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--soft base-button--md w-full !border-white/45 !text-whit"
+  },
+  {
+    "tag": "A",
+    "text": "Use service",
+    "href": "https://app.aihomedesign.com/generate/?tool_slug=tool-day-to-dusk",
+    "id": "cta-services-dtd-use",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--light base-button--md w-full"
+  },
+  {
+    "tag": "A",
+    "text": "Learn more",
+    "href": "/day-to-dusk",
+    "id": "cta-services-dtd-learn",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--soft base-button--md w-full !border-white/45 !text-whit"
+  },
+  {
+    "tag": "A",
+    "text": "Use service",
+    "href": "https://app.aihomedesign.com/generate/?tool_slug=tool-image-enhancement",
+    "id": "cta-services-ie-use",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--light base-button--md w-full"
+  },
+  {
+    "tag": "A",
+    "text": "Learn more",
+    "href": "/image-enhancement",
+    "id": "cta-services-ie-learn",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--soft base-button--md w-full !border-white/45 !text-whit"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "01 Upload photos Add your property photos to get started.",
+    "href": null,
+    "id": "hiw-tab-0",
+    "testid": null,
+    "visible": true,
+    "classes": "hiw-step group flex w-full bg-transparent text-left transition-colors duration-2"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "02 AI analyzes photos AI detects what kind of edit the photo needs.",
+    "href": null,
+    "id": "hiw-tab-1",
+    "testid": null,
+    "visible": true,
+    "classes": "hiw-step group flex w-full bg-transparent text-left transition-colors duration-2"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "03 Select editing service Choose a service from virtual staging, photo editing, or renovation.",
+    "href": null,
+    "id": "hiw-tab-2",
+    "testid": null,
+    "visible": true,
+    "classes": "hiw-step group flex w-full bg-transparent text-left transition-colors duration-2"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "04 Generate and edit results Create results, regenerate variations, or fine-tune them with chat-base",
+    "href": null,
+    "id": "hiw-tab-3",
+    "testid": null,
+    "visible": true,
+    "classes": "hiw-step group flex w-full bg-transparent text-left transition-colors duration-2"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "05 Download results Save the final photos and move them into your listing.",
+    "href": null,
+    "id": "hiw-tab-4",
+    "testid": null,
+    "visible": true,
+    "classes": "hiw-step group flex w-full bg-transparent text-left transition-colors duration-2"
+  },
+  {
+    "tag": "A",
+    "text": "AI Interior Designer",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "bento-card group relative block h-[100px] w-full overflow-hidden rounded-3xl no-"
+  },
+  {
+    "tag": "A",
+    "text": "AI Furniture Restyle",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "bento-card group relative block h-[100px] w-full overflow-hidden rounded-3xl no-"
+  },
+  {
+    "tag": "A",
+    "text": "AI Wall Change",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "bento-card group relative block h-[100px] w-full overflow-hidden rounded-3xl no-"
+  },
+  {
+    "tag": "A",
+    "text": "AI Floor Change",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "bento-card group relative block h-[100px] w-full overflow-hidden rounded-3xl no-"
+  },
+  {
+    "tag": "A",
+    "text": "AI Ceiling Change",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "bento-card group relative block h-[100px] w-full overflow-hidden rounded-3xl no-"
+  },
+  {
+    "tag": "A",
+    "text": "AI Construction Completion",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "bento-card group relative block h-[100px] w-full overflow-hidden rounded-3xl no-"
+  },
+  {
+    "tag": "A",
+    "text": "AI Backsplash Change",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "bento-card group relative block h-[100px] w-full overflow-hidden rounded-3xl no-"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Brokerages",
+    "href": null,
+    "id": "tab-ourVision-0",
+    "testid": null,
+    "visible": true,
+    "classes": "vision-tab rounded-xl border border-transparent bg-lightest px-4 py-2 text-label"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "MLSs",
+    "href": null,
+    "id": "tab-ourVision-1",
+    "testid": null,
+    "visible": true,
+    "classes": "vision-tab rounded-xl border border-transparent bg-lightest px-4 py-2 text-label"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Service Partners",
+    "href": null,
+    "id": "tab-ourVision-2",
+    "testid": null,
+    "visible": true,
+    "classes": "vision-tab rounded-xl border border-transparent bg-lightest px-4 py-2 text-label"
+  },
+  {
+    "tag": "A",
+    "text": "Book a Demo",
+    "href": "https://calendly.com/aihomedesign/30min",
+    "id": "cta-vision-brokerage-primary",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--default-gradient base-button--lg"
+  },
+  {
+    "tag": "A",
+    "text": "Explore Solutions",
+    "href": "/b2b",
+    "id": "cta-vision-brokerage-secondary",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--lightest base-button--lg"
+  },
+  {
+    "tag": "A",
+    "text": "Explore our blog",
+    "href": "/blog",
+    "id": "cta-blog-explore",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--outline base-button--md blog-explore-btn w-fit [&>span:"
+  },
+  {
+    "tag": "A",
+    "text": "Best Real Estate Companies in the U.S. for 2026 Compare the best real estate companies in the U.S. f",
+    "href": "/blog/real-estate/best-real-estate-companies-in-the-u-s",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "blog-card-link group block no-underline"
+  },
+  {
+    "tag": "A",
+    "text": "40 Real Estate Questions and Answers for Agents (2026) 40 real estate questions and answers covering",
+    "href": "/blog/real-estate/real-estate-questions",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "blog-card-link group block no-underline"
+  },
+  {
+    "tag": "A",
+    "text": "Top 5 AI Photo Editor Online Tools for Real Estate (2026 Guide) Compare the top 5 AI photo editor on",
+    "href": "/blog/real-estate-photography/ai-photo-editor-online-real-estate",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "blog-card-link group block no-underline"
+  },
+  {
+    "tag": "A",
+    "text": "Start Your First Listing",
+    "href": "https://app.aihomedesign.com/generate",
+    "id": "cta-shared-cta-below-primary",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--white base-button--lg !text-static-black !shadow-none"
+  },
+  {
+    "tag": "A",
+    "text": "virtual staging",
+    "href": "/virtual-staging",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": ""
+  },
+  {
+    "tag": "A",
+    "text": "renovate a house visually",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": ""
+  },
+  {
+    "tag": "A",
+    "text": "AI photo editing",
+    "href": "/photo-editing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": ""
+  },
+  {
+    "tag": "A",
+    "text": "starting free with no credit card required",
+    "href": "https://app.aihomedesign.com/pricing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": ""
+  },
+  {
+    "tag": "BUTTON",
+    "text": "View More",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "view-more__button"
+  },
+  {
+    "tag": "A",
+    "text": "AI Virtual Staging",
+    "href": "/virtual-staging",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Photo Editing",
+    "href": "/photo-editing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Renovation",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Day to Dusk",
+    "href": "/day-to-dusk",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Image Enhancement",
+    "href": "/image-enhancement",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Item Removal",
+    "href": "/item-removal",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "MCP Server",
+    "href": "/mcp",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Terms",
+    "href": "/terms-and-conditions",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Privacy",
+    "href": "/privacy-policy",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Refund Policy",
+    "href": "/refund-policy",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Pricing",
+    "href": "https://app.aihomedesign.com/pricing",
+    "id": "cta-footer-pricing",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "MLS & Real Estate Agencies",
+    "href": "/b2b",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Affiliate Program",
+    "href": "/affiliate-program",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "API",
+    "href": "/b2b",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Ideation Center",
+    "href": "/ideas",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "What's New",
+    "href": "/whats-new",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Blog",
+    "href": "/blog",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "EN",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "inline-flex items-center gap-1 rounded-lg bg-transparent px-1 py-1 text-label-lg"
+  },
+  {
+    "tag": "A",
+    "text": "support@aihomedesign.com",
+    "href": "mailto:support@aihomedesign.com",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "flex flex-wrap items-center gap-2"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Accept all",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "cc-btn cc-btn-primary"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Reject all",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "cc-btn cc-btn-ghost"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Customize",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "cc-btn cc-btn-ghost"
+  }
+]

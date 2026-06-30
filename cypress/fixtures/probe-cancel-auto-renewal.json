@@ -1,0 +1,22 @@
+{
+  "mutations": [],
+  "dialogs": [
+    {
+      "text": "Turn Off Auto-RenewalAre you sure you want to turn off auto-renewal for your plan?Yes, ContinueNo, Go Back",
+      "buttons": [
+        {
+          "id": "",
+          "text": ""
+        },
+        {
+          "id": "",
+          "text": "Yes, Continue"
+        },
+        {
+          "id": "",
+          "text": "No, Go Back"
+        }
+      ]
+    }
+  ]
+}

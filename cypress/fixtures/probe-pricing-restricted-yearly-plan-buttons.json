@@ -1,0 +1,20 @@
+[
+  {
+    "id": "v5-pricing-yearly-pro-button",
+    "text": "Get Yearly",
+    "tag": "BUTTON",
+    "visible": true
+  },
+  {
+    "id": "v5-pricing-yearly-pro-plus-button",
+    "text": "Get Yearly",
+    "tag": "BUTTON",
+    "visible": true
+  },
+  {
+    "id": "v5-pricing-yearly-enterprise-button",
+    "text": "Get Yearly",
+    "tag": "BUTTON",
+    "visible": true
+  }
+]

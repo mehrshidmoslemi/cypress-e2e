@@ -1,0 +1,22 @@
+[
+  {
+    "text": "Turn Off Auto-RenewalAre you sure you want to turn off auto-renewal for your plan?Yes, ContinueNo, Go Back",
+    "buttons": [
+      {
+        "id": "",
+        "text": "",
+        "ariaLabel": null
+      },
+      {
+        "id": "",
+        "text": "Yes, Continue",
+        "ariaLabel": null
+      },
+      {
+        "id": "",
+        "text": "No, Go Back",
+        "ariaLabel": null
+      }
+    ]
+  }
+]

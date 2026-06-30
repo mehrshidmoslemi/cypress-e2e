@@ -1,0 +1,75 @@
+[
+  {
+    "variant": {
+      "pending": "pro-plus",
+      "cycle": "monthly",
+      "activeTier": "enterprise"
+    },
+    "buttons": [
+      {
+        "id": "v5-pricing-monthly-downgrade-pro-button",
+        "text": "Downgrade",
+        "disabled": false
+      },
+      {
+        "id": "v5-pricing-monthly-downgrade-pro-plus-button",
+        "text": "Downgrade",
+        "disabled": false
+      },
+      {
+        "id": "v5-pricing-monthly-downgrade-enterprise-button",
+        "text": "Downgrade",
+        "disabled": false
+      }
+    ]
+  },
+  {
+    "variant": {
+      "pending": "pro-plus",
+      "cycle": "yearly",
+      "activeTier": "enterprise"
+    },
+    "buttons": [
+      {
+        "id": "v5-pricing-monthly-downgrade-pro-button",
+        "text": "Downgrade",
+        "disabled": false
+      },
+      {
+        "id": "v5-pricing-monthly-downgrade-pro-plus-button",
+        "text": "Downgrade",
+        "disabled": false
+      },
+      {
+        "id": "v5-pricing-monthly-downgrade-enterprise-button",
+        "text": "Downgrade",
+        "disabled": false
+      }
+    ]
+  },
+  {
+    "variant": {
+      "pending": "pro-plus",
+      "cycle": "yearly",
+      "activeTier": "enterprise",
+      "renewalCanceled": false
+    },
+    "buttons": [
+      {
+        "id": "v5-pricing-monthly-downgrade-pro-button",
+        "text": "Downgrade",
+        "disabled": false
+      },
+      {
+        "id": "v5-pricing-monthly-downgrade-pro-plus-button",
+        "text": "Downgrade",
+        "disabled": false
+      },
+      {
+        "id": "v5-pricing-monthly-downgrade-enterprise-button",
+        "text": "Downgrade",
+        "disabled": false
+      }
+    ]
+  }
+]

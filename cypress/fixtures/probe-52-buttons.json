@@ -1,0 +1,87 @@
+[
+  {
+    "text": "Upgrade",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Home",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Studio",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "API",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Pricing",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Help",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "More",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Download",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Origin",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Back",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "SpaceStudio",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Studio",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "StylePrime",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Prime",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Generate",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "Cancel",
+    "visible": true,
+    "testid": null
+  },
+  {
+    "text": "See Plans",
+    "visible": true,
+    "testid": null
+  }
+]

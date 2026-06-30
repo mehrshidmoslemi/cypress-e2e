@@ -1,0 +1,96 @@
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6QM6Q76" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe>      Menu            Virtual Staging  Photo Editing  Renovation  B2B Solution  Pricing   Get started for free Get started     Virtual Staging  Photo Editing  Renovation  B2B Solution  Pricing                Virtual Staging AI   Stage the Space. Sell the Vision    Turn vacant or already-furnished listing photos into styled, MLS-ready images with free AI virtual staging for real estate listings, built for real estate agents, brokerages. and associations.    Start Staging Free       
+  
+  
+  No credit card required   
+  
+  
+  Plans from $0.24/photo   
+  
+  
+  MLS-ready   
+  
+  
+  Results in seconds            Empty living room transformed into a fully staged listing photo using AI HomeDesign virtual staging.(() => {
+  const shell = document.getElementById("ui-video-c73fd336-2ab7-4a41-b1ec-5a76396447cb");
+  if (!shell) return;
+
+  const video = shell.querySelector('video');
+  if (!video) return;
+
+  let revealed = false;
+  const reveal = () => {
+    if (revealed || shell.classList.contains('has-video-error')) return;
+    revealed = true;
+    shell.classList.add('is-video-ready');
+  };
+
+  const tryPlay = () => {
+    if (video.dataset.autoplay !== 'true') {
+      if (video.readyState >= 1 || video.currentSrc) reveal();
+      return;
+    }
+
+    video.muted = true;
+    video.autoplay = true;
+    video.playsInline = true;
+
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(reveal).catch(() => {
+        if (video.readyState >= 2 || video.currentSrc) reveal();
+      });
+    } else if (video.readyState >= 1 || video.currentSrc) {
+      reveal();
+    }
+  };
+
+  const loadVideo = () => {
+    if (video.dataset.loaded === 'true') return;
+    video.dataset.loaded = 'true';
+
+    video.addEventListener('playing', reveal, { once: true });
+    video.addEventListener('timeupdate', reveal, { once: true });
+    video.addEventListener('canplay', tryPlay, { once: true });
+    video.addEventListener('loadeddata', tryPlay, { once: true });
+    video.addEventListener('loadedmetadata', tryPlay, { once: true });
+    video.addEventListener('error', () => {
+      shell.classList.add('has-video-error');
+    }, { once: true });
+
+    video.querySelectorAll('source[data-src]').forEach((source) => {
+      const nextSrc = source.dataset.src;
+      if (!nextSrc) return;
+      source.src = nextSrc;
+      source.removeAttribute('data-src');
+    });
+
+    video.load();
+    tryPlay();
+
+    window.setTimeout(() => {
+      if (!revealed && !shell.classList.contains('has-video-error') && (video.readyState >= 1 || video.currentSrc)) {
+        tryPlay();
+        reveal();
+      }
+    }, 2200);
+  };
+
+  const scheduleLoad = () => window.requestAnimationFrame(loadVideo);
+  if (document.readyState === 'complete') {
+    scheduleLoad();
+  } else {
+    window.addEventListener('load', scheduleLoad, { once: true });
+  }
+})();         Used by agents at                  What AI Virtual Staging Can Do for Real Estate Listings   From furnished-room replacement to style changes and instant regeneration, these capabilities make virtual staging more flexible for real estate listings.                                      Virtual Staging Room Type and Style  Stage spaces across 15 room types, from living rooms and bedrooms to terraces and dining areas, in 8 design styles including Scandinavian, Modern, and Farmhouse. The result adapts to both the space and the visual direction the listing needs.    Get Started             Stage Vacant or Furnished Rooms with AI  Handle vacant rooms and furnished spaces in one workflow, with the option to remove existing furniture before applying a new style. This keeps restaging flexible across different property conditions.    Get Started             Free Regeneration and AI Chat Edits  Use free regeneration and chat-based edits to iterate on the staged result without starting over. This gives teams more flexibility when refining style, layout, or overall room presentation.    Get Started             MLS-Compliant Virtual Staging from the Start  Generate staged visuals designed for real estate listing workflows, with support for MLS-ready output and badge eligibility where applicable.    Get Started             Virtual Staging in Under 5 Seconds  Generate staged results in under 5 seconds, making it easier to move listing prep forward without waiting on manual staging delivery.    Get Started                    What You Get with AI Virtual Staging         Staging Cost Reduction     95%    Lower staging cost compared with traditional staging, without furniture rental, on-site setup, or redesign delays.      Staging Combinations     120    Across 8 design styles and 15 room types from one uploaded photo.      Turnaround Time     Under 5 sec    From 24–48 hours to seconds for virtual staging results.         How Virtual Staging Software works   Upload, Choose a Style, and Get Virtual Staging Results in Seconds            01         Upload photos  Upload a vacant or furnished room photo to get started.        02         AI analyzes photos  AI detects the room type, layout, and whether the space is vacant or furnished.        03         Select Room Type and Staging Style  Choose the room category, design style, and whether to remove existing furniture before staging.        04         Generate and edit results  Create staged outputs, regenerate variations, or fine-tune them with chat-based edits.        05         Download results  Save the final photos and move them into your listing.           How Virtual Staging Software works   Upload, Choose a Style, and Get Virtual Staging Results in Seconds                                                                 Upload photos  Upload a vacant or furnished room photo to get started.            AI analyzes photos  AI detects the room type, layout, and whether the space is vacant or furnished.            Select Room Type and Staging Style  Choose the room category, design style, and whether to remove existing furniture before staging.            Generate and edit results  Create staged outputs, regenerate variations, or fine-tune them with chat-based edits.            Download results  Save the final photos and move them into your listing.                Real Estate Agents Using AI Virtual Staging                                     Phil Radtke   kw TEAM BERLIN KELLER WILLIAMS   Associate Professor at Virginia Tech     I like the software in general! It still has loooot to learn, as it can’t work with bigger apartments and sometimes even smaller apartments are quite to hard to put in perspective regarding the size of furniture. The option to delete furniture works well, but forgets to clear lamps. It would be awesome to predict the floor before, like wood, stone, tiles etc.. In general I'am happy!             Before    After       
+Before
+    
+After
+        Used  Virtual Staging  service to create this photo             Brigitte Elzarki   COLDWELL BANKER   CB Global Luxury Property Specialist     I just used it for the first time yesterday. I chose the Standard plan and loved it. If I have more than the included pictures, I pay a small additional fee to add a few more.             Before    After       
+Before
+    
+After
+        Used  Virtual Staging  service to create this photo             Steven Barkho   PRIME   Managing Director     AI home design is truly impressive! The creativity and attention to detail shine through, making a significant impact.             Before    After       
+Before
+    
+After
+        Used  Virtual Staging  service to create this photo             Jersenia Patterson   RE/MAX   Licensed REALTOR®     AI HomeDesign is a great marketing tool I use for my listings. I work with many house flippers who do not have staging budgets, this tool allows me to stage our listings and make 

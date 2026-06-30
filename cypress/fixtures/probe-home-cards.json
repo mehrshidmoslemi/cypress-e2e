@@ -1,0 +1,30 @@
+[
+  {
+    "id": "v5-home-tool-virtual-staging-card",
+    "text": "Use AI Virtual Staging",
+    "visible": true,
+    "href": null,
+    "tag": "DIV"
+  },
+  {
+    "id": "v5-home-tool-day-to-dusk-card",
+    "text": "Use AI Day to Dusk",
+    "visible": true,
+    "href": null,
+    "tag": "DIV"
+  },
+  {
+    "id": "v5-home-tool-item-removal-card",
+    "text": "Use AI Item Removal",
+    "visible": true,
+    "href": null,
+    "tag": "DIV"
+  },
+  {
+    "id": "v5-home-tool-image-enhancement-card",
+    "text": "Use AI Image Enhancement",
+    "visible": true,
+    "href": null,
+    "tag": "DIV"
+  }
+]

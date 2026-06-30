@@ -1,0 +1,96 @@
+  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T6QM6Q76" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe>      Menu            Virtual Staging  Photo Editing  Renovation  B2B Solution  Pricing   Get started for free Get started     Virtual Staging  Photo Editing  Renovation  B2B Solution  Pricing                AI Item Removal   Clear the Clutter. Reveal the Listing    Remove unwanted objects from real estate photos with free AI item removal and virtual decluttering for cleaner, distraction-free listing images, no physical cleaning needed.    Start decluttering free       
+  
+  
+  No credit card required   
+  
+  
+  Plans from $0.24/photo   
+  
+  
+  MLS-ready   
+  
+  
+  Results in seconds            A cluttered real estate listing photo with furniture and objects removed by AI in seconds — a clean, distraction-free result, no physical cleaning.(() => {
+  const shell = document.getElementById("ui-video-b19d6d6e-15fb-4ca8-88a6-d134d8346471");
+  if (!shell) return;
+
+  const video = shell.querySelector('video');
+  if (!video) return;
+
+  let revealed = false;
+  const reveal = () => {
+    if (revealed || shell.classList.contains('has-video-error')) return;
+    revealed = true;
+    shell.classList.add('is-video-ready');
+  };
+
+  const tryPlay = () => {
+    if (video.dataset.autoplay !== 'true') {
+      if (video.readyState >= 1 || video.currentSrc) reveal();
+      return;
+    }
+
+    video.muted = true;
+    video.autoplay = true;
+    video.playsInline = true;
+
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise.then(reveal).catch(() => {
+        if (video.readyState >= 2 || video.currentSrc) reveal();
+      });
+    } else if (video.readyState >= 1 || video.currentSrc) {
+      reveal();
+    }
+  };
+
+  const loadVideo = () => {
+    if (video.dataset.loaded === 'true') return;
+    video.dataset.loaded = 'true';
+
+    video.addEventListener('playing', reveal, { once: true });
+    video.addEventListener('timeupdate', reveal, { once: true });
+    video.addEventListener('canplay', tryPlay, { once: true });
+    video.addEventListener('loadeddata', tryPlay, { once: true });
+    video.addEventListener('loadedmetadata', tryPlay, { once: true });
+    video.addEventListener('error', () => {
+      shell.classList.add('has-video-error');
+    }, { once: true });
+
+    video.querySelectorAll('source[data-src]').forEach((source) => {
+      const nextSrc = source.dataset.src;
+      if (!nextSrc) return;
+      source.src = nextSrc;
+      source.removeAttribute('data-src');
+    });
+
+    video.load();
+    tryPlay();
+
+    window.setTimeout(() => {
+      if (!revealed && !shell.classList.contains('has-video-error') && (video.readyState >= 1 || video.currentSrc)) {
+        tryPlay();
+        reveal();
+      }
+    }, 2200);
+  };
+
+  const scheduleLoad = () => window.requestAnimationFrame(loadVideo);
+  if (document.readyState === 'complete') {
+    scheduleLoad();
+  } else {
+    window.addEventListener('load', scheduleLoad, { once: true });
+  }
+})();         Used by agents at                  What Item Removal Can Do   Use item removal, virtual decluttering, and virtual cleaning to create cleaner, distraction-free listing photos for occupied homes and active listings. From whole-room cleanup and select & remove tools to chat-based refinements, each feature helps reduce buyer distractions without physical cleaning.                                      Whole-Room Declutter  Clear clutter, furniture, and personal items from occupied rooms in one step. Create cleaner, distraction-free listing photos without physical cleaning.    Get Started             Select & Remove  Use Brush Mode to select and remove specific distractions with more control, from mirror smudges and photographer reflections to festive decorations, “for sale” signs, cords, bins, and other unwanted objects.    Get Started             Edit with Chat  Refine the result with simple prompts to remove what still feels distracting, adjust the cleanup, or guide the image toward a more MLS-ready, listing-ready final look.    Get Started                    What You Get with AI Item Removal         Turnaround Speed     Under 5 sec    From 24–48 hours to seconds for item removal results.      Cost Savings     Up to 33× Cheaper    Compared with traditional item removal pricing.      Hourly Output     720 Results / Hour    Generate high-volume item removal results faster across listing workflows.         How AI Item Removal Works   Upload a property photo, choose what to remove, and create a cleaner, distraction-free result in seconds.            01         Upload photos  Upload a property photo to get started.        02         AI analyzes photos  AI detects clutter, furniture, and other unwanted objects in the scene.        03         Select removal type  Choose whole-room declutter or select & remove specific objects.        04         Generate and edit results  Create cleaned-up results, regenerate variations, or refine the image with chat-based edits.        05         Download results  Save the final photos and move them into your listing.           How AI Item Removal Works   Upload a property photo, choose what to remove, and create a cleaner, distraction-free result in seconds.                                                                 Upload photos  Upload a property photo to get started.            AI analyzes photos  AI detects clutter, furniture, and other unwanted objects in the scene.            Select removal type  Choose whole-room declutter or select & remove specific objects.            Generate and edit results  Create cleaned-up results, regenerate variations, or refine the image with chat-based edits.            Download results  Save the final photos and move them into your listing.                Proof in Every Edit                                     Dan Safier   Pardo Group   President &amp; CEO     I love how easy aihomedesign.com makes creating beautiful virtual stagings. The quick results, free redos, and low cost per photo are great. I’d like more room types and transferable credits, but it’s my top choice for home staging—highly recommend!             Before    After       
+Before
+    
+After
+        Used  Item Removal  service to create this photo             Lily Vallario   Sold by Lily   Team Leader     I am a real estate agent, and I love this tool! I use it to remove items on my marketing pictures. The AI does a great job, and I highly recommend it.             Before    After       
+Before
+    
+After
+        Used  Item Removal  service to create this photo                  Built to Scale with Your Team     Brokerages  MLSs  Service Partners     Brokerage teams are under pressure to keep listing visuals consistent across agents and offices while reducing coordination overhead and protecting margins. We understand how quickly fragmented workflows can slow teams down as volume grows, and we can adapt the approach to fit those operational needs.      API Integration       Single Sign-On (SSO)       MLS compliance built-in       From $0.24/photo    Book a Demo Explore Solutions    MLS environments depend on structured, high-volume operations where
+efficiency, consistency, and compliance all matter every day.
+We know how photo workflows become a bottleneck when they
+do not fit existing systems or create extra review pressure, and we can
+support MLS-compliant visual preparation as part of that process.      API Integration       Single Sign-On (SSO)       MLS compliance built-in       From $0.24/photo    Book a Demo Explore Solutions    Service providers have to move fast, stay flexible, and deliver consistent results across many clients without letting production overhead eat into turnaround time. We see how quickly growth can strain delivery speed and quality control, and we can support a more tailored approach as volume increases.      API Integration       Single Sign-On 

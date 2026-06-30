@@ -1,0 +1,97 @@
+[
+  {
+    "text": "AI Virtual Staging",
+    "href": "/virtual-staging",
+    "visible": true
+  },
+  {
+    "text": "AI Photo Editing",
+    "href": "/photo-editing",
+    "visible": true
+  },
+  {
+    "text": "AI Renovation",
+    "href": "/home-renovation",
+    "visible": true
+  },
+  {
+    "text": "AI Day to Dusk",
+    "href": "/day-to-dusk",
+    "visible": true
+  },
+  {
+    "text": "AI Image Enhancement",
+    "href": "/image-enhancement",
+    "visible": true
+  },
+  {
+    "text": "AI Item Removal",
+    "href": "/item-removal",
+    "visible": true
+  },
+  {
+    "text": "MCP Server",
+    "href": "/mcp",
+    "visible": true
+  },
+  {
+    "text": "Terms",
+    "href": "/terms-and-conditions",
+    "visible": true
+  },
+  {
+    "text": "Privacy",
+    "href": "/privacy-policy",
+    "visible": true
+  },
+  {
+    "text": "Refund Policy",
+    "href": "/refund-policy",
+    "visible": true
+  },
+  {
+    "text": "Pricing",
+    "href": "https://app.aihomedesign.com/pricing",
+    "visible": true
+  },
+  {
+    "text": "MLS & Real Estate Agencies",
+    "href": "/b2b",
+    "visible": true
+  },
+  {
+    "text": "Affiliate Program",
+    "href": "/affiliate-program",
+    "visible": true
+  },
+  {
+    "text": "API",
+    "href": "/b2b",
+    "visible": true
+  },
+  {
+    "text": "Ideation Center",
+    "href": "/ideas",
+    "visible": true
+  },
+  {
+    "text": "What's New",
+    "href": "/whats-new",
+    "visible": true
+  },
+  {
+    "text": "Blog",
+    "href": "/blog",
+    "visible": true
+  },
+  {
+    "text": "EN",
+    "href": null,
+    "visible": true
+  },
+  {
+    "text": "support@aihomedesign.com",
+    "href": "mailto:support@aihomedesign.com",
+    "visible": true
+  }
+]

@@ -1,0 +1,725 @@
+[
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "status": 401,
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+    "status": 401,
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/latest-subscription-transaction",
+    "status": 401,
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "status": 401,
+    "body": {
+      "error": "token is malformed: token contains an invalid number of segments"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "status": 200,
+    "body": {
+      "active_plan_id": "95142b572cf11efa3c6df7ec",
+      "active_plan_name": "pro-plus",
+      "active_plan_title": "pages_pricing_plan_pro_plus_title",
+      "badge_link": "",
+      "background_color": "",
+      "cycle": "yearly",
+      "previous_plan_id": "95142b572cf11eee3c6df7ec",
+      "previous_plan_name": "pro",
+      "previous_plan_title": "pages_pricing_plan_pro_title",
+      "previous_plan_cycle": "yearly"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "status": 200,
+    "body": {
+      "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+      "active_plan_id": "95142b572cf11efa3c6df7ec",
+      "balance": 393,
+      "remaining_time": 3,
+      "total_time": 365,
+      "test_balance": 0,
+      "test_remaining_time": -106751,
+      "test_time": 0,
+      "free_plan": false,
+      "renewal_canceled": true,
+      "plan_expire_date": "2027-02-03T07:21:53Z",
+      "total_test_duration": 0
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "status": 200,
+    "body": {
+      "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+      "active_plan_id": "95142b572cf11efa3c6df7ec",
+      "balance": 393,
+      "remaining_time": 3,
+      "total_time": 365,
+      "test_balance": 0,
+      "test_remaining_time": -106751,
+      "test_time": 0,
+      "free_plan": false,
+      "renewal_canceled": true,
+      "plan_expire_date": "2027-02-03T07:21:53Z",
+      "total_test_duration": 0
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "status": 200,
+    "body": {
+      "active_plan_id": "95142b572cf11efa3c6df7ec",
+      "active_plan_name": "pro-plus",
+      "active_plan_title": "pages_pricing_plan_pro_plus_title",
+      "badge_link": "",
+      "background_color": "",
+      "cycle": "yearly",
+      "previous_plan_id": "95142b572cf11eee3c6df7ec",
+      "previous_plan_name": "pro",
+      "previous_plan_title": "pages_pricing_plan_pro_title",
+      "previous_plan_cycle": "yearly"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+    "status": 200,
+    "body": {
+      "is_real_estate_permitted": true,
+      "can_display_renewal_failed_banner": false,
+      "can_subscribe": false,
+      "can_cancel_downgrade": false,
+      "can_change_payment_method": false,
+      "restricted_user": false,
+      "price_per_one_credit": 0.54,
+      "will_be_roll_overed": true,
+      "balance": 393
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/latest-subscription-transaction",
+    "status": 200,
+    "body": {
+      "price": 0,
+      "symbol": "$",
+      "currency": "usd",
+      "current_plan_credit": 960,
+      "credit_plan_index": 0
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+    "status": 200,
+    "body": {
+      "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+      "active_plan_id": "95142b572cf11efa3c6df7ec",
+      "balance": 393,
+      "remaining_time": 3,
+      "total_time": 365,
+      "test_balance": 0,
+      "test_remaining_time": -106751,
+      "test_time": 0,
+      "free_plan": false,
+      "renewal_canceled": true,
+      "plan_expire_date": "2027-02-03T07:21:53Z",
+      "total_test_duration": 0
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+    "status": 200,
+    "body": {
+      "active_plan_id": "95142b572cf11efa3c6df7ec",
+      "active_plan_name": "pro-plus",
+      "active_plan_title": "pages_pricing_plan_pro_plus_title",
+      "badge_link": "",
+      "background_color": "",
+      "cycle": "yearly",
+      "previous_plan_id": "95142b572cf11eee3c6df7ec",
+      "previous_plan_name": "pro",
+      "previous_plan_title": "pages_pricing_plan_pro_title",
+      "previous_plan_cycle": "yearly"
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/latest-subscription-transaction",
+    "status": 200,
+    "body": {
+      "price": 0,
+      "symbol": "$",
+      "currency": "usd",
+      "current_plan_credit": 960,
+      "credit_plan_index": 0
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+    "status": 200,
+    "body": {
+      "is_real_estate_permitted": true,
+      "can_display_renewal_failed_banner": false,
+      "can_subscribe": false,
+      "can_cancel_downgrade": false,
+      "can_change_payment_method": false,
+      "restricted_user": false,
+      "price_per_one_credit": 0.54,
+      "will_be_roll_overed": true,
+      "balance": 393
+    }
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/plans/personal?currency=usd&cycle=yearly&width=480&height=320",
+    "status": 200,
+    "body": [
+      {
+        "id": "95142b572cf11eee3c6df7ec",
+        "name": "pro",
+        "title": "pages_pricing_plan_pro_title",
+        "subtitle": "pages_pricing_plan_pro_subtitle",
+        "is_recommended": false,
+        "enterprise": false,
+        "price_package": {
+          "symbol": "$",
+          "currency": "usd",
+          "amount": "228.00",
+          "amount_per_month": "19.00",
+          "amount_per_photo": "0.63",
+          "credit": 360,
+          "credit_per_month": 30,
+          "plan_transition_type": "downgrade"
+        },
+        "cycle": "yearly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "6",
+        "api_access": false,
+        "features": [
+          "pages_pricing_plan_pro_feature_1",
+          "pages_pricing_plan_pro_feature_2",
+          "pages_pricing_plan_pro_feature_3",
+          "pages_pricing_plan_pro_feature_4",
+          "pages_pricing_plan_pro_feature_5"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      },
+      {
+        "id": "95142b572cf11efa3c6df7ec",
+        "name": "pro-plus",
+        "title": "pages_pricing_plan_pro_plus_title",
+        "subtitle": "pages_pricing_plan_pro_plus_subtitle",
+        "is_recommended": true,
+        "enterprise": false,
+        "price_package": {
+          "symbol": "$",
+          "currency": "usd",
+          "amount": "348.00",
+          "amount_per_month": "29.00",
+          "amount_per_photo": "0.36",
+          "credit": 960,
+          "credit_per_month": 80,
+          "plan_transition_type": "credit-pack"
+        },
+        "cycle": "yearly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "12",
+        "api_access": false,
+        "features": [
+          "pages_pricing_plan_pro_plus_feature_1",
+          "pages_pricing_plan_pro_plus_feature_2",
+          "pages_pricing_plan_pro_plus_feature_3",
+          "pages_pricing_plan_pro_plus_feature_4",
+          "pages_pricing_plan_pro_plus_feature_5"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      }
+    ]
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/plans/enterprise?currency=usd&cycle=yearly&width=480&height=320",
+    "status": 200,
+    "body": [
+      {
+        "id": "9515cf7369ce22772023bb14",
+        "name": "enterprise",
+        "title": "pages_pricing_plan_enterprise_title",
+        "subtitle": "pages_pricing_plan_enterprise_subtitle",
+        "is_recommended": false,
+        "enterprise": true,
+        "price_packages": [
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "588.00",
+            "amount_per_month": "49.00",
+            "amount_per_photo": "0.24",
+            "credit": 2400,
+            "credit_per_month": 200,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "2940.00",
+            "amount_per_month": "245.00",
+            "amount_per_photo": "0.24",
+            "credit": 12000,
+            "credit_per_month": 1000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "5880.00",
+            "amount_per_month": "490.00",
+            "amount_per_photo": "0.24",
+            "credit": 24000,
+            "credit_per_month": 2000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "11760.00",
+            "amount_per_month": "980.00",
+            "amount_per_photo": "0.24",
+            "credit": 48000,
+            "credit_per_month": 4000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "29400.00",
+            "amount_per_month": "2450.00",
+            "amount_per_photo": "0.24",
+            "credit": 120000,
+            "credit_per_month": 10000,
+            "plan_transition_type": "upgrade"
+          }
+        ],
+        "cycle": "yearly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "pages_pricing_unlimited",
+        "api_access": true,
+        "features": [
+          "pages_pricing_plan_enterprise_feature_1",
+          "pages_pricing_plan_enterprise_feature_2",
+          "pages_pricing_plan_enterprise_feature_3",
+          "pages_pricing_plan_enterprise_feature_4",
+          "pages_pricing_plan_enterprise_feature_5",
+          "pages_pricing_plan_enterprise_feature_6"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      }
+    ]
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/plans/personal?currency=usd&cycle=yearly&width=480&height=320",
+    "status": 200,
+    "body": [
+      {
+        "id": "95142b572cf11eee3c6df7ec",
+        "name": "pro",
+        "title": "pages_pricing_plan_pro_title",
+        "subtitle": "pages_pricing_plan_pro_subtitle",
+        "is_recommended": false,
+        "enterprise": false,
+        "price_package": {
+          "symbol": "$",
+          "currency": "usd",
+          "amount": "228.00",
+          "amount_per_month": "19.00",
+          "amount_per_photo": "0.63",
+          "credit": 360,
+          "credit_per_month": 30,
+          "plan_transition_type": "downgrade"
+        },
+        "cycle": "yearly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "6",
+        "api_access": false,
+        "features": [
+          "pages_pricing_plan_pro_feature_1",
+          "pages_pricing_plan_pro_feature_2",
+          "pages_pricing_plan_pro_feature_3",
+          "pages_pricing_plan_pro_feature_4",
+          "pages_pricing_plan_pro_feature_5"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      },
+      {
+        "id": "95142b572cf11efa3c6df7ec",
+        "name": "pro-plus",
+        "title": "pages_pricing_plan_pro_plus_title",
+        "subtitle": "pages_pricing_plan_pro_plus_subtitle",
+        "is_recommended": true,
+        "enterprise": false,
+        "price_package": {
+          "symbol": "$",
+          "currency": "usd",
+          "amount": "348.00",
+          "amount_per_month": "29.00",
+          "amount_per_photo": "0.36",
+          "credit": 960,
+          "credit_per_month": 80,
+          "plan_transition_type": "credit-pack"
+        },
+        "cycle": "yearly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "12",
+        "api_access": false,
+        "features": [
+          "pages_pricing_plan_pro_plus_feature_1",
+          "pages_pricing_plan_pro_plus_feature_2",
+          "pages_pricing_plan_pro_plus_feature_3",
+          "pages_pricing_plan_pro_plus_feature_4",
+          "pages_pricing_plan_pro_plus_feature_5"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      }
+    ]
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/plans/enterprise?currency=usd&cycle=yearly&width=480&height=320",
+    "status": 200,
+    "body": [
+      {
+        "id": "9515cf7369ce22772023bb14",
+        "name": "enterprise",
+        "title": "pages_pricing_plan_enterprise_title",
+        "subtitle": "pages_pricing_plan_enterprise_subtitle",
+        "is_recommended": false,
+        "enterprise": true,
+        "price_packages": [
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "588.00",
+            "amount_per_month": "49.00",
+            "amount_per_photo": "0.24",
+            "credit": 2400,
+            "credit_per_month": 200,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "2940.00",
+            "amount_per_month": "245.00",
+            "amount_per_photo": "0.24",
+            "credit": 12000,
+            "credit_per_month": 1000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "5880.00",
+            "amount_per_month": "490.00",
+            "amount_per_photo": "0.24",
+            "credit": 24000,
+            "credit_per_month": 2000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "11760.00",
+            "amount_per_month": "980.00",
+            "amount_per_photo": "0.24",
+            "credit": 48000,
+            "credit_per_month": 4000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "29400.00",
+            "amount_per_month": "2450.00",
+            "amount_per_photo": "0.24",
+            "credit": 120000,
+            "credit_per_month": 10000,
+            "plan_transition_type": "upgrade"
+          }
+        ],
+        "cycle": "yearly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "pages_pricing_unlimited",
+        "api_access": true,
+        "features": [
+          "pages_pricing_plan_enterprise_feature_1",
+          "pages_pricing_plan_enterprise_feature_2",
+          "pages_pricing_plan_enterprise_feature_3",
+          "pages_pricing_plan_enterprise_feature_4",
+          "pages_pricing_plan_enterprise_feature_5",
+          "pages_pricing_plan_enterprise_feature_6"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      }
+    ]
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/plans/enterprise?currency=usd&cycle=yearly&width=480&height=320",
+    "status": 200,
+    "body": [
+      {
+        "id": "9515cf7369ce22772023bb14",
+        "name": "enterprise",
+        "title": "pages_pricing_plan_enterprise_title",
+        "subtitle": "pages_pricing_plan_enterprise_subtitle",
+        "is_recommended": false,
+        "enterprise": true,
+        "price_packages": [
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "588.00",
+            "amount_per_month": "49.00",
+            "amount_per_photo": "0.24",
+            "credit": 2400,
+            "credit_per_month": 200,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "2940.00",
+            "amount_per_month": "245.00",
+            "amount_per_photo": "0.24",
+            "credit": 12000,
+            "credit_per_month": 1000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "5880.00",
+            "amount_per_month": "490.00",
+            "amount_per_photo": "0.24",
+            "credit": 24000,
+            "credit_per_month": 2000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "11760.00",
+            "amount_per_month": "980.00",
+            "amount_per_photo": "0.24",
+            "credit": 48000,
+            "credit_per_month": 4000,
+            "plan_transition_type": "upgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "29400.00",
+            "amount_per_month": "2450.00",
+            "amount_per_photo": "0.24",
+            "credit": 120000,
+            "credit_per_month": 10000,
+            "plan_transition_type": "upgrade"
+          }
+        ],
+        "cycle": "yearly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "pages_pricing_unlimited",
+        "api_access": true,
+        "features": [
+          "pages_pricing_plan_enterprise_feature_1",
+          "pages_pricing_plan_enterprise_feature_2",
+          "pages_pricing_plan_enterprise_feature_3",
+          "pages_pricing_plan_enterprise_feature_4",
+          "pages_pricing_plan_enterprise_feature_5",
+          "pages_pricing_plan_enterprise_feature_6"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      }
+    ]
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/plans/enterprise?currency=usd&cycle=monthly&width=480&height=320",
+    "status": 200,
+    "body": [
+      {
+        "id": "8515cf7369ce22772023bb14",
+        "name": "enterprise",
+        "title": "pages_pricing_plan_enterprise_title",
+        "subtitle": "pages_pricing_plan_enterprise_subtitle",
+        "is_recommended": false,
+        "enterprise": true,
+        "price_packages": [
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "99.00",
+            "amount_per_month": "99.00",
+            "amount_per_photo": "0.49",
+            "monthly_amount_per_year": "49.00",
+            "credit": 200,
+            "credit_per_month": 200,
+            "plan_transition_type": "downgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "495.00",
+            "amount_per_month": "495.00",
+            "amount_per_photo": "0.49",
+            "monthly_amount_per_year": "245.00",
+            "credit": 1000,
+            "credit_per_month": 1000,
+            "plan_transition_type": "downgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "990.00",
+            "amount_per_month": "990.00",
+            "amount_per_photo": "0.49",
+            "monthly_amount_per_year": "490.00",
+            "credit": 2000,
+            "credit_per_month": 2000,
+            "plan_transition_type": "downgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "1980.00",
+            "amount_per_month": "1980.00",
+            "amount_per_photo": "0.49",
+            "monthly_amount_per_year": "980.00",
+            "credit": 4000,
+            "credit_per_month": 4000,
+            "plan_transition_type": "downgrade"
+          },
+          {
+            "symbol": "$",
+            "currency": "usd",
+            "amount": "4950.00",
+            "amount_per_month": "4950.00",
+            "amount_per_photo": "0.49",
+            "monthly_amount_per_year": "2450.00",
+            "credit": 10000,
+            "credit_per_month": 10000,
+            "plan_transition_type": "downgrade"
+          }
+        ],
+        "cycle": "monthly",
+        "tools_access": "global_all",
+        "roll_over": true,
+        "backup_storage": "pages_pricing_unlimited",
+        "api_access": true,
+        "features": [
+          "pages_pricing_plan_enterprise_feature_1",
+          "pages_pricing_plan_enterprise_feature_2",
+          "pages_pricing_plan_enterprise_feature_3",
+          "pages_pricing_plan_enterprise_feature_4",
+          "pages_pricing_plan_enterprise_feature_5",
+          "pages_pricing_plan_enterprise_feature_6"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      }
+    ]
+  },
+  {
+    "url": "https://api.aihomedesign.com/v1/payment/plans/personal?currency=usd&cycle=monthly&width=480&height=320",
+    "status": 200,
+    "body": [
+      {
+        "id": "85142b572cf11eee3c6df7ec",
+        "name": "pro",
+        "title": "pages_pricing_plan_pro_title",
+        "subtitle": "pages_pricing_plan_pro_subtitle",
+        "is_recommended": false,
+        "enterprise": false,
+        "price_package": {
+          "symbol": "$",
+          "currency": "usd",
+          "amount": "35.00",
+          "amount_per_month": "35.00",
+          "amount_per_photo": "1.17",
+          "monthly_amount_per_year": "19.00",
+          "credit": 30,
+          "credit_per_month": 30,
+          "plan_transition_type": "downgrade"
+        },
+        "cycle": "monthly",
+        "tools_access": "global_all",
+        "roll_over": false,
+        "backup_storage": "6",
+        "api_access": false,
+        "features": [
+          "pages_pricing_plan_pro_feature_1",
+          "pages_pricing_plan_pro_feature_2",
+          "pages_pricing_plan_pro_feature_3",
+          "pages_pricing_plan_pro_feature_4",
+          "pages_pricing_plan_pro_feature_5"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      },
+      {
+        "id": "72142b572cf11efa3c6df7cc",
+        "name": "pro-plus",
+        "title": "pages_pricing_plan_pro_plus_title",
+        "subtitle": "pages_pricing_plan_pro_plus_subtitle",
+        "is_recommended": true,
+        "enterprise": false,
+        "price_package": {
+          "symbol": "$",
+          "currency": "usd",
+          "amount": "59.00",
+          "amount_per_month": "59.00",
+          "amount_per_photo": "0.74",
+          "monthly_amount_per_year": "29.00",
+          "credit": 80,
+          "credit_per_month": 80,
+          "plan_transition_type": "downgrade"
+        },
+        "cycle": "monthly",
+        "tools_access": "global_all",
+        "roll_over": false,
+        "backup_storage": "12",
+        "api_access": false,
+        "features": [
+          "pages_pricing_plan_pro_plus_feature_1",
+          "pages_pricing_plan_pro_plus_feature_2",
+          "pages_pricing_plan_pro_plus_feature_3",
+          "pages_pricing_plan_pro_plus_feature_4",
+          "pages_pricing_plan_pro_plus_feature_5"
+        ],
+        "badge_link": "",
+        "background_color": ""
+      }
+    ]
+  }
+]

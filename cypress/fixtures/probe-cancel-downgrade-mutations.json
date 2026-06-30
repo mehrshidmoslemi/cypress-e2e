@@ -1,0 +1,7 @@
+[
+  {
+    "method": "POST",
+    "url": "https://api.aihomedesign.com/v1/payment/downgrade/cancel?width=480&height=320",
+    "body": ""
+  }
+]

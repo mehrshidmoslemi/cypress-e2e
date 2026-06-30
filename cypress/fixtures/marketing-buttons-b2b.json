@@ -1,0 +1,308 @@
+[
+  {
+    "tag": "A",
+    "text": "Virtual Staging",
+    "href": "/virtual-staging",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Photo Editing",
+    "href": "/photo-editing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Renovation",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "B2B Solution",
+    "href": "/b2b",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Pricing",
+    "href": "https://app.aihomedesign.com/pricing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link"
+  },
+  {
+    "tag": "A",
+    "text": "Get started for free",
+    "href": "https://app.aihomedesign.com/",
+    "id": "cta-header-primary-desktop",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--default-gradient base-button--md hidden! lg:flex! heade"
+  },
+  {
+    "tag": "A",
+    "text": "Book a Demo",
+    "href": "https://calendly.com/aihomedesign/30min",
+    "id": "cta-b2b-hero-book-demo",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--default-gradient base-button--lg w-[200px]"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Brokerages",
+    "href": null,
+    "id": "tab-ourVision-0",
+    "testid": null,
+    "visible": true,
+    "classes": "vision-tab rounded-xl border border-transparent bg-lightest px-4 py-2 text-label"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "MLSs",
+    "href": null,
+    "id": "tab-ourVision-1",
+    "testid": null,
+    "visible": true,
+    "classes": "vision-tab rounded-xl border border-transparent bg-lightest px-4 py-2 text-label"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Service Partners",
+    "href": null,
+    "id": "tab-ourVision-2",
+    "testid": null,
+    "visible": true,
+    "classes": "vision-tab rounded-xl border border-transparent bg-lightest px-4 py-2 text-label"
+  },
+  {
+    "tag": "A",
+    "text": "Book a Demo",
+    "href": "https://calendly.com/aihomedesign/30min",
+    "id": "cta-vision-brokerages-primary",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--default-gradient base-button--lg"
+  },
+  {
+    "tag": "A",
+    "text": "Schedule a call",
+    "href": "https://calendly.com/aihomedesign/30min",
+    "id": "cta-shared-cta-below-primary",
+    "testid": null,
+    "visible": true,
+    "classes": "base-button base-button--white base-button--lg !text-static-black !shadow-none"
+  },
+  {
+    "tag": "A",
+    "text": "AI Virtual Staging",
+    "href": "/virtual-staging",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Photo Editing",
+    "href": "/photo-editing",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Renovation",
+    "href": "/home-renovation",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Day to Dusk",
+    "href": "/day-to-dusk",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Image Enhancement",
+    "href": "/image-enhancement",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "AI Item Removal",
+    "href": "/item-removal",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "MCP Server",
+    "href": "/mcp",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Terms",
+    "href": "/terms-and-conditions",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Privacy",
+    "href": "/privacy-policy",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Refund Policy",
+    "href": "/refund-policy",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Pricing",
+    "href": "https://app.aihomedesign.com/pricing",
+    "id": "cta-footer-pricing",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "MLS & Real Estate Agencies",
+    "href": "/b2b",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Affiliate Program",
+    "href": "/affiliate-program",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "API",
+    "href": "/b2b",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Ideation Center",
+    "href": "/ideas",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "What's New",
+    "href": "/whats-new",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "A",
+    "text": "Blog",
+    "href": "/blog",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "nav-link-footer"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "EN",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "inline-flex items-center gap-1 rounded-lg bg-transparent px-1 py-1 text-label-lg"
+  },
+  {
+    "tag": "A",
+    "text": "support@aihomedesign.com",
+    "href": "mailto:support@aihomedesign.com",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "flex flex-wrap items-center gap-2"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Accept all",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "cc-btn cc-btn-primary"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Reject all",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "cc-btn cc-btn-ghost"
+  },
+  {
+    "tag": "BUTTON",
+    "text": "Customize",
+    "href": null,
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "classes": "cc-btn cc-btn-ghost"
+  }
+]

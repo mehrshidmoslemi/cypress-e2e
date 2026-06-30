@@ -1,0 +1,351 @@
+{
+  "billingPath": "/billing",
+  "profileNavigationUrl": "https://app.aihomedesign.com/billing",
+  "pathAttempts": [
+    {
+      "path": "/billing",
+      "finalUrl": "https://app.aihomedesign.com/billing",
+      "renewalButtonCount": 0,
+      "renewalButtons": []
+    },
+    {
+      "path": "/account/billing",
+      "finalUrl": "https://app.aihomedesign.com/account/billing",
+      "renewalButtonCount": 0,
+      "renewalButtons": []
+    },
+    {
+      "path": "/settings/billing",
+      "finalUrl": "https://app.aihomedesign.com/settings/billing",
+      "renewalButtonCount": 0,
+      "renewalButtons": []
+    },
+    {
+      "path": "/account",
+      "finalUrl": "https://app.aihomedesign.com/account",
+      "renewalButtonCount": 0,
+      "renewalButtons": []
+    },
+    {
+      "path": "/settings",
+      "finalUrl": "https://app.aihomedesign.com/settings",
+      "renewalButtonCount": 0,
+      "renewalButtons": []
+    },
+    {
+      "path": "/pricing",
+      "finalUrl": "https://app.aihomedesign.com/pricing",
+      "renewalButtonCount": 0,
+      "renewalButtons": []
+    }
+  ],
+  "capturedApis": [
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "error": "token is malformed: token contains an invalid number of segments"
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+      "body": {
+        "error": "token is malformed: token contains an invalid number of segments"
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+      "body": {
+        "error": "token is malformed: token contains an invalid number of segments"
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+      "body": {
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "active_plan_name": "pro-plus",
+        "active_plan_title": "pages_pricing_plan_pro_plus_title",
+        "badge_link": "",
+        "background_color": "",
+        "cycle": "yearly",
+        "previous_plan_id": "95142b572cf11eee3c6df7ec",
+        "previous_plan_name": "pro",
+        "previous_plan_title": "pages_pricing_plan_pro_title",
+        "previous_plan_cycle": "yearly"
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+      "body": {
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "active_plan_name": "pro-plus",
+        "active_plan_title": "pages_pricing_plan_pro_plus_title",
+        "badge_link": "",
+        "background_color": "",
+        "cycle": "yearly",
+        "previous_plan_id": "95142b572cf11eee3c6df7ec",
+        "previous_plan_name": "pro",
+        "previous_plan_title": "pages_pricing_plan_pro_title",
+        "previous_plan_cycle": "yearly"
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+      "body": {
+        "is_real_estate_permitted": true,
+        "can_display_renewal_failed_banner": false,
+        "can_subscribe": false,
+        "can_cancel_downgrade": false,
+        "can_change_payment_method": false,
+        "restricted_user": false,
+        "price_per_one_credit": 0.54,
+        "will_be_roll_overed": true,
+        "balance": 393
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/subscription",
+      "body": {
+        "is_real_estate_permitted": true,
+        "can_display_renewal_failed_banner": false,
+        "can_subscribe": false,
+        "can_cancel_downgrade": false,
+        "can_change_payment_method": false,
+        "restricted_user": false,
+        "price_per_one_credit": 0.54,
+        "will_be_roll_overed": true,
+        "balance": 393
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/plan",
+      "body": {
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "active_plan_name": "pro-plus",
+        "active_plan_title": "pages_pricing_plan_pro_plus_title",
+        "badge_link": "",
+        "background_color": "",
+        "cycle": "yearly",
+        "previous_plan_id": "95142b572cf11eee3c6df7ec",
+        "previous_plan_name": "pro",
+        "previous_plan_title": "pages_pricing_plan_pro_title",
+        "previous_plan_cycle": "yearly"
+      }
+    },
+    {
+      "url": "https://api.aihomedesign.com/v1/payment/account/credit",
+      "body": {
+        "user_id": "35fc4b3c-eb6c-4c74-8f76-59810e70b075",
+        "active_plan_id": "95142b572cf11efa3c6df7ec",
+        "balance": 393,
+        "remaining_time": 3,
+        "total_time": 365,
+        "test_balance": 0,
+        "test_remaining_time": -106751,
+        "test_time": 0,
+        "free_plan": false,
+        "renewal_canceled": true,
+        "plan_expire_date": "2027-02-03T07:21:53Z",
+        "total_test_duration": 0
+      }
+    }
+  ],
+  "profileMenuItems": [
+    {
+      "id": "v5-user-credit-pop-over-upgrade",
+      "text": "Upgrade",
+      "disabled": false,
+      "ariaDisabled": null,
+      "visible": true,
+      "href": null,
+      "tag": "BUTTON"
+    },
+    {
+      "id": "v5-user-credit-pop-over-get-more-credit",
+      "text": "Add Coins",
+      "disabled": false,
+      "ariaDisabled": null,
+      "visible": true,
+      "href": null,
+      "tag": "BUTTON"
+    },
+    {
+      "id": "v-0-0-5",
+      "text": "",
+      "disabled": false,
+      "ariaDisabled": null,
+      "visible": true,
+      "href": null,
+      "tag": "BUTTON"
+    },
+    {
+      "id": null,
+      "text": "Brand Center",
+      "disabled": false,
+      "ariaDisabled": null,
+      "visible": true,
+      "href": "/account/settings",
+      "tag": "A"
+    },
+    {
+      "id": null,
+      "text": "Billing",
+      "disabled": false,
+      "ariaDisabled": null,
+      "visible": true,
+      "href": "/billing",
+      "tag": "A"
+    },
+    {
+      "id": null,
+      "text": "Logout",
+      "disabled": false,
+      "ariaDisabled": null,
+      "visible": true,
+      "href": null,
+      "tag": "BUTTON"
+    }
+  ],
+  "renewalButtons": [],
+  "allBillingButtons": [],
+  "dialogsBeforeCancelAutoRenewal": [],
+  "cancelAutoRenewalClicked": false,
+  "promotionModal": null,
+  "renewalButtonsAfterCancelAutoRenewal": [],
+  "dialogsAfterCancelAutoRenewal": []
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "#v5-home-tool-virtual-staging-card",
+    "name": "Use AI Virtual Staging",
+    "slug": "tool-virtual-staging",
+    "url": "https://app.aihomedesign.com/generate?tool_slug=tool-virtual-staging"
+  },
+  {
+    "id": "#v5-home-tool-day-to-dusk-card",
+    "name": "Use AI Day to Dusk",
+    "slug": "tool-day-to-dusk",
+    "url": "https://app.aihomedesign.com/generate?tool_slug=tool-day-to-dusk"
+  },
+  {
+    "id": "#v5-home-tool-item-removal-card",
+    "name": "Use AI Item Removal",
+    "slug": "tool-item-removal",
+    "url": "https://app.aihomedesign.com/generate?tool_slug=tool-item-removal"
+  },
+  {
+    "id": "#v5-home-tool-image-enhancement-card",
+    "name": "Use AI Image Enhancement",
+    "slug": "tool-image-enhancement",
+    "url": "https://app.aihomedesign.com/generate?tool_slug=tool-image-enhancement"
+  }
+]

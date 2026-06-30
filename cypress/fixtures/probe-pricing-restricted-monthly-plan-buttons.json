@@ -1,0 +1,20 @@
+[
+  {
+    "id": "v5-pricing-monthly-pro-button",
+    "text": "Get Monthly",
+    "tag": "BUTTON",
+    "visible": true
+  },
+  {
+    "id": "v5-pricing-monthly-pro-plus-button",
+    "text": "Get Monthly",
+    "tag": "BUTTON",
+    "visible": true
+  },
+  {
+    "id": "v5-pricing-monthly-enterprise-button",
+    "text": "Get Monthly",
+    "tag": "BUTTON",
+    "visible": true
+  }
+]

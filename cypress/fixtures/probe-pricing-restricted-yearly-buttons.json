@@ -1,0 +1,106 @@
+[
+  {
+    "text": "More",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group relative font-medium text-sm before:absolute before:z-"
+  },
+  {
+    "text": "USD",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "relative group inline-flex items-center disabled:cursor-not-"
+  },
+  {
+    "text": "Monthly",
+    "id": "reka-tabs-v-0-1-1-trigger-monthly",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group relative min-w-0 data-[state=inactive]:text-muted hove"
+  },
+  {
+    "text": "Yearly (51% OFF)",
+    "id": "reka-tabs-v-0-1-1-trigger-yearly",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group relative min-w-0 data-[state=inactive]:text-muted hove"
+  },
+  {
+    "text": "Get Yearly",
+    "id": "v5-pricing-monthly-pro-button",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "inline-flex items-center disabled:cursor-not-allowed aria-di"
+  },
+  {
+    "text": "Get Yearly",
+    "id": "v5-pricing-monthly-pro-plus-button",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "inline-flex items-center disabled:cursor-not-allowed aria-di"
+  },
+  {
+    "text": "200",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "relative group inline-flex items-center focus:outline-none d"
+  },
+  {
+    "text": "Get Yearly",
+    "id": "v5-pricing-monthly-enterprise-button",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "inline-flex items-center disabled:cursor-not-allowed aria-di"
+  },
+  {
+    "text": "Real estate agent / Realtor",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group flex w-full items-center gap-4 rounded-2xl border bord"
+  },
+  {
+    "text": "Real estate photographer / Photo editor",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group flex w-full items-center gap-4 rounded-2xl border bord"
+  },
+  {
+    "text": "Brokerage / Real estate team",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group flex w-full items-center gap-4 rounded-2xl border bord"
+  },
+  {
+    "text": "Homeowner / Property owner",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group flex w-full items-center gap-4 rounded-2xl border bord"
+  },
+  {
+    "text": "Other",
+    "id": "",
+    "testid": null,
+    "visible": true,
+    "disabled": false,
+    "classes": "group flex w-full items-center gap-4 rounded-2xl border bord"
+  }
+]

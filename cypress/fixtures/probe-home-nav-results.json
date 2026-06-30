@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Start Now",
+    "selector": "#v5-home-login-banner-start-now-button",
+    "url": "https://app.aihomedesign.com/"
+  },
+  {
+    "name": "VS card",
+    "selector": "#v5-home-tool-virtual-staging-card",
+    "url": "https://app.aihomedesign.com/"
+  },
+  {
+    "name": "D2D card",
+    "selector": "#v5-home-tool-day-to-dusk-card",
+    "url": "https://app.aihomedesign.com/"
+  },
+  {
+    "name": "IR card",
+    "selector": "#v5-home-tool-item-removal-card",
+    "url": "https://app.aihomedesign.com/"
+  },
+  {
+    "name": "IE card",
+    "selector": "#v5-home-tool-image-enhancement-card",
+    "url": "https://app.aihomedesign.com/"
+  }
+]

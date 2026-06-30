@@ -1,0 +1,64 @@
+{
+  "runId": "run-20260629-171529",
+  "overallStatus": "PASS",
+  "successRate": 100,
+  "stats": {
+    "passed": 10,
+    "failed": 0,
+    "pending": 0,
+    "skipped": 0,
+    "total": 10
+  },
+  "passedTests": [
+    {
+      "title": "login test email login completes login with valid email and password",
+      "duration": 34775
+    },
+    {
+      "title": "login test email login shows error for invalid password",
+      "duration": 11164
+    },
+    {
+      "title": "login test email login shows error for unknown email",
+      "duration": 11277
+    },
+    {
+      "title": "login test email login validates login form fields",
+      "duration": 10262
+    },
+    {
+      "title": "login test email login persists session after page reload",
+      "duration": 12728
+    },
+    {
+      "title": "login test email login succeeds after retrying with correct credentials",
+      "duration": 15200
+    },
+    {
+      "title": "login test login modal navigation switches between Login and Signup modals",
+      "duration": 8544
+    },
+    {
+      "title": "login test logout logs out from profile menu",
+      "duration": 15427
+    },
+    {
+      "title": "login test google login shows Continue with Google on login modal",
+      "duration": 8154
+    },
+    {
+      "title": "login test google login starts Google OAuth when Continue with Google is clicked",
+      "duration": 7293
+    }
+  ],
+  "failedTests": [],
+  "duration": "2m 29s",
+  "startTime": "2026-06-29T13:45:29.737Z",
+  "endTime": "2026-06-29T13:47:59.312Z",
+  "startTimeFormatted": "۱۴۰۵/۴/۸, ۱۷:۱۵:۲۹",
+  "endTimeFormatted": "۱۴۰۵/۴/۸, ۱۷:۱۷:۵۹",
+  "baseUrl": "https://app.aihomedesign.com",
+  "testsPath": "cypress/e2e-final-tests",
+  "hostname": "PC070-SD",
+  "runnerError": false
+}

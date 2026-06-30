@@ -1,0 +1,4 @@
+[push] Running: npx cypress run --headed --reporter json --config "specPattern=cypress/e2e-final-tests/**/*.cy.js"
+[push] Running: npx cypress run --headed --reporter json --config "specPattern=cypress/e2e-final-tests/**/*.cy.js"
+[push] Result: PASS | passed: 10 failed: 0 | duration: 2m 29s
+[push] Failed to send to n8n: getaddrinfo ENOTFOUND your-n8n-host
