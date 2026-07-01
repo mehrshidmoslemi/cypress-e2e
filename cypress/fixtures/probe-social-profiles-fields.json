@@ -1,0 +1,23 @@
+[
+  {
+    "tag": "INPUT",
+    "name": null,
+    "placeholder": null,
+    "type": "file",
+    "visible": false
+  },
+  {
+    "tag": "INPUT",
+    "name": null,
+    "placeholder": null,
+    "type": "file",
+    "visible": false
+  },
+  {
+    "tag": "INPUT",
+    "name": "url",
+    "placeholder": "https://instagram.com/yourname",
+    "type": "text",
+    "visible": true
+  }
+]

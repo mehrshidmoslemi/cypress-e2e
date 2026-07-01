@@ -1,0 +1,152 @@
+[
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "More",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "name": null,
+    "type": null,
+    "placeholder": null,
+    "value": null,
+    "text": "Change Password",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "reka-tabs-v-0-2-trigger-identity",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Identity",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "reka-tabs-v-0-2-trigger-contactInfo",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Contact Info",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "reka-tabs-v-0-2-trigger-socialProfiles",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Social Profiles",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "reka-tabs-v-0-2-trigger-brokerageDetails",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Brokerage Details",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "reka-tabs-v-0-2-trigger-brandLogo",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Brand Logo",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Upload profile photo",
+    "visible": true
+  },
+  {
+    "tag": "INPUT",
+    "id": "v-0-9",
+    "name": "first_name",
+    "type": "text",
+    "placeholder": "Enter first name",
+    "value": null,
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "INPUT",
+    "id": "v-0-10",
+    "name": "last_name",
+    "type": "text",
+    "placeholder": "Enter last name",
+    "value": null,
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "INPUT",
+    "id": "v-0-11",
+    "name": "email",
+    "type": "text",
+    "placeholder": "Enter email address",
+    "value": "memoslemi.sdstudio+proplusmonthly@gmail.com",
+    "text": "",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "v-0-12",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Enter years of experiences",
+    "visible": true
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "name": null,
+    "type": "button",
+    "placeholder": null,
+    "value": null,
+    "text": "Save and Continue",
+    "visible": true
+  }
+]

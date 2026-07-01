@@ -1,0 +1,46 @@
+{
+  "credit": {
+    "user_id": "21f2b068-aec5-4509-8c50-b3c0837a7a4a",
+    "active_plan_id": "8515cf7369ce22772023bb14",
+    "balance": 9792,
+    "remaining_time": 22,
+    "total_time": 30,
+    "test_balance": 0,
+    "test_remaining_time": -106751,
+    "test_time": 0,
+    "free_plan": false,
+    "renewal_canceled": true,
+    "plan_expire_date": "2026-07-22T05:53:53Z",
+    "total_test_duration": 0
+  },
+  "latest": {
+    "price": 0,
+    "symbol": "$",
+    "currency": "usd",
+    "current_plan_credit": 10000,
+    "credit_plan_index": 4
+  },
+  "subscription": {
+    "is_real_estate_permitted": true,
+    "can_display_renewal_failed_banner": false,
+    "can_subscribe": true,
+    "can_cancel_downgrade": false,
+    "can_change_payment_method": false,
+    "restricted_user": false,
+    "price_per_one_credit": 0.73,
+    "will_be_roll_overed": true,
+    "balance": 9792
+  },
+  "plan": {
+    "active_plan_id": "8515cf7369ce22772023bb14",
+    "active_plan_name": "enterprise",
+    "active_plan_title": "pages_pricing_plan_enterprise_title",
+    "badge_link": "",
+    "background_color": "",
+    "cycle": "monthly",
+    "previous_plan_id": "72142b572cf11efa3c6df7cc",
+    "previous_plan_name": "pro-plus",
+    "previous_plan_title": "pages_pricing_plan_pro_plus_title",
+    "previous_plan_cycle": "monthly"
+  }
+}

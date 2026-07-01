@@ -1,0 +1,6 @@
+{
+  "textLength": 2356,
+  "hasNav": false,
+  "buttonCount": 0,
+  "snippet": "[{\"serverRendered\":1},false]window.__NUXT__={};window.__NUXT__.config={public:{sentryRelease:\"dev\",sentry:{environment:\"production\",dsn:\"https://331c18c0519c3a2d9ac677818fc29801@o4507339757453312.ingest.us.sentry.io/4510335564578817\"},stripe:{key:\"pk_live_51JwqaoCo0VI1uDM8gFazluToJzwtEY8IcC3vi651HKDjpq3KhHdCKQXyrWJQTBJWnbccfT79W8POi8adZle1P9jB00aULrluNJ\",options:{manualClientLoad:true}},baseURL:\"https://api.aihomedesign.com/\",pusherKey:\"54a06bc7c85dc4c50948\",pusherCluster:\"us3\",environment:\"prod"
+}

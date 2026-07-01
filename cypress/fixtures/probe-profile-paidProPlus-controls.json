@@ -1,0 +1,62 @@
+[
+  {
+    "tag": "BUTTON",
+    "id": "v5-user-credit-pop-over-upgrade",
+    "text": "Upgrade",
+    "ariaLabel": null,
+    "href": null,
+    "type": "button",
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": "v5-user-credit-pop-over-get-more-credit",
+    "text": "Add Coins",
+    "ariaLabel": null,
+    "href": null,
+    "type": "button",
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": "v-0-0-5",
+    "text": "",
+    "ariaLabel": "Switch to light mode",
+    "href": null,
+    "type": "button",
+    "name": null,
+    "role": "switch"
+  },
+  {
+    "tag": "A",
+    "id": null,
+    "text": "Brand Center",
+    "ariaLabel": null,
+    "href": "/account/settings",
+    "type": null,
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "A",
+    "id": null,
+    "text": "Billing",
+    "ariaLabel": null,
+    "href": "/billing",
+    "type": null,
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": null,
+    "text": "Logout",
+    "ariaLabel": null,
+    "href": null,
+    "type": "button",
+    "name": null,
+    "role": null
+  }
+]

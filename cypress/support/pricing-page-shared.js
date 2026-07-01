@@ -33,6 +33,16 @@ const ACCOUNTS = {
     email: Cypress.env('PRICING_ACTIVE_YEARLY_EMAIL') || 'memoslemi.sdstudio+1011@gmail.com',
     password: Cypress.env('PRICING_ACTIVE_YEARLY_PASSWORD') || '12345678',
   }),
+  paidProPlus: () => ({
+    email:
+      Cypress.env('PRICING_PROPLUS_MONTHLY_EMAIL') ||
+      Cypress.env('PRICING_PRICES_PRO_PLUS_MONTHLY_EMAIL') ||
+      'memoslemi.sdstudio+proplusmonthly@gmail.com',
+    password:
+      Cypress.env('PRICING_PROPLUS_MONTHLY_PASSWORD') ||
+      Cypress.env('PRICING_PRICES_PRO_PLUS_MONTHLY_PASSWORD') ||
+      'mmmmmmmm',
+  }),
 }
 
 const SUBSCRIBE_BUTTON_IDS = {
@@ -60,6 +70,12 @@ const PLAN_IDS = {
   enterprise: '9515cf7369ce22772023bb14',
 }
 
+const MONTHLY_PLAN_IDS = {
+  pro: '85142b572cf11eee3c6df7ec',
+  'pro-plus': '72142b572cf11efa3c6df7cc',
+  enterprise: '8515cf7369ce22772023bb14',
+}
+
 const tierToApiName = (tier) => tier
 
 const pendingDowngradeButtonId = (cycle, tier) =>
@@ -69,7 +85,10 @@ const downgradeButtonId = (cycle, tier) => `#v5-pricing-${cycle}-downgrade-${tie
 
 const CANCEL_DOWNGRADE_BUTTON_ID = '#v5-billing-cancel-downgrade-button'
 
-const transitionForTier = (tier, { pending }) => {
+const transitionForTier = (tier, { pending, noActivePlan }) => {
+  if (noActivePlan) {
+    return 'upgrade'
+  }
   if (pending && tier === pending) {
     return 'downgrade-pending'
   }
@@ -345,6 +364,94 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
     visibleDialog().invoke('text').should('match', /downgrade/i)
   }
 
+  const confirmDowngradeModal = () => {
+    visibleDialog().within(() => {
+      cy.contains('button', /confirm|downgrade|proceed|continue/i, { timeout: MODAL_TIMEOUT })
+        .first()
+        .click({ force: true })
+    })
+  }
+
+  const assertNoDowngradeOrPendingButtons = (cycle) => {
+    cy.get(`[id^="v5-pricing-${cycle}-downgrade-"][id$="-button"]`).should('not.exist')
+    cy.get(`[id^="v5-pricing-${cycle}-downgrade-pending-"][id$="-button"]`).should('not.exist')
+  }
+
+  const assertNoActivePlanBillingControls = () => {
+    assertCancelDowngradeNotVisible()
+    cy.get('body').then(($body) => {
+      ;[/cancel auto renewal/i, /change payment method/i].forEach((label) => {
+        const button = [...$body.find('button')].find((el) => label.test(el.textContent || ''))
+        if (button) {
+          expect(
+            button.disabled || button.getAttribute('aria-disabled') === 'true',
+            `${button.textContent.trim()} should be disabled when there is no active plan`,
+          ).to.be.true
+        }
+      })
+    })
+  }
+
+  const visitPricingWithPaymentErrors = () => {
+    cy.visit('/pricing', visitOptions)
+    dismissBlockingModals()
+    dismissStartup()
+    cy.wait(500)
+    cy.url({ timeout: MODAL_TIMEOUT }).should('include', '/pricing')
+  }
+
+  const visitBillingWithPaymentErrors = () => {
+    cy.visit('/billing', visitOptions)
+    dismissBlockingModals()
+    dismissStartup()
+    cy.wait(500)
+    cy.url({ timeout: MODAL_TIMEOUT }).should('include', '/billing')
+  }
+
+  const interceptPaymentApiErrors = ({
+    statusCode = 200,
+    body = { error: 'token is malformed: token contains an invalid number of segments' },
+  } = {}) => {
+    const errorResponse = { statusCode, body }
+    const catalogState = { pending: null, activeTier: null, noActivePlan: true }
+
+    cy.intercept('GET', '**/v1/payment/account/plan**', errorResponse).as('mockPlanError')
+    cy.intercept('GET', '**/v1/payment/account/credit**', errorResponse).as('mockCreditError')
+    cy.intercept('GET', '**/v1/payment/account/subscription**', errorResponse).as(
+      'mockSubscriptionError',
+    )
+    cy.intercept('GET', '**/v1/payment/account/latest-subscription-transaction**', errorResponse).as(
+      'mockLatestTransactionError',
+    )
+    cy.intercept('GET', '**/v1/payment/plans/personal**cycle=monthly**', {
+      body: buildPersonalPlans('monthly', catalogState),
+    }).as('mockPersonalMonthly')
+    cy.intercept('GET', '**/v1/payment/plans/personal**cycle=yearly**', {
+      body: buildPersonalPlans('yearly', catalogState),
+    }).as('mockPersonalYearly')
+    cy.intercept('GET', '**/v1/payment/plans/enterprise**cycle=monthly**', {
+      body: buildEnterprisePlans('monthly', catalogState),
+    }).as('mockEnterpriseMonthly')
+    cy.intercept('GET', '**/v1/payment/plans/enterprise**cycle=yearly**', {
+      body: buildEnterprisePlans('yearly', catalogState),
+    }).as('mockEnterpriseYearly')
+  }
+
+  const assertPricingPageDegradedGracefully = () => {
+    cy.get('body').should('be.visible').invoke('text').should('not.equal', '')
+    cy.get('nav', { timeout: MODAL_TIMEOUT }).should('exist')
+    cy.get('[id^="v5-pricing-"][id$="-button"]', { timeout: MODAL_TIMEOUT }).should(
+      'have.length.at.least',
+      3,
+    )
+  }
+
+  const assertBillingPageDegradedGracefully = () => {
+    cy.get('body').should('be.visible').invoke('text').should('not.equal', '')
+    cy.get('nav', { timeout: MODAL_TIMEOUT }).should('exist')
+    cy.url({ timeout: MODAL_TIMEOUT }).should('include', '/billing')
+  }
+
   const assertStripePresent = () => {
     cy.get('body', { timeout: MODAL_TIMEOUT }).should(($body) => {
       const hasStripeIframe = [...$body.find('iframe')].some((iframe) => {
@@ -371,9 +478,10 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
     dismissStartup()
     cy.wait(500)
     cy.url({ timeout: MODAL_TIMEOUT }).should('include', '/billing')
-    cy.contains(/active plan|payment history|renewal date/i, { timeout: MODAL_TIMEOUT }).should(
-      'be.visible',
-    )
+    cy.contains(
+      /active plan|payment history|renewal date|no active plan|subscribe to a plan/i,
+      { timeout: MODAL_TIMEOUT },
+    ).should('be.visible')
   }
 
   const interceptPlanState = ({
@@ -384,70 +492,113 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
     activeTier = 'enterprise',
     freeMonthGranted = false,
     promotionUsed = false,
+    promotionEligible = null,
+    expired = false,
   } = {}) => {
-    const activePlanName = tierToApiName(activeTier)
-    const activePlanId = PLAN_IDS[activeTier] || PLAN_IDS.enterprise
     const pendingPlanName = pending ? tierToApiName(pending) : null
-    const state = { pending: pendingPlanName, activeTier: activePlanName }
-    const resolvedAccountCycle = accountCycle ?? (cycle === 'monthly' ? 'yearly' : cycle)
-
-    const planBody = {
-      active_plan_id: activePlanId,
-      active_plan_name: activePlanName,
-      active_plan_title: `pages_pricing_plan_${activePlanName.replace(/-/g, '_')}_title`,
-      badge_link: '',
-      background_color: '',
-      cycle: resolvedAccountCycle,
-      previous_plan_id: pendingPlanName ? PLAN_IDS[pending] : PLAN_IDS.pro,
-      previous_plan_name: pendingPlanName || 'pro',
-      previous_plan_title: `pages_pricing_plan_${(pendingPlanName || 'pro').replace(/-/g, '_')}_title`,
-      previous_plan_cycle: pendingPlanName ? cycle : 'monthly',
+    const resolvedAccountCycle = accountCycle ?? cycle
+    const noActivePlan = expired
+    const activePlanName = expired ? 'starter' : tierToApiName(activeTier)
+    const planIdMap = resolvedAccountCycle === 'monthly' ? MONTHLY_PLAN_IDS : PLAN_IDS
+    const activePlanId = expired ? '' : planIdMap[activeTier] || planIdMap.enterprise
+    const state = {
+      pending: expired ? null : pendingPlanName,
+      activeTier: expired ? null : tierToApiName(activeTier),
+      noActivePlan,
     }
+    const isPromotionEligible =
+      !expired &&
+      (promotionEligible ??
+        (resolvedAccountCycle === 'monthly' &&
+          activePlanName !== 'enterprise' &&
+          !renewalCanceled &&
+          !promotionUsed &&
+          !freeMonthGranted))
+
+    const planBody = expired
+      ? {
+          active_plan_id: '',
+          active_plan_name: 'starter',
+          active_plan_title: 'pages_pricing_plan_starter_title',
+          badge_link: '',
+          background_color: '',
+          cycle: resolvedAccountCycle,
+          previous_plan_id: '',
+          previous_plan_name: '',
+          previous_plan_title: '',
+          previous_plan_cycle: resolvedAccountCycle,
+        }
+      : {
+          active_plan_id: activePlanId,
+          active_plan_name: activePlanName,
+          active_plan_title: `pages_pricing_plan_${activePlanName.replace(/-/g, '_')}_title`,
+          badge_link: '',
+          background_color: '',
+          cycle: resolvedAccountCycle,
+          previous_plan_id: pendingPlanName ? PLAN_IDS[pending] : PLAN_IDS.pro,
+          previous_plan_name: pendingPlanName || 'pro',
+          previous_plan_title: `pages_pricing_plan_${(pendingPlanName || 'pro').replace(/-/g, '_')}_title`,
+          previous_plan_cycle: pendingPlanName ? cycle : 'monthly',
+        }
 
     const creditBody = {
       user_id: '35fc4b3c-eb6c-4c74-8f76-59810e70b075',
-      active_plan_id: activePlanId,
-      balance: 200,
-      remaining_time: 30,
-      total_time: cycle === 'yearly' ? 365 : 30,
+      active_plan_id: expired ? '' : activePlanId,
+      balance: expired ? 0 : 200,
+      remaining_time: expired ? 0 : 30,
+      total_time: resolvedAccountCycle === 'yearly' ? 365 : 30,
       test_balance: 0,
       test_remaining_time: -106751,
       test_time: 0,
-      free_plan: false,
-      renewal_canceled: renewalCanceled,
-      plan_expire_date: '2027-05-26T08:27:11Z',
+      free_plan: expired,
+      renewal_canceled: expired ? true : renewalCanceled,
+      plan_expire_date: expired ? '2023-06-01T00:00:00Z' : '2027-05-26T08:27:11Z',
       total_test_duration: 0,
+      free_month_granted: freeMonthGranted,
+      free_month_promotion_used: promotionUsed,
+      free_month_offer_available: isPromotionEligible,
+      has_free_month_retention_offer: isPromotionEligible,
     }
 
     const subscriptionBody = {
-      is_real_estate_permitted: true,
-      can_display_renewal_failed_banner: false,
-      can_subscribe: false,
-      can_cancel_downgrade: Boolean(pendingPlanName) && !renewalCanceled,
-      can_change_payment_method: !renewalCanceled,
+      is_real_estate_permitted: !expired,
+      can_display_renewal_failed_banner: expired,
+      can_subscribe: expired,
+      can_cancel_downgrade: Boolean(pendingPlanName) && !renewalCanceled && !expired,
+      can_change_payment_method: !renewalCanceled && !expired,
+      can_cancel_auto_renewal: !renewalCanceled && !expired,
       restricted_user: false,
       price_per_one_credit: 0.54,
-      will_be_roll_overed: true,
-      balance: 200,
+      will_be_roll_overed: !expired,
+      balance: expired ? 0 : 200,
       free_month_granted: freeMonthGranted,
       free_month_promotion_used: promotionUsed,
-      can_show_free_month_promotion:
-        resolvedAccountCycle === 'monthly' && !renewalCanceled && !promotionUsed,
+      can_show_free_month_promotion: isPromotionEligible,
+      show_free_month_retention_offer: isPromotionEligible,
+      free_month_retention_offer: isPromotionEligible ? { available: true, accepted: false } : null,
     }
 
-    const latestTransactionBody = {
-      price: 0,
-      symbol: '$',
-      currency: 'usd',
-      current_plan_credit: 2400,
-      credit_plan_index: 0,
-      ...(pendingPlanName
-        ? {
-            pending_downgrade_plan_name: pendingPlanName,
-            pending_downgrade_plan_cycle: cycle,
-          }
-        : {}),
-    }
+    const latestTransactionBody = expired
+      ? {
+          price: 0,
+          symbol: '$',
+          currency: 'usd',
+          current_plan_credit: 0,
+          credit_plan_index: 0,
+        }
+      : {
+          price: 0,
+          symbol: '$',
+          currency: 'usd',
+          current_plan_credit: 2400,
+          credit_plan_index: 0,
+          ...(pendingPlanName
+            ? {
+                pending_downgrade_plan_name: pendingPlanName,
+                pending_downgrade_plan_cycle: cycle,
+              }
+            : {}),
+        }
 
     const blockMutations = { statusCode: 403, body: { error: 'blocked in e2e mock' } }
 
@@ -479,10 +630,22 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
       statusCode: 200,
       body: { success: true },
     }).as('mockCancelDowngrade')
+    cy.intercept('POST', '**/v1/payment/cancel**', {
+      statusCode: 200,
+      body: { success: true },
+    }).as('mockCancelSubscription')
+    cy.intercept('POST', '**/v1/payment/customer-retention**', {
+      statusCode: 200,
+      body: { success: true },
+    }).as('mockCustomerRetention')
     cy.intercept('POST', '**/v1/payment/**/renewal/**', {
       statusCode: 200,
       body: { success: true },
     }).as('mockCancelAutoRenewal')
+    cy.intercept('POST', '**/v1/payment/**/free**', {
+      statusCode: 200,
+      body: { success: true },
+    }).as('mockFreeMonthOffer')
     cy.intercept('POST', '**/v1/payment/subscription/**', {
       statusCode: 200,
       body: { success: true },
@@ -533,59 +696,112 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
     assertAutoRenewalDisabled()
   }
 
+  const PROMOTION_TEXT =
+    /free month|one month|100%\s*off|free credits on us|we don't want you to leave/i
+
+  const hasPromotionModal = ($body) =>
+    [...$body.find('[role="dialog"]:visible, .fixed.inset-0:visible')].some((dialog) =>
+      PROMOTION_TEXT.test(dialog.textContent || ''),
+    )
+
+  const promotionDialog = () =>
+    cy.contains('[role="dialog"]:visible, .fixed.inset-0:visible', PROMOTION_TEXT, {
+      timeout: MODAL_TIMEOUT,
+    })
+
+  const assertPromotionModal = () => {
+    promotionDialog().should('be.visible')
+    promotionDialog().within(() => {
+      cy.contains('button', /yes,\s*i'll take it|accept/i).should('be.visible')
+      cy.contains('button', /no,\s*cancel my subscription|decline/i).should('be.visible')
+    })
+  }
+
+  const assertNoPromotionModal = () => {
+    cy.get('body').should(($body) => {
+      expect(hasPromotionModal($body), 'promotion modal should not be visible').to.be.false
+    })
+  }
+
   const openCancelAutoRenewal = () => {
-    cy.contains('button', /cancel auto renewal/i, { timeout: MODAL_TIMEOUT }).click({ force: true })
+    cy.contains('button', /cancel auto renewal/i, { timeout: MODAL_TIMEOUT })
+      .scrollIntoView()
+      .click({ force: true })
   }
 
   const confirmTurnOffAutoRenewal = () => {
     cy.contains('button', /yes,\s*continue/i, { timeout: MODAL_TIMEOUT }).click({ force: true })
   }
 
+  const fillCancelAutoRenewalFeedback = () => {
+    cy.contains('[role="dialog"]:visible', /help us improve|would you like to share/i, {
+      timeout: MODAL_TIMEOUT,
+    })
+      .find('textarea')
+      .type('E2E feedback for cancel auto renewal flow.', { force: true })
+  }
+
+  const continueCancelAutoRenewalFeedback = () => {
+    cy.contains('button', /continue to cancel/i, { timeout: MODAL_TIMEOUT }).click({ force: true })
+  }
+
+  const advanceToPromotionModal = () => {
+    openCancelAutoRenewal()
+    confirmTurnOffAutoRenewal()
+    fillCancelAutoRenewalFeedback()
+    continueCancelAutoRenewalFeedback()
+    assertPromotionModal()
+  }
+
   const clickCancelAutoRenewal = () => {
     openCancelAutoRenewal()
     confirmTurnOffAutoRenewal()
-  }
-
-  const promotionModal = () => cy.get('[role="dialog"]:visible').last()
-
-  const assertPromotionModal = () => {
-    promotionModal()
-      .should('be.visible')
-      .invoke('text')
-      .should('match', /free month|one month|promotion/i)
-    promotionModal().within(() => {
-      cy.contains('button', /accept/i).should('be.visible')
-      cy.contains('button', /decline/i).should('be.visible')
-    })
-  }
-
-  const assertNoPromotionModal = () => {
-    cy.get('body').should(($body) => {
-      const promoDialog = [...$body.find('[role="dialog"]:visible')].find((dialog) =>
-        /free month|one month|promotion/i.test(dialog.textContent || ''),
-      )
-      expect(promoDialog, 'promotion modal should not be visible').to.be.undefined
+    fillCancelAutoRenewalFeedback()
+    continueCancelAutoRenewalFeedback()
+    cy.get('body', { timeout: MODAL_TIMEOUT }).then(($body) => {
+      if (hasPromotionModal($body)) {
+        clickPromotionDecline()
+      }
     })
   }
 
   const clickPromotionAccept = () => {
-    promotionModal().contains('button', /accept/i).click({ force: true })
+    promotionDialog().contains('button', /yes,\s*i'll take it|accept/i).click({ force: true })
   }
 
   const clickPromotionDecline = () => {
-    promotionModal().contains('button', /decline/i).click({ force: true })
+    promotionDialog()
+      .contains('button', /no,\s*cancel my subscription|decline/i)
+      .click({ force: true })
   }
 
   const closePromotionModal = () => {
-    promotionModal().then(($dialog) => {
-      const $close = $dialog.find('button[aria-label="Close"]')
-      if ($close.length) {
-        cy.wrap($close.first()).click({ force: true })
-        return
-      }
+    promotionDialog().find('button').first().click({ force: true })
+  }
 
-      cy.wrap($dialog).find('button').first().click({ force: true })
+  const assertPromotionModalClosed = () => {
+    cy.get('body').should(($body) => {
+      expect(hasPromotionModal($body), 'promotion modal should be closed').to.be.false
     })
+  }
+
+  const dismissThankYouOrSuccessModal = () => {
+    cy.get('body').then(($body) => {
+      const gotIt = [...$body.find('button')].find(
+        (button) => /got it|thank you/i.test(button.textContent) && Cypress.dom.isVisible(button),
+      )
+      if (gotIt) {
+        cy.wrap(gotIt).click({ force: true })
+      }
+    })
+  }
+
+  const completeCancelAutoRenewalAfterPromotion = () => {
+    openCancelAutoRenewal()
+    confirmTurnOffAutoRenewal()
+    fillCancelAutoRenewalFeedback()
+    continueCancelAutoRenewalFeedback()
+    assertNoPromotionModal()
   }
 
   const assertAutoRenewalEnabled = () => {
@@ -609,11 +825,11 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
 
   const readBillingCycle = () =>
     cy.get('body', { timeout: MODAL_TIMEOUT }).then(($body) => {
-      const snippet = $body.text().slice(0, 1200)
-      if (/active plan[\s\S]{0,120}\byearly\b/i.test(snippet) || /\byearly\b/i.test(snippet)) {
+      const snippet = $body.text().slice(0, 1500)
+      if (/active plan[\s\S]{0,160}\byearly\b/i.test(snippet)) {
         return 'yearly'
       }
-      if (/\bmonthly\b/i.test(snippet)) {
+      if (/active plan[\s\S]{0,160}\bmonthly\b/i.test(snippet) || /\bmonthly\b/i.test(snippet)) {
         return 'monthly'
       }
       return null
@@ -652,6 +868,17 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
     })
   }
 
+  const assertPendingDowngradeGuardModal = () => {
+    cy.get('body', { timeout: 5000 }).should(($body) => {
+      const confirmDialog = [...$body.find('[role="dialog"]:visible')].find(
+        (dialog) =>
+          /downgrade/i.test(dialog.textContent || '') &&
+          !/downgrade in progress|already downgraded|got it/i.test(dialog.textContent || ''),
+      )
+      expect(confirmDialog, 'downgrade confirmation modal should not open').to.be.undefined
+    })
+  }
+
   const closeVisibleModal = () => {
     cy.get('body').type('{esc}', { force: true })
   }
@@ -680,19 +907,33 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
     proceedToStripeIfNeeded,
     assertUpgradeModal,
     assertDowngradeModal,
+    confirmDowngradeModal,
+    assertNoDowngradeOrPendingButtons,
+    assertNoActivePlanBillingControls,
+    interceptPaymentApiErrors,
+    assertPricingPageDegradedGracefully,
+    assertBillingPageDegradedGracefully,
+    visitPricingWithPaymentErrors,
+    visitBillingWithPaymentErrors,
     assertStripePresent,
     assertCancelDowngradeVisible,
     assertCancelDowngradeNotVisible,
     clickCancelDowngrade,
     openCancelAutoRenewal,
     confirmTurnOffAutoRenewal,
+    fillCancelAutoRenewalFeedback,
+    continueCancelAutoRenewalFeedback,
+    advanceToPromotionModal,
     clickCancelAutoRenewal,
+    completeCancelAutoRenewalAfterPromotion,
+    dismissThankYouOrSuccessModal,
     assertNormalDowngradeButton,
     assertAutoRenewalDisabled,
     assertAutoRenewalEnabled,
     assertAutoRenewalCanceled,
     assertPromotionModal,
     assertNoPromotionModal,
+    assertPromotionModalClosed,
     clickPromotionAccept,
     clickPromotionDecline,
     closePromotionModal,
@@ -702,6 +943,7 @@ function createPricingPageHelpers(sessionPrefix = 'pricing-page') {
     isCancelAutoRenewalAvailable,
     assertPendingPlanNotDowngradeable,
     assertNoDowngradeModal,
+    assertPendingDowngradeGuardModal,
     clickCheckout,
     closeVisibleModal,
     waitForPricingCards,

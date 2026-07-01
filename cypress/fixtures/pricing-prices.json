@@ -1,0 +1,523 @@
+{
+  "meta": {
+    "generatedAt": "2026-06-30T12:37:05.100Z",
+    "currencyMechanism": {
+      "free": {
+        "usd": "Nuxt i18n route /pricing (locale en → usd)",
+        "gbp": "Nuxt i18n route /en-gb/pricing (locale en-gb → gbp)",
+        "eur": "Nuxt i18n route /fr/pricing (locale fr → eur)",
+        "cad": "cy.intercept rewrites GET /v1/payment/plans/* query param currency=cad"
+      },
+      "paid": "Account currency from GET /v1/payment/account/credit (set at subscribe time)"
+    },
+    "apiEndpoints": {
+      "personalPlans": "GET /v1/payment/plans/personal?currency={currency}&cycle={cycle}",
+      "enterprisePlans": "GET /v1/payment/plans/enterprise?currency={currency}&cycle={cycle}",
+      "higherTier": "GET /v1/payment/preview?plan_id=… (upgrade modal preview)",
+      "accountCredit": "GET /v1/payment/account/credit (paid account currency)"
+    },
+    "schema": "accounts[accountKey][currencyCode][cycle][tier] → { displayedPrice, basePrice, discountedPrice, discountPercent, currencySymbol }"
+  },
+  "accounts": {
+    "free": {
+      "usd": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 35,
+            "basePrice": 35,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 59,
+            "basePrice": 59,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 99,
+            "basePrice": 99,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 19,
+            "basePrice": 228,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 29,
+            "basePrice": 348,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 49,
+            "basePrice": 588,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        }
+      },
+      "cad": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": null,
+            "basePrice": null,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": ""
+          },
+          "pro-plus": {
+            "displayedPrice": null,
+            "basePrice": null,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": ""
+          },
+          "enterprise": {
+            "displayedPrice": null,
+            "basePrice": null,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": ""
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": null,
+            "basePrice": null,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": ""
+          },
+          "pro-plus": {
+            "displayedPrice": null,
+            "basePrice": null,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": ""
+          },
+          "enterprise": {
+            "displayedPrice": null,
+            "basePrice": null,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": ""
+          }
+        }
+      },
+      "gbp": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 28,
+            "basePrice": 28,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "£"
+          },
+          "pro-plus": {
+            "displayedPrice": 47.2,
+            "basePrice": 47.2,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "£"
+          },
+          "enterprise": {
+            "displayedPrice": 79.2,
+            "basePrice": 79.2,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "£"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 15.2,
+            "basePrice": 182.4,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "£"
+          },
+          "pro-plus": {
+            "displayedPrice": 23.2,
+            "basePrice": 278.4,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "£"
+          },
+          "enterprise": {
+            "displayedPrice": 39.2,
+            "basePrice": 470.4,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "£"
+          }
+        }
+      },
+      "eur": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 32.55,
+            "basePrice": 32.55,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "€"
+          },
+          "pro-plus": {
+            "displayedPrice": 54.87,
+            "basePrice": 54.87,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "€"
+          },
+          "enterprise": {
+            "displayedPrice": 92.07,
+            "basePrice": 92.07,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "€"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 17.67,
+            "basePrice": 212.04,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "€"
+          },
+          "pro-plus": {
+            "displayedPrice": 26.97,
+            "basePrice": 323.64,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "€"
+          },
+          "enterprise": {
+            "displayedPrice": 45.57,
+            "basePrice": 546.84,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "€"
+          }
+        }
+      }
+    },
+    "proMonthly": {
+      "detectedCurrency": "usd",
+      "usd": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 35,
+            "basePrice": 35,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 59,
+            "basePrice": 59,
+            "discountedPrice": 47.2,
+            "discountPercent": 20,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 99,
+            "basePrice": 99,
+            "discountedPrice": 99,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 19,
+            "basePrice": 228,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 29,
+            "basePrice": 348,
+            "discountedPrice": 174,
+            "discountPercent": 50,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 49,
+            "basePrice": 588,
+            "discountedPrice": 588,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        }
+      }
+    },
+    "proPlusMonthly": {
+      "detectedCurrency": "usd",
+      "usd": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 35,
+            "basePrice": 35,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 59,
+            "basePrice": 59,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 99,
+            "basePrice": 99,
+            "discountedPrice": 99,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 19,
+            "basePrice": 228,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 29,
+            "basePrice": 348,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 49,
+            "basePrice": 588,
+            "discountedPrice": 588,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        }
+      }
+    },
+    "enterpriseMonthly": {
+      "detectedCurrency": "usd",
+      "usd": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 35,
+            "basePrice": 35,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 59,
+            "basePrice": 59,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 99,
+            "basePrice": 99,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 19,
+            "basePrice": 228,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 29,
+            "basePrice": 348,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 49,
+            "basePrice": 588,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        }
+      }
+    },
+    "proYearly": {
+      "detectedCurrency": "usd",
+      "usd": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 35,
+            "basePrice": 35,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 59,
+            "basePrice": 59,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 99,
+            "basePrice": 99,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 19,
+            "basePrice": 228,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 29,
+            "basePrice": 348,
+            "discountedPrice": 174,
+            "discountPercent": 50,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 49,
+            "basePrice": 588,
+            "discountedPrice": 588,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        }
+      }
+    },
+    "proPlusYearly": {
+      "detectedCurrency": "usd",
+      "usd": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 35,
+            "basePrice": 35,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 59,
+            "basePrice": 59,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 99,
+            "basePrice": 99,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 19,
+            "basePrice": 228,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 29,
+            "basePrice": 348,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 49,
+            "basePrice": 588,
+            "discountedPrice": 588,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        }
+      }
+    },
+    "enterpriseYearly": {
+      "detectedCurrency": "usd",
+      "usd": {
+        "monthly": {
+          "pro": {
+            "displayedPrice": 35,
+            "basePrice": 35,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 59,
+            "basePrice": 59,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 99,
+            "basePrice": 99,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        },
+        "yearly": {
+          "pro": {
+            "displayedPrice": 19,
+            "basePrice": 228,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "pro-plus": {
+            "displayedPrice": 29,
+            "basePrice": 348,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          },
+          "enterprise": {
+            "displayedPrice": 49,
+            "basePrice": 588,
+            "discountedPrice": null,
+            "discountPercent": null,
+            "currencySymbol": "$"
+          }
+        }
+      }
+    }
+  }
+}

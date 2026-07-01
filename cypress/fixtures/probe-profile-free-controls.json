@@ -1,0 +1,62 @@
+[
+  {
+    "tag": "BUTTON",
+    "id": null,
+    "text": "",
+    "ariaLabel": "Close",
+    "href": null,
+    "type": "button",
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": null,
+    "text": "Real estate agent / Realtor",
+    "ariaLabel": null,
+    "href": null,
+    "type": null,
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": null,
+    "text": "Real estate photographer / Photo editor",
+    "ariaLabel": null,
+    "href": null,
+    "type": null,
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": null,
+    "text": "Brokerage / Real estate team",
+    "ariaLabel": null,
+    "href": null,
+    "type": null,
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": null,
+    "text": "Homeowner / Property owner",
+    "ariaLabel": null,
+    "href": null,
+    "type": null,
+    "name": null,
+    "role": null
+  },
+  {
+    "tag": "BUTTON",
+    "id": null,
+    "text": "Other",
+    "ariaLabel": null,
+    "href": null,
+    "type": null,
+    "name": null,
+    "role": null
+  }
+]

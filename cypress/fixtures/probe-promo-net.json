@@ -1,0 +1,11 @@
+{
+  "requests": [
+    {
+      "method": "GET",
+      "url": "https://api.aihomedesign.com/v1/payment/history?page=1&pageSize=30&width=480&height=320"
+    }
+  ],
+  "dialogs": [
+    "Turn Off Auto-RenewalAre you sure you want to turn off auto-renewal for your plan?Yes, ContinueNo, Go Back"
+  ]
+}
