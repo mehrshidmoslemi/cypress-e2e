@@ -240,7 +240,7 @@ function createImportListingHelpers(sessionId, { account } = {}) {
     cy.get('body', { timeout: 30000 }).then(($body) => {
       if ($body.text().includes(ONBOARDING_STEP2)) {
         cy.contains('Just testing AIHomeDesign', { timeout: 30000 }).click({ force: true })
-        cy.contains("I'll explore on my own", { timeout: 30000 }).click({ force: true })
+        cy.contains(/explore on my own/i, { timeout: 30000 }).click({ force: true })
       } else if ($body.text().includes(ONBOARDING_TITLE)) {
         cy.log('Onboarding step 2 not shown — dismissing via close button')
         dismissOnboardingDialog($root)
@@ -298,9 +298,7 @@ function createImportListingHelpers(sessionId, { account } = {}) {
 
   const ensureStudioSession = () => {
     ensureLoggedIn()
-    cy.visit('/studio/projects')
-    cy.get('nav', { timeout: 60000 }).should('exist')
-    cy.get('[aria-busy="true"]', { timeout: 60000 }).should('not.exist')
+    visitStudioProjectsWithRetry()
     cy.contains('button', 'Create Project', { timeout: 60000 }).should('be.visible')
   }
 
@@ -520,9 +518,7 @@ function createImportListingHelpers(sessionId, { account } = {}) {
         return
       }
 
-      cy.visit('/studio/projects', { timeout: 120000, failOnStatusCode: false })
-      flow.prepareSiteForTesting()
-      prepareStudioPage()
+      visitStudioProjectsWithRetry()
       openProjectFromStudioList(project)
       cy.contains(/upload assets|do magic|project overview|magic complete/i, { timeout: IMPORT_TIMEOUT }).should(
         'exist',
@@ -631,32 +627,48 @@ function createImportListingHelpers(sessionId, { account } = {}) {
   }
 
   const visitStudioProjectsWithRetry = (attempt = 0) => {
+    const maxAttempts = 6
     cy.intercept('GET', '**/v3/project?*').as('projectListPoll')
+
+    dismissLeaveImportIfShown()
+    closeWelcomeBackModalIfOpen()
+
     cy.visit('/studio/projects', {
       timeout: 120000,
       failOnStatusCode: false,
     })
 
-    return cy.get('body', { timeout: 60000 }).then(($body) => {
+    cy.get('body', { timeout: 60000 }).should('exist')
+    flow.dismissServerErrorModal()
+    flow.prepareSiteForTesting()
+    completeOnboardingIfVisible()
+    flow.completeOnboardingIfShown()
+
+    cy.get('body').then(($body) => {
       const text = $body.text()
-      const isServerError = /server error|\(500\)|something went wrong/i.test(text)
-      const hasNav = $body.find('nav').length > 0
+      const needsAuth = text.includes('Welcome Back') || navLoginVisible($body)
 
-      if (isServerError || !hasNav) {
-        if (attempt >= 5) {
-          throw new Error('Studio projects page unavailable after retries')
-        }
-
-        cy.log(`Studio visit failed (attempt ${attempt + 1}) — retrying`)
-        cy.wait(5000)
-        return visitStudioProjectsWithRetry(attempt + 1)
-      }
-
-      if (!isNavLoggedIn($body) || text.includes('Welcome Back')) {
+      if (needsAuth) {
         recoverStudioAuthIfNeeded()
       }
+    })
 
-      flow.prepareSiteForTesting()
+    cy.get('body').then(($body) => {
+      const text = $body.text()
+      const isServerError = /server error|\(500\)|something went wrong|request failed/i.test(text)
+      const hasNav = $body.find('nav').length > 0
+
+      if ((isServerError || !hasNav) && attempt < maxAttempts - 1) {
+        cy.log(`Studio visit failed (attempt ${attempt + 1}/${maxAttempts}) — retrying`)
+        cy.wait(5000)
+        visitStudioProjectsWithRetry(attempt + 1)
+        return
+      }
+
+      if (isServerError || !hasNav) {
+        throw new Error('Studio projects page unavailable after retries')
+      }
+
       prepareStudioPage()
     })
   }
@@ -675,8 +687,8 @@ function createImportListingHelpers(sessionId, { account } = {}) {
   }
 
   const pollProjectCounts = (projectId, expected, attempt = 0) => {
-    return visitStudioProjectsWithRetry().then(() =>
-      cy.wait('@projectListPoll', { timeout: 120000 }).then(({ response }) => {
+    visitStudioProjectsWithRetry()
+    return cy.wait('@projectListPoll', { timeout: 120000 }).then(({ response }) => {
         const project = findProjectInList(response, projectId)
         const counts = projectCounts(project)
 
@@ -695,8 +707,7 @@ function createImportListingHelpers(sessionId, { account } = {}) {
 
         cy.wait(POLL_INTERVAL_MS)
         return pollProjectCounts(projectId, expected, attempt + 1)
-      }),
-    )
+      })
   }
 
   const assertAssetsVisible = () => {
@@ -773,9 +784,91 @@ function createImportListingHelpers(sessionId, { account } = {}) {
   }
 
   const tryOpenLeaveStayModal = () => {
-    cy.contains('Check Details').should('be.visible')
+    cy.get('body', { timeout: 60000 }).should('contain.text', 'Check Details')
     cy.get('body').type('{esc}', { force: true })
     cy.contains(/leave import/i, { timeout: 15000 }).should('be.visible')
+  }
+
+  const clickSidebarNavForLeavePrompt = () => {
+    cy.get('nav', { timeout: 30000 }).should('be.visible').then(($nav) => {
+      const studioLink = [...$nav.find('a[href="/studio/projects"]')].find((el) => Cypress.dom.isVisible(el))
+      const homeLink = [...$nav.find('a[href="/"]')].find((el) => Cypress.dom.isVisible(el))
+      const target = studioLink || homeLink
+
+      expect(target, 'sidebar nav link to trigger leave import').to.exist
+      cy.wrap(target).click({ force: true })
+    })
+  }
+
+  const isListingImportInProgress = (text) =>
+    (/importing listing/i.test(text) ||
+      /import listing data directly from mls/i.test(text) ||
+      (/checking url/i.test(text) && /getting things ready|images and property/i.test(text))) &&
+    !text.includes('Magic Complete')
+
+  const waitForListingImportInProgress = () => {
+    cy.get('body', { timeout: 120000 }).should(($body) => {
+      expect(isListingImportInProgress($body.text()), 'import in progress UI').to.be.true
+    })
+  }
+
+  const tryOpenLeaveStayModalDuringImport = (attempt = 0) => {
+    cy.get('body', { timeout: 10000 }).then(($body) => {
+      const text = $body.text()
+      const importing = isListingImportInProgress(text)
+
+      if (importing) {
+        clickSidebarNavForLeavePrompt()
+        cy.contains(/leave import/i, { timeout: 15000 }).should('be.visible')
+        return
+      }
+
+      if (attempt >= 120) {
+        throw new Error('Import in progress UI never appeared — cannot open Leave/Stay modal via sidebar')
+      }
+
+      cy.wait(500)
+      tryOpenLeaveStayModalDuringImport(attempt + 1)
+    })
+  }
+
+  const waitForImportedImagesReady = () => {
+    cy.get('body', { timeout: IMPORT_TIMEOUT }).should(($body) => {
+      const text = $body.text()
+      const stillProcessing =
+        /deep analysis|scanning spatial|importing listing|checking url|getting things ready/i.test(text)
+      expect(stillProcessing, 'listing images should finish importing').to.be.false
+
+      const inputCount = Number(text.match(/Input\s*(\d+)/i)?.[1])
+      const listingImages = [...$body.find('img')].filter((img) => {
+        const src = img.getAttribute('src') || ''
+        const rect = img.getBoundingClientRect()
+        return (
+          src.includes('http') &&
+          !src.includes('logo') &&
+          !src.includes('icon') &&
+          Cypress.dom.isVisible(img) &&
+          rect.width > 80
+        )
+      }).length
+
+      expect(
+        inputCount >= 1 || listingImages >= 1,
+        'imported listing images visible in upload panel',
+      ).to.be.true
+    })
+  }
+  const assertImportContinuesAfterStay = () => {
+    cy.contains(/leave import\?/i).should('not.exist')
+    cy.get('body', { timeout: IMPORT_TIMEOUT }).should(($body) => {
+      const text = $body.text()
+      const importStillActive =
+        isListingImportInProgress(text) ||
+        text.includes('Upload Assets') ||
+        /uploading/i.test(text)
+
+      expect(importStillActive, 'import should keep running after Stay').to.be.true
+    })
   }
 
   const assertLeaveStayVisible = () => {
@@ -843,10 +936,15 @@ function createImportListingHelpers(sessionId, { account } = {}) {
     openCreateProjectImport,
     waitForImportStarted,
     waitForImportComplete,
+    waitForImportedImagesReady,
     waitForProjectCreated: resolveImportProject,
     resolveImportProject,
     assertInvalidUrlError,
     tryOpenLeaveStayModal,
+    tryOpenLeaveStayModalDuringImport,
+    clickSidebarNavForLeavePrompt,
+    waitForListingImportInProgress,
+    assertImportContinuesAfterStay,
     assertLeaveStayVisible,
     confirmListingDetails,
     waitForListingDetails,

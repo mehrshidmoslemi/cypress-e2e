@@ -1,0 +1,163 @@
+{
+  "url": "https://app.aihomedesign.com/__cypress/iframes/cypress%5Ce2e%5C_probe-studio-api.cy.js?browserFamily=chromium",
+  "textSnippet": " Home Studio API Pricing Help MoreAPI AccessTo harness the full power of our platform and access the API, you need to purchase our Enterprise plan.EnterpriseSelect your needMonthlyYearly   (51% OFF)$0.24/PhotoBilled $588.00 Yearly$0.24/PhotoBilled $588.00 Yearly200Photos /mo 1 KPhotos /mo 2 KPhotos /mo 4 KPhotos /mo 10 KPhotos /mo $49 .00/mo Unused Credits Rollover8 Extra AI Tools Without CoinsDownload Photos Without WatermarksUnlimited BackupPriority SupportAPI AccessExplore More Features Get YearlyWe use cookies We use our own and third-party cookies to display this site correctly and understand how it's used. See our Privacy Policy for details. Accept allReject allCustomize[{\"serverRendered\":1},false]window.__NUXT__={};window.__NUXT__.config={public:{sentryRelease:\"dev\",sentry:{environment:\"production\",dsn:\"https://331c18c0519c3a2d9ac677818fc29801@o4507339757453312.ingest.us.sentry.io/4510335564578817\"},stripe:{key:\"pk_live_51JwqaoCo0VI1uDM8gFazluToJzwtEY8IcC3vi651HKDjpq3KhHdCKQXyrWJQTBJWnbccfT79W8POi8adZle1P9jB00aULrluNJ\",options:{manualClientLoad:true}},baseURL:\"https://api.aihomedesign.com/\",pusherKey:\"54a06bc7c85dc4c50948\",pusherCluster:\"us3\",environment:\"production\",websiteUrl:\"https://aihomedesign.com\",cookieDomain:\".aihomedesign.com\",googleAuthBaseUrl:\"https://api.aihomedesign.com/v1/auth/login/google\",googleOneTapBaseurl:\"https://api.aihomedesign.com/v1/auth/login/google\",googleClientId:\"450042431205-bqr4osv4t944j26edajuabhnio6b7pu3.apps.googleusercontent.com\",appleClientId:\"com.rdl.aihomedesign\",appleRedirectUri:\"https://app.aihomedesign.com\",gtmId:\"GTM-T6QM6Q76\",authUrl:\"\",authRealm:\"\",authClientId:\"\",authClientSecret:\"\",imgUrl:\"https://revi.rvstatic.com/aihomedesign/images-v3\",posthogPublicKey:\"phc_3iZfEJtCcIhbVdkAnemQM8YfW6nDUGceuqno2kZ2iMw\",posthogHost:\"https://app.posthog.com\",device:{defaultUserAgent:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36\",enabled:true,refreshOnResize:false},\"nuxt-scripts\":{version:\"\",defaultScriptOptions:{trigger:\"onNuxtReady\"}},scripts:{googleTagManager:{id:\"GTM-T6QM6Q76\"}},posthog:{publicKey:\"phc_3iZfEJtCcIhbVdkAnemQM8YfW6nDUGceuqno2kZ2iMw\",host:\"https://app.posthog.com\",capturePageViews:true,capturePageLeaves:true,clientOptions:{persistence:\"cookie\",cross_subdomain_cookie:true},disabled:false,proxy:false},i18n:{baseUrl:\"https://aihomedesign.com\",defaultLocale:\"en\",rootRedirect:\"\",redirectStatusCode:302,skipSettingLocaleOnNavigate:false,locales:[{code:\"en\",iso:\"en\",language:\"\"},{code:\"en-gb\",iso:\"en-GB\",language:\"\"},{code:\"fr\",iso:\"fr\",language:\"\"}],detectBrowserLanguage:false,experimental:{localeDetector:\"\",typedPages:true,typedOptionsAndMessages:false,alternateLinkCanonicalQueries:true,devCache:false,cacheLifetime:\"\",stripMessagesPayload:false,preload:false,strictSeo:false,nitroContextDetection:true},domainLocales:{en:{domain:\"\"},\"en-gb\":{domain:\"\"},fr:{domain:\"\"}}}},app:{baseURL:\"/\",buildId:\"9707d41d-cf65-4cbc-9601-4d11325551a4\",buildAssetsDir:\"/_nuxt/\",cdnURL:\"\"}}(function(a,b){a._rwq=b;a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)}})(window,\"rewardful\");(function(){var a=document.createElement(\"script\");a.setAttribute(\"src\",\"https://r.wdfl.co/rw.js\");a.setAttribute(\"data-rewardful\",\"c49e94\");document.body.appendChild(a)})();Se connecter avec Google. S'ouvre dans un nouvel onglet.",
+  "buttons": [
+    {
+      "tag": "A",
+      "text": "",
+      "id": null,
+      "href": "/",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "",
+      "id": null,
+      "href": "/tools-list",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Home",
+      "id": null,
+      "href": "/",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Studio",
+      "id": null,
+      "href": "/studio/projects",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "API",
+      "id": null,
+      "href": "/api-access",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Pricing",
+      "id": null,
+      "href": "/pricing",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Help",
+      "id": null,
+      "href": "/help",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "More",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Monthly",
+      "id": "reka-tabs-v-0-3-0-0-trigger-monthly",
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Yearly   (51% OFF)",
+      "id": "reka-tabs-v-0-3-0-0-trigger-yearly",
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "200Photos /mo",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "1 KPhotos /mo",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "2 KPhotos /mo",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "4 KPhotos /mo",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "10 KPhotos /mo",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Explore More Features",
+      "id": null,
+      "href": "https://aihomedesign.com/b2b",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Get Yearly",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Accept all",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Reject all",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Customize",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    }
+  ],
+  "inputs": [],
+  "tabs": [
+    "Monthly",
+    "Yearly   (51% OFF)",
+    "Get Yearly"
+  ],
+  "hasApiKey": false,
+  "hasWebhook": false,
+  "hasEnterpriseUpsell": true,
+  "hasStripeUpsell": false
+}

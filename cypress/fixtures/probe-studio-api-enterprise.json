@@ -1,0 +1,162 @@
+{
+  "url": "https://app.aihomedesign.com/__cypress/iframes/cypress%5Ce2e%5C_probe-studio-api.cy.js?browserFamily=chromium",
+  "textSnippet": " Home Studio API Pricing Help MoreAPI Access Seamlessly connect with our API - empower your application/Website today.  Our magic wand, in your hands! You can check out API Documentation to get more detailed information. Private API KeyToken Regenerate  Copy Webhook View docs URL Edit  View webhook logs MCP Endpoint GeneratorGenerate a secure MCP endpoint URL for use with Claude and other AI assistants.Generate MCP Endpoint Server health check — no key needed:  https://mcp.aihomedesign.com/health We use cookies We use our own and third-party cookies to display this site correctly and understand how it's used. See our Privacy Policy for details. Accept allReject allCustomize[{\"serverRendered\":1},false]window.__NUXT__={};window.__NUXT__.config={public:{sentryRelease:\"dev\",sentry:{environment:\"production\",dsn:\"https://331c18c0519c3a2d9ac677818fc29801@o4507339757453312.ingest.us.sentry.io/4510335564578817\"},stripe:{key:\"pk_live_51JwqaoCo0VI1uDM8gFazluToJzwtEY8IcC3vi651HKDjpq3KhHdCKQXyrWJQTBJWnbccfT79W8POi8adZle1P9jB00aULrluNJ\",options:{manualClientLoad:true}},baseURL:\"https://api.aihomedesign.com/\",pusherKey:\"54a06bc7c85dc4c50948\",pusherCluster:\"us3\",environment:\"production\",websiteUrl:\"https://aihomedesign.com\",cookieDomain:\".aihomedesign.com\",googleAuthBaseUrl:\"https://api.aihomedesign.com/v1/auth/login/google\",googleOneTapBaseurl:\"https://api.aihomedesign.com/v1/auth/login/google\",googleClientId:\"450042431205-bqr4osv4t944j26edajuabhnio6b7pu3.apps.googleusercontent.com\",appleClientId:\"com.rdl.aihomedesign\",appleRedirectUri:\"https://app.aihomedesign.com\",gtmId:\"GTM-T6QM6Q76\",authUrl:\"\",authRealm:\"\",authClientId:\"\",authClientSecret:\"\",imgUrl:\"https://revi.rvstatic.com/aihomedesign/images-v3\",posthogPublicKey:\"phc_3iZfEJtCcIhbVdkAnemQM8YfW6nDUGceuqno2kZ2iMw\",posthogHost:\"https://app.posthog.com\",device:{defaultUserAgent:\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36\",enabled:true,refreshOnResize:false},\"nuxt-scripts\":{version:\"\",defaultScriptOptions:{trigger:\"onNuxtReady\"}},scripts:{googleTagManager:{id:\"GTM-T6QM6Q76\"}},posthog:{publicKey:\"phc_3iZfEJtCcIhbVdkAnemQM8YfW6nDUGceuqno2kZ2iMw\",host:\"https://app.posthog.com\",capturePageViews:true,capturePageLeaves:true,clientOptions:{persistence:\"cookie\",cross_subdomain_cookie:true},disabled:false,proxy:false},i18n:{baseUrl:\"https://aihomedesign.com\",defaultLocale:\"en\",rootRedirect:\"\",redirectStatusCode:302,skipSettingLocaleOnNavigate:false,locales:[{code:\"en\",iso:\"en\",language:\"\"},{code:\"en-gb\",iso:\"en-GB\",language:\"\"},{code:\"fr\",iso:\"fr\",language:\"\"}],detectBrowserLanguage:false,experimental:{localeDetector:\"\",typedPages:true,typedOptionsAndMessages:false,alternateLinkCanonicalQueries:true,devCache:false,cacheLifetime:\"\",stripMessagesPayload:false,preload:false,strictSeo:false,nitroContextDetection:true},domainLocales:{en:{domain:\"\"},\"en-gb\":{domain:\"\"},fr:{domain:\"\"}}}},app:{baseURL:\"/\",buildId:\"9707d41d-cf65-4cbc-9601-4d11325551a4\",buildAssetsDir:\"/_nuxt/\",cdnURL:\"\"}}AnalysisSelectionApplyingCompleteDeep AnalysisIdentifying room architecture…Maybe LaterView Results(function(a,b){a._rwq=b;a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)}})(window,\"rewardful\");(function(){var a=document.createElement(\"script\");a.setAttribute(\"src\",\"https://r.wdfl.co/rw.js\");a.setAttribute(\"data-rewardful\",\"c49e94\");document.body.appendChild(a)})();",
+  "buttons": [
+    {
+      "tag": "A",
+      "text": "",
+      "id": null,
+      "href": "/",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "",
+      "id": null,
+      "href": "/tools-list",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Home",
+      "id": null,
+      "href": "/",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Studio",
+      "id": null,
+      "href": "/studio/projects",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "API",
+      "id": null,
+      "href": "/api-access",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Pricing",
+      "id": null,
+      "href": "/pricing",
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "Help",
+      "id": null,
+      "href": "/help",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "More",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "API Documentation",
+      "id": null,
+      "href": "https://doc.aihomedesign.com/",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Regenerate",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Copy",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "View docs",
+      "id": null,
+      "href": "https://doc.aihomedesign.com/getting-started/webhook-reference",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Edit",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "View webhook logs",
+      "id": null,
+      "href": "/api-access/logs",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Generate MCP Endpoint",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "A",
+      "text": "https://mcp.aihomedesign.com/health",
+      "id": null,
+      "href": "https://mcp.aihomedesign.com/health",
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "Maybe Later",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    },
+    {
+      "tag": "BUTTON",
+      "text": "View Results",
+      "id": null,
+      "href": null,
+      "ariaLabel": null
+    }
+  ],
+  "inputs": [
+    {
+      "type": "textarea",
+      "name": "token",
+      "id": "v-0-3-0",
+      "placeholder": "",
+      "value": "bb943a29cdacf87da4b70588234d8b8d47d6cfb1",
+      "readOnly": true
+    },
+    {
+      "type": "text",
+      "name": "webhook-url",
+      "id": "v-0-3-1",
+      "placeholder": "https://your-domain.com/webhooks/aihd",
+      "value": "http://amirmalek.ir/wp-json/aihd/v1/webh",
+      "readOnly": true
+    }
+  ],
+  "tabs": [],
+  "hasApiKey": true,
+  "hasWebhook": true,
+  "hasEnterpriseUpsell": false,
+  "hasStripeUpsell": false
+}

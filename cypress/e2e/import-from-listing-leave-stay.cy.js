@@ -5,11 +5,15 @@
 const {
   createImportListingHelpers,
   LISTING_URLS,
-  IMPORT_LISTING_ACCOUNT,
 } = require('../support/import-listing-shared')
 
+const LEAVE_STAY_ACCOUNT = {
+  email: 'memoslemi.sdstudio+1009@gmail.com',
+  password: 'mmmmmmmm',
+}
+
 const importFlow = createImportListingHelpers('import-listing-leave-stay', {
-  account: IMPORT_LISTING_ACCOUNT,
+  account: LEAVE_STAY_ACCOUNT,
 })
 
 describe('Import from Listing — Leave / Stay modal', () => {
@@ -45,12 +49,12 @@ describe('Import from Listing — Leave / Stay modal', () => {
       stopBeforeConfirm: true,
     })
 
-    importFlow.tryOpenLeaveStayModal()
+    cy.contains('button', /it's correct,\s*continue/i).click({ force: true })
+    importFlow.tryOpenLeaveStayModalDuringImport()
     importFlow.assertLeaveStayVisible()
     cy.contains('button', /^Stay$/i).click({ force: true })
 
-    cy.contains('Check Details').should('be.visible')
-    importFlow.confirmListingDetails()
-    importFlow.waitForImportStarted()
+    importFlow.assertImportContinuesAfterStay()
+    importFlow.waitForImportedImagesReady()
   })
 })

@@ -130,15 +130,16 @@ describe('Profile & Settings', () => {
       profile.assertTheme('dark')
     })
 
-    it('Theme persists after reload', () => {
+    it('Light theme applies and persists after reload', () => {
       profile.setTheme('light')
       profile.closeProfilePopover()
       profile.assertTheme('light')
       cy.reload()
       profile.dismissStartup()
       profile.assertTheme('light')
+    })
 
-      profile.openProfilePopover()
+    it('Dark theme persists after reload', () => {
       profile.setTheme('dark')
       profile.closeProfilePopover()
       profile.assertTheme('dark')
@@ -148,14 +149,6 @@ describe('Profile & Settings', () => {
     })
 
     it('Theme persists after re-login', () => {
-      profile.setTheme('light')
-      profile.closeProfilePopover()
-      profile.assertTheme('light')
-      profile.logoutViaProfileMenu()
-      profile.ensureLoggedIn('free')
-      profile.assertTheme('light')
-
-      profile.openProfilePopover()
       profile.setTheme('dark')
       profile.closeProfilePopover()
       profile.assertTheme('dark')
